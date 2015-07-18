@@ -7,7 +7,7 @@ Ext.define("app.view.Login", {
     	layout: 'vbox', 
         scrollable: null,
         title: '登录',
-        padding: '10',
+        padding: '10',  
         cls:'userLogin',
         items: [{
             xtype: 'fieldset',
@@ -21,8 +21,16 @@ Ext.define("app.view.Login", {
 				xtype:'panel',
 				html:'<div class="login-logo"><img src="resources/images/logo.png" style="width:120px;"/></div>'
 			},{
+				xtype:'hiddenfield',
+				name:'ostype',
+				value:0
+			},{
+				xtype:'hiddenfield',
+				name:'version',
+				value:1
+			},{
                 xtype: 'textfield',
-                name: 'name',
+                name: 'username',
                 value:'',
                 placeHolder: '输入用户名/手机号'
             },

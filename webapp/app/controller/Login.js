@@ -14,7 +14,22 @@ Ext.define('app.controller.Login', {
         }
     },
     logUserIn: function () {
-        util.ePush('main');
+    	var login = this.getUserLogin();
+    	Ext.Ajax.request({
+            url: config.url.login,
+            params:login.getValues(),
+            scope: this,
+            success: function (result) {
+            	
+                result = Ext.decode(result.responseText);
+                if (result.state==0) {
+                	util.err(result.info);
+                } else {
+                	util.suc('登录成功');
+                	
+                }
+            }
+        });
     },
     logCheck: function () {
     	
