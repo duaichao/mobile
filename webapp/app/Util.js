@@ -31,6 +31,36 @@ Ext.define('app.Util', {
 		        return '';
 		    }
     	},
+    	request :function(url,params,callback,scope){
+    		Ext.Ajax.request({
+                url: url,
+                params:params,
+                success: function (result) {
+                    result = Ext.decode(result.responseText);
+                    if (result.state==0) {
+                    	util.err(result.info);
+                    } else {
+                    	callback.call(scope,result);
+                    }
+                }
+            });
+    	},
+    	//model验证
+    	valid: function (model, form) {
+            var tmpModel = Ext.create(model),
+            me = this,
+            errors, valid;
+            form.updateRecord(tmpModel);
+            errors = tmpModel.validate();
+            valid = errors.isValid();
+            if (!valid) {
+                errors.each(function (err) {
+                    util.err(err.getMessage());
+                    return;
+                });
+            }
+            return valid;
+        },
         //加载stroe
         storeLoad: function (id,params) {
         	params = params || {};
@@ -139,6 +169,10 @@ Ext.define('app.Util', {
 				};
     		var nf = dh.append(Ext.getBody(),notification,true);
     			nf.setXY(nf.getAlignToXY(document,'c-c'));
+			Ext.Viewport.setMasked({
+    			xtype: 'mask',
+                transparent: true
+    		});
         },
         war:function(format){
         	format = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 0));
@@ -169,11 +203,17 @@ Ext.define('app.Util', {
     		var nf = dh.append(Ext.getBody(),notification,true);
     		
     		nf.setXY(nf.getAlignToXY(document,'c-c'));
+    		
+    		Ext.Viewport.setMasked({
+    			xtype: 'mask',
+                transparent: true
+    		});
     		setTimeout(function(){
     			util.hideMessage();
     		},3000);
         },
         hideMessage:function(){
+        	Ext.Viewport.setMasked(false);
         	if(Ext.get('notification')){
    				Ext.get('notification').destroy();
    			}
@@ -182,6 +222,7 @@ Ext.define('app.Util', {
         overrideAjax: function () {
             //开始加载
             Ext.Ajax.on('beforerequest',function (connection, options) {
+            	options.params = Ext.applyIf(options.params,config.defaultParams);
             	util.loader('加载中...');
             });
             //加载成功

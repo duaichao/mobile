@@ -9,10 +9,10 @@ Ext.define('app.view.user.Home', {
 		
         autoDestroy: false,
 		navigationBar: {
-			
             items: [{
                 xtype: 'button',
                 iconCls:'icon-geren',
+                action:'toinfo',
                 align: 'right',
                 ui: 'plain'
             }],

@@ -24,13 +24,11 @@ Ext.application({
     },
 	controllers: [
 		'Main',
-		'Index',
-		'Login'
+		'user.User'
 	],
 	views:[
 		'Main',
-		'Index',
-		'Login'
+		'Index'
 	],
 	requires: [
 		'Ext.MessageBox',
