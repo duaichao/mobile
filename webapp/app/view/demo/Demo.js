@@ -1,0 +1,99 @@
+Ext.define('app.view.demo.Demo', {
+    extend: 'Ext.Panel',
+	alternateClassName: 'demo',
+	xtype:'demo',
+	requires: 'Ext.layout.VBox',
+    config: {
+    	layout: {
+            type : 'vbox',
+            pack : 'center',
+            align: 'stretch'
+        },
+        defaults: {
+            xtype: 'container',
+            flex : 1,
+            layout: {
+                type : 'hbox',
+                align: 'middle'
+            },
+            defaults: {
+                xtype : 'button',
+                flex  : 1,
+                margin: 10
+            }
+        },
+        items: [{
+			items: [{
+				xtype:'button',
+				text:'录音',
+				handler:function(){
+					navigator.device.capture.captureAudio(function(files){
+						//成功回调函数
+				 		Ext.getCmp("video_files_mainview").config.param.sourceobj.startUpload(files[0].fullPath, 2);
+					},function(error){
+						//失败回调函数
+						//navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+			        }, {limit:1});//一次最多录制的文件个数
+				}
+			},{
+	          	xtype:'button',
+	          	text:'录相',
+	          	handler:function(){
+					navigator.device.capture.captureVideo(function(files){
+						//成功回调
+						//navigator.notification.alert(files[0].fullPath);
+						Ext.getCmp("video_files_mainview").config.param.sourceobj.startUpload(files[0].fullPath, 1);
+					},function(){
+						//失败回调
+						//navigator.notification.alert('错误码：' + err.code, null, 'Uh oh!');
+					});
+				}  				        
+			},{
+	          	xtype:'button',
+	          	text:'拍照',
+	          	handler:function(){
+					navigator.camera.getPicture(function(imgtemp){
+						//向列表中放圖片
+					   	var acqimage =imgtemp;
+				   		//acqimage.src = "data:image/jpeg;base64," + imageData;
+						param.config.param.sourceobj.startUpload(imgtemp, 0);
+					}, function(){
+						console.log('什麼都沒有得到');
+					}, { 
+					   	quality: 5,
+					   	destinationType:Camera.DestinationType.FILE_URL,
+					   	sourceType:Camera.PictureSourceType.CAMERA 
+			  		});
+				}
+			}]
+          },{
+			items: [{
+	          	xtype:'button',
+	          	text:'选择图片',
+	          	handler:function(){
+					navigator.camera.getPicture(function(imgtemp){
+						console.log("文件路径："+imgtemp);
+					},function(){
+						console.log('选择出错');
+					},{
+						quality:10,//0-100
+		       			destinationType:Camera.DestinationType.FILE_URL, 
+		       			sourceType:Camera.PictureSourceType.PHOTOLIBRARY, 
+		       			mediaType:Camera.MediaType.PICTURE
+					});
+				}
+			},{
+	          	xtype:'button',
+	          	text:'震动响铃',
+	          	handler:function(){
+	          		navigator.notification.vibrate(500);
+	          		navigator.notification.beep(1);
+	          	}
+			}]
+		}],
+        
+        
+        
+        title: '硬件测试'
+    }
+});

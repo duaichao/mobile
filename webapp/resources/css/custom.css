@@ -1,0 +1,72 @@
+/*全局 */
+*{
+	font-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	-moz-font-size-adjust: none;
+	-ms-font-size-adjust: none;
+	-o-font-size-adjust: none;
+}
+i, cite, em, var, address, dfn{font-style:normal;}
+html,body {
+	font-family:微软雅黑;
+	color:#404040;
+}
+body.x-desktop {
+	font-size:100%;
+}
+.font12{font-size:12px!important;}
+.font14{font-size:14px!important;}
+.font16{font-size:16px!important;}
+.font18{font-size:18px!important;}
+.font20{font-size:20px!important;}
+.clearfix:after {
+  content: ".";
+  font-size: 0px;
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+.x-input-el::-webkit-input-placeholder {
+	color: #ccc!important;
+	font-weight:normal;
+	font-size:14px;
+}
+.fill .x-form-field{
+	-webkit-text-fill-color: #ccc;
+}
+.x-field .x-input-el{
+	font-weight:normal!important;
+}
+/**/
+/*提示样式*/
+.message .x-mask-inner{
+	background-color:#000000;
+	-webkit-border-radius: 30px;
+	border-radius:30px;
+}
+.message .x-mask-message{
+	color:#fff;
+	font-size:14px;
+	padding:.3em;
+	font-weight:normal;
+}
+/**/
+/*底部版权*/
+.copyright{
+	margin-top:10px;
+	color:#999;
+	font-size:12px;
+	text-align:center;
+	width:100%;
+}
+/**/
+
+/*logo*/
+.login-logo{
+	width:100%;
+	text-align:center;
+	padding:10px;
+}
+/**/
