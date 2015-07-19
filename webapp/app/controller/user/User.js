@@ -6,18 +6,10 @@ Ext.define('app.controller.user.User', {
         refs: {
         	home:'home',
         	userLogin: 'userLogin',
-        	userRegist: 'userRegist'
+        	userRegist: 'userRegist',
+        	userInfo:'userInfo'
         },
         control: {
-        	'home':{
-        		back:function(item){
-        			var tbar = item.getNavigationBar(),
-        				toInfoBtn = tbar.down('button[action=toinfo]'),
-        				infoSaveBtn = tbar.down('button[action=saveInfo]');
-        			toInfoBtn.show();
-        			tbar.remove(infoSaveBtn);
-        		}
-        	},
             'userLogin button[action=login]': {
                 tap: function () {
                     var login = this.getUserLogin(),
@@ -60,20 +52,17 @@ Ext.define('app.controller.user.User', {
             },
             'home button[action=toinfo]':{
             	tap: function(){
-            		this.getHome().push(Ext.create('app.view.user.Info'));
-            		var tbar = this.getHome().getNavigationBar(),
-            			toInfoBtn = tbar.down('button[action=toinfo]');
-            		toInfoBtn.hide();
-            		tbar.add({
-                    	text:'保存',
-        				action:'saveInfo',
-        				align:'right'
-                    });
+            		util.ePush('userInfo');
             		this.loadPersonInfo(config.user);
             	}
             },
-            'button[action=saveInfo]':{
+            'userInfo button[action=saveInfo]':{
             	tap: 'saveInfo'
+            },
+            'userInfo button[action=backHome]':{
+            	tap:function(){
+            		util.ePush('home');
+            	}
             }
         }
     },
@@ -87,23 +76,11 @@ Ext.define('app.controller.user.User', {
     loadPersonInfo:function(params){
     	util.request(config.url.getPersonalInfo,params,function(data){
         	var d = config.user = Ext.applyIf(params,data.result),
-        		f = this.getHome().getActiveItem();
+        		f = this.getUserInfo();
         	if(d.birthday!=''&&!Ext.isDate(d.birthday)){
         		d.birthday = Ext.Date.parse(d.birthday, "Y-m-d");
         	}
         	f.setValues(d);
-        	/*for(var i in d){
-        		var fd =f.down('[name='+i+']');
-        		if(fd){
-        			if(fd.setValue){
-        				fd.resetOriginalValue();
-        				fd.setValue(d[i]);
-        				console.log(d[i]);
-        			}else{
-        				console.log(fd);
-        			}
-        		}
-        	}*/
     	},this);
     },
     logRegist: function(params){
@@ -115,7 +92,7 @@ Ext.define('app.controller.user.User', {
     keepUser: function (user) {
     },
     saveInfo :function(){
-    	var params = this.getHome().getActiveItem().getValues();
+    	var params = this.getUserInfo().getValues();
     	util.request(config.url.setPersonalInfo,params,function(data){
     		util.suc('保存成功');
     	},this);

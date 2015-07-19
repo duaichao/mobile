@@ -6,8 +6,20 @@ Ext.define('app.view.user.Info', {
         defaults: {
             labelWidth: '20%'
         },
-        title:'个人信息',
         items: [{
+        	title:'个人信息',
+			docked: 'top',
+			xtype: 'titlebar',
+			items:[{
+				action: 'backHome',
+				ui:'back',
+				text:'Back'
+			},{
+				action: 'saveInfo',
+				text:'保存',
+				align:'right'
+			}]
+        },{
 			xtype: 'fieldset',
             layout: 'vbox', 
             defaults: {
