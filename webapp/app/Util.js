@@ -3,8 +3,8 @@ Ext.define('app.Util', {
     statics: {
     	loadingRing :function(target){
     		var defaultOpt = {
-	            trackColor: '#f0f0f0',
-	            progressColor: '#53a93f',
+	            trackColor: '#fff',
+	            progressColor: '#6ec84e',
 	            precent: 75,
 	            duration: 1500
 	        }; // 默认选项
@@ -63,6 +63,25 @@ Ext.define('app.Util', {
                     'animation-timing-function': 'step-start'
                 });
             }
+    	},
+    	lastDays :function(date){
+    		var now,dateTime;
+    		if(Ext.isString(date)){
+	    		date = date || '';
+	    		date = date.replace(/\.\d\d\d+/,""); 
+				date = date.replace(/-/,"/").replace(/-/,"/");
+				date = date.replace(/T/," ").replace(/Z/," UTC");
+				date = date.replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2");
+				dateTime = Math.ceil(Date.parse(date==''?new Date():new Date(date)) / 1000);
+	    	}
+			now = Math.ceil(Date.parse(new Date()) / 1000);
+			dateTime = Math.ceil(Date.parse(date) / 1000),
+            diff = dateTime - now,
+            str = 0;
+			if(diff >= 60 * 60 * 24){
+				str = String(Math.ceil(diff / (60 * 60 * 24)));
+			}
+			return str;
     	},
     	//时间字符串转换
     	timeAgoInWords:function(date){
@@ -124,68 +143,6 @@ Ext.define('app.Util', {
             }
             return valid;
         },
-        //加载stroe
-        storeLoad: function (id,params) {
-        	params = params || {};
-            var store = Ext.isString(id)?Ext.getStore(id):id,rePage = false;
-            if (store.getCount() > 0) {
-            	store.currentPage = 1;
-            	params.start = 0;
-            	params.page = 1;
-            	rePage = true;
-            }
-            store.setParams(Ext.applyIf(params, store.getParams()));
-            store.load();
-            if(rePage){
-            	params.start = null;
-            	delete params.start;
-            	params.page = null;
-            	delete params.page;
-            	store.setParams(Ext.applyIf(params, store.getParams()));
-            }
-            
-        },
-        //加载data数据
-        dataLoad: function (view, url, params) {
-            Ext.Ajax.request({
-                url: url,
-                params: params,
-                success: function (result, request) {
-                    result = Ext.decode(result.responseText);
-                    console.log(result.result[5]);
-                    view.setData(result.result[5]);
-                }
-            });
-        },
-        //加载record数据
-        recordLoad: function (record, view, url, params, ckName) {
-            if (record.data.ckName) {
-                view.setData(record.data);
-                return;
-            }
-            Ext.Ajax.request({
-                url: url,
-                params: params,
-                success: function (result, request) {
-                    result = Ext.decode(result.responseText);
-                    record.set(result);
-                    view.setData(record.data);
-                }
-            });
-        },
-        //显示pick
-        showPick: function (xtype, params) {
-            var pick = Ext.create(xtype);
-            Ext.Viewport.add(pick);
-            pick.show(params);
-        },
-        //结束pick
-        endPick: function (xtype) {
-            var pick = Ext.Viewport.down(xtype);
-            if (pick) {
-                pick.endPick();
-            }
-        },
         //Viewport添加新项,Viewport之中始终只有一项
         ePush: function (xtype) {
             var me = Ext.Viewport,
@@ -196,20 +153,6 @@ Ext.define('app.Util', {
             view = Ext.create(xtype, {
                 itemId: xtype
             });
-            
-            if(config.user.username&&xtype=='index'){
-            	if(view.getActiveItem().isXType('home')){
-            		var dv = view.down('dataview'),
-            			st = dv.getStore();
-            		st.getProxy().setExtraParams(config.user);
-            		st.load({callback:function(){
-            			dv.el.select('.progress-ring').each(function(ring){
-                			util.loadingRing(ring);
-                		});
-            		}});
-            	}
-            }
-            
             //切换
             me.animateActiveItem(view, {
                 type: 'slide',
@@ -386,63 +329,6 @@ Ext.define('app.Util', {
                 }
 
             });
-        },
-        //上传图片
-        openFileSelector: function () {
-            /*
-            *图片选择方式
-            *PHOTOLIBRARY：从相册中选取
-            *CAMERA:调用摄像头
-            *AVEDPHOTOALBUM：左右不明
-            */
-            var source = navigator.camera.PictureSourceType.PHOTOLIBRARY;
-            /*
-            *图片返回格式
-            *DATA_URL：64位字符串
-            *FILE_URI:返回文件路径
-            *NATIVE_URI：返回系统路径 iOS：eg. assets-library://  Android： content://
-            */
-            var destinationType = navigator.camera.DestinationType.FILE_URI;
-            /*
-            *媒体类型
-            *PICTURE：图片
-            *VIDEO:视频 始终返回FILE_URI格式
-            *ALLMEDIA：支持任意文件选择 
-            */
-            var mediaType = navigator.camera.MediaType.PICTURE;
-            var options = {
-                quality: 50,
-                //图像质量[0-100]
-                destinationType: destinationType,
-                sourceType: source,
-                mediaType: mediaType
-            };
-            navigator.camera.getPicture(this.uploadFile, this.uploadBroken, options);
-        },
-        //图片选择失败 
-        uploadBroken: function (message) {
-            this.showMessage(message, true);
-        },
-        //选择图片后上传
-        uploadFile: function (fileURI) {
-            var options = new FileUploadOptions();
-            options.fileKey = "userfile";
-            options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-            options.mimeType = "multipart/form-data";
-            options.chunkedMode = false;
-            ft = new FileTransfer();
-            var uploadUrl = encodeURI(config.imgUp);
-            this.showMessage('正在上传中,请等待...');
-            ft.upload(fileURI, uploadUrl, this.uploadSuccess, this.uploadFailed, options);
-        },
-        //文件上传成功
-        uploadSuccess: function (r) {
-            var res = Ext.decode(r.responseText);
-            this.showMessage(res.message, true);
-        },
-        //文件上传失败
-        uploadFailed: function (error) {
-            this.showMessage('图片上传失败...', true);
         },
         //app初始化执行
         init: function () {

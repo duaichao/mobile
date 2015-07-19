@@ -56,7 +56,8 @@ Ext.define('app.view.user.Info', {
                 destroyPickerOnHide: true,
                 dateFormat: 'Y-m-d',
                 picker: {
-                    yearFrom: 1990
+                    yearFrom: 1960,
+                    yearTo: 1990
                 }
 	        },{
 	            xtype: 'emailfield',
@@ -68,9 +69,15 @@ Ext.define('app.view.user.Info', {
 	            name: 'telphone',
 	            label: '手机'
 	        },{
-	            xtype: 'textfield',
-	            name: 'examtime',
-	            label: '考试时间'
+	            label: '考试时间',
+            	name: 'examtime',
+	            xtype: 'datepickerfield',
+                destroyPickerOnHide: true,
+                dateFormat: 'Y-m-d',
+                picker: {
+                    yearFrom: 2015,
+                    yearTo: 2025
+                }
 	        },{
 	            xtype: 'textareafield',
 	            name: 'examadd',

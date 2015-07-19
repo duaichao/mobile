@@ -30,12 +30,14 @@ Ext.define("app.view.Login", {
 			},{
                 xtype: 'textfield',
                 name: 'username',
+                clearIcon:false,
                 value:'',
                 placeHolder: '输入用户名/手机号'
             },
             {
                 xtype: 'passwordfield',
                 name: 'password',
+                clearIcon:false,
                 placeHolder: '输入密码'
             }/*,
             {
@@ -47,17 +49,11 @@ Ext.define("app.view.Login", {
             }*/]
         },
         {
-            xtype: 'panel',
-            layout:'hbox',
-            height:35,
-            items:[{
-            	xtype:'button',
-            	action: 'login',
-	            margin:'0 5px 0 5px',
-	            text: '登录',
-	            flex:1,
-	            ui: 'action-round'
-            }]
+        	xtype:'button',
+        	action: 'login',
+            margin:'0 5px 0 5px',
+            text: '登录',
+            ui: 'action'
         },{
         	height:35,
 			xtype:'container',

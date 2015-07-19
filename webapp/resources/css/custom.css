@@ -1,4 +1,3 @@
-/*全局 */
 *{
 	font-size-adjust: none;
 	-webkit-text-size-adjust: none;
@@ -8,17 +7,34 @@
 }
 i, cite, em, var, address, dfn{font-style:normal;}
 html,body {
-	font-family:微软雅黑;
+	font-family: "Microsoft Yahei", sans-serif;
 	color:#404040;
 }
 body.x-desktop {
 	font-size:100%;
 }
-.font12{font-size:12px!important;}
-.font14{font-size:14px!important;}
-.font16{font-size:16px!important;}
-.font18{font-size:18px!important;}
-.font20{font-size:20px!important;}
+
+.font6{font-size:0.375em!important;}
+.font8{font-size:0.5em!important;}
+.font10{font-size:0.625em!important;}
+.font12{font-size:0.75em!important;}
+.font14{font-size:0.875em!important;}
+.font16{font-size:1em!important;}
+.font18{font-size:1.125em!important;}
+.font20{font-size:1.25em!important;}
+.font22{font-size:1.4em!important;}
+.font24{font-size:1.5em!important;}
+.font26{font-size:1.6em!important;}
+.font29{font-size:1.8em!important;}
+.font32{font-size:2em!important;}
+.font36{font-size:2.25em!important;}
+.font40{font-size:2.45em!important;}
+.font42{font-size:2.55em!important;}
+
+
+
+
+.fnumber{font-family: "Arial", sans-serif;}
 .clearfix:after {
   content: ".";
   font-size: 0px;
@@ -31,7 +47,7 @@ body.x-desktop {
 .x-input-el::-webkit-input-placeholder {
 	color: #ccc!important;
 	font-weight:normal;
-	font-size:14px;
+	font-size:0.875em;
 }
 .fill .x-form-field{
 	-webkit-text-fill-color: #ccc;
@@ -40,20 +56,6 @@ body.x-desktop {
 	font-weight:normal!important;
 }
 /**/
-/*提示样式*/
-.message .x-mask-inner{
-	background-color:#000000;
-	-webkit-border-radius: 30px;
-	border-radius:30px;
-}
-.message .x-mask-message{
-	color:#fff;
-	font-size:14px;
-	padding:.3em;
-	font-weight:normal;
-}
-/**/
-/*底部版权*/
 .copyright{
 	margin-top:10px;
 	color:#999;

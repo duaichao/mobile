@@ -19,7 +19,11 @@ Ext.define('app.model.user.User', {
         	type:'string'
         },{
         	name:'photo',
-        	type:'string'
+        	type:'string',
+        	convert: function(value){
+        		value = value ||'resources/images/noface.png';
+	        	return value;
+	        }
         },{
         	name:'district',
         	type:'string'
