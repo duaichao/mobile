@@ -2,14 +2,21 @@ Ext.define("app.view.Login", {
     alternateClassName: 'userLogin',
     extend: 'Ext.form.Panel',
     xtype: 'userLogin',
-    requires: ['Ext.field.Toggle', 'Ext.form.FieldSet','Ext.field.Password'],
     config: {
     	layout: 'vbox', 
         scrollable: null,
-        title: '登录',
         padding: '10',  
         cls:'userLogin',
         items: [{
+			title:'登录',
+			docked: 'top',
+			xtype: 'titlebar',
+			items:[{
+				action: 'regist',
+				text:'注册',
+				align:'right'
+			}]
+		},{
             xtype: 'fieldset',
             flex:1,
             layout: 'vbox', 
@@ -20,14 +27,6 @@ Ext.define("app.view.Login", {
             	flex:1,
 				xtype:'panel',
 				html:'<div class="login-logo"><img src="resources/images/logo.png" style="width:120px;"/></div>'
-			},{
-				xtype:'hiddenfield',
-				name:'ostype',
-				value:0
-			},{
-				xtype:'hiddenfield',
-				name:'version',
-				value:1
 			},{
                 xtype: 'textfield',
                 name: 'username',
@@ -58,13 +57,6 @@ Ext.define("app.view.Login", {
 	            text: '登录',
 	            flex:1,
 	            ui: 'action-round'
-            },{
-            	xtype:'button',
-            	width:80,
-            	action: 'regist',
-	            margin:'0 5px 0 5px',
-	            text: '注册',
-	            ui: 'confirm-round'
             }]
         },{
         	height:35,

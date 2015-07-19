@@ -105,13 +105,13 @@ Ext.define("app.view.Main", {
 
             // Enable the slide button using the defaults defined above in
             // `slideButtonDefaults`.
-            //slideButton: true,
-            slideButton: {
+            slideButton: true,
+            /*slideButton: {
                 selector: 'container[docked=top]',
                 iconMask: false,
                 iconCls:'icon-svgliebiao font18',
                 ui: 'plain'
-            },
+            },*/
             items: [{
             	maskOnOpen:true,
             	xclass : 'app.view.Index'
