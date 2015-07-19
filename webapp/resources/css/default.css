@@ -72,6 +72,84 @@
 	border:1px solid #eff1f3;
 }
 
+.clear{clear:both;height:0px;font-size:0px;}
+
+.dv-basic .dv-item{height:120px;margin-top:5px;background:#fff;position: relative;}
+.content{padding:20px 0 0 10px;position: absolute;left:85px;}
+.content h3{font-size:18px;}
+
+.dv-basic .dv-item .bars{padding-top:10px;}
+.dv-basic .dv-item .bars button{margin:0px;margin-right:5px;padding:0px;}
+.dv-basic .dv-item .bars button span.label{font-size:12px;font-weight:normal;padding:0 5px!important;}
+
+
+.ht20{line-height:20px;height:20px;}
+.ht30{line-height:30px;height:30px;}
+.ht40{line-height:40px;height:40px;}
+
+
+
+@-webkit-keyframes toggle {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes toggle {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+.progress-ring {
+  position: absolute;
+  top: 20px;
+  left: 5px;
+  height: 80px;
+  width: 80px;
+}
+.progress-ring div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 80px;
+  border: 12.25px solid transparent;
+  border-radius: 50%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.progress-ring .progress-left, .progress-ring .progress-right, .progress-ring .progress-cover {
+  clip: rect(0 40px 80px 0);
+  /* rect( [0 | <width/2> | <height> | 0] ) */
+}
+.progress-ring .progress-right {
+  opacity: 0;
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.progress-ring .progress-text {
+  border: none;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  font-size: 16.5px;
+  color: #949494;
+  line-height: 80px;
+}
+.progress-ring .progress-percent {
+  font-size: .55em;
+  font-style: italic;
+  font-family: "Microsoft Yahei", sans-serif;
+}
+
 /*V2*/
 .ex-popoup-hint {
     position: fixed;

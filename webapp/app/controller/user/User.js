@@ -2,7 +2,7 @@ Ext.define('app.controller.user.User', {
     extend: 'Ext.app.Controller',
     config: {
         views: ['Login','user.Regist','user.Home','user.Info'],
-        models: ['user.User'],
+        models: ['user.User','Course'],
         refs: {
         	home:'home',
         	userLogin: 'userLogin',
@@ -61,17 +61,28 @@ Ext.define('app.controller.user.User', {
             },
             'userInfo button[action=backHome]':{
             	tap:function(){
-            		util.ePush('home');
+            		util.ePush('index');
             	}
             }
         }
     },
     logUserIn: function (params) {
     	util.request(config.url.login,params,function(data){
-    		util.ePush('main');
+    		util.ePush('index');
         	params.token = data.result.token;
         	config.user = params;
+        	this.loadCourseList(params);
     	},this);
+    },
+    loadCourseList: function(params){
+    	var dv = this.getHome().down('dataview'),
+    		st = dv.getStore();
+    	st.getProxy().setExtraParams(params);
+    	st.load({callback:function(){
+    		dv.el.select('.progress-ring').each(function(ring){
+    			util.loadingRing(ring);
+    		});
+    	}});
     },
     loadPersonInfo:function(params){
     	util.request(config.url.getPersonalInfo,params,function(data){
