@@ -1,8 +1,8 @@
 Ext.define('app.controller.user.User', {
     extend: 'Ext.app.Controller',
     config: {
-        views: ['Login','user.Regist','user.Home','user.Info'],
-        models: ['user.User','Course'],
+        views: ['Login','user.Regist','user.Home','user.Info','app.view.exercise.Main'],
+        models: ['user.User','Course','Exercise'],
         refs: {
         	home:'home',
         	userLogin: 'userLogin',
@@ -50,12 +50,6 @@ Ext.define('app.controller.user.User', {
             		util.ePush('userLogin');
             	}
             },
-            'home button[action=toinfo]':{
-            	tap: function(){
-            		util.ePush('userInfo');
-            		this.loadPersonInfo(config.user);
-            	}
-            },
             'home button[action=hello]':{
             	tap: function(){
             		util.ePush('userInfo');
@@ -70,14 +64,17 @@ Ext.define('app.controller.user.User', {
             'home dataview':{
             	itemtap:function(dv, index, target, record, e, eOpts){
             		if(e.target.className.indexOf('kclx')!=-1){
-            			var params = Ext.applyIf(config.user,{
-            				course_id:record.get('course_id'),
-            				course_offse:0,
-            				course_num:20
+            			var params = config.user;
+            			params.course_id = record.get('course_id');
+            			
+            			dv.up('home').push({
+            				xtype:'exerciseview',
+            				defaultParams:params
             			});
-            			util.request(config.url.getExercise,params,function(data){
+            			
+            			/*util.request(config.url.getExercise,params,function(data){
             	        	console.log(data);
-            	    	},this);
+            	    	},this);*/
             		}
             	}
             },

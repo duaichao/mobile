@@ -23,16 +23,6 @@ Ext.define('app.view.user.Home', {
 		    	
 		    }
         },
-		navigationBar: {
-            items: [{
-                xtype: 'button',
-                iconCls:'icon-geren',
-                action:'toinfo',
-                align: 'right',
-                ui: 'plain'
-            }],
-            docked: 'top'
-        },
         items: [{
 			title:'首页',
 			layout: 'vbox',
@@ -49,7 +39,7 @@ Ext.define('app.view.user.Home', {
 					cls:'face',
 					xtype:'button',
 					text:[
-					      '<img src="resources/images/noface.png" style="top:-7px;left:-3px;">'
+					      '<img src="resources/images/noface.png" style="top:-10px;left:-3px;">'
 					].join('')
 				},{
 					flex:1,

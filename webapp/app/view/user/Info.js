@@ -3,9 +3,6 @@ Ext.define('app.view.user.Info', {
 	xtype:'userInfo',
     extend: 'Ext.form.Panel',
     config: {
-        defaults: {
-            labelWidth: '20%'
-        },
         items: [{
         	title:'个人信息',
 			docked: 'top',
@@ -23,7 +20,7 @@ Ext.define('app.view.user.Info', {
 			xtype: 'fieldset',
             layout: 'vbox', 
             defaults: {
-                labelWidth: '35%'
+                labelWidth: '25%'
             },
 			items:[{
 	            xtype: 'hiddenfield',

@@ -12,6 +12,7 @@ Ext.define('app.view.user.Regist', {
 			xtype: 'titlebar',
 			items:[{
 				text:'登录',
+				cls:'tool red',
 				action:'tologin',
 				align:'right'
 			}]
@@ -19,7 +20,7 @@ Ext.define('app.view.user.Regist', {
 			xtype: 'fieldset',
             layout: 'vbox', 
             defaults: {
-                labelWidth: '35%'
+                labelWidth: '25%'
             },
 			items:[{
 	            xtype: 'textfield',
@@ -41,10 +42,11 @@ Ext.define('app.view.user.Regist', {
 		},
         {
         	xtype:'button',
+        	cls:'ui green',
         	action: 'save',
+        	height:40,
             margin:'0 5px 0 5px',
-            text: '注册',
-            ui: 'confirm'
+            text: '注册'
         }]
     }
 });

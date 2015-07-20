@@ -1,6 +1,5 @@
 Ext.define('app.model.user.User', {
     extend: 'Ext.data.Model',
-    requires: ['Ext.data.JsonP'],
     config: {
         fields: [{
             name: 'id',
@@ -56,7 +55,7 @@ Ext.define('app.model.user.User', {
         }],
         proxy: {
             type: 'localstorage',
-            id: 'login-data'
+            id: 'user-data'
         }
     }
 });

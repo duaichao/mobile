@@ -87,7 +87,7 @@ body.x-desktop {
 
 a.button {
     color: #6e6e6e;
-    font: bold 12px Helvetica, Arial, sans-serif;
+    font: bold 0.75em Helvetica, Arial, sans-serif;
     text-decoration: none;
     padding: 5px 8px;
     position: relative;
@@ -121,12 +121,36 @@ a.button:active {
 
 
 
-.x-button.ui{border:1px solid transparent;-webkit-border-radius: 0px;border-radius: 0px;}
-.x-button.ui .x-button-label{color:#fff;}
-.x-button.ui .blue{
-	background: #2b91e3;
+.x-button.ui{
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
 }
-.x-button.ui.red{
+.x-button.ui .x-button-label,.x-button.tool  .x-button-label{color:#fff;}
+.x-button.tool.blue,.x-button.ui.blue{
+	border-color:#336cc6;
+	background: #4285f4;
+}
+.x-button.tool.blue:hover,.x-button.tool.blue:active,.x-button.ui.blue:hover,.x-button.ui.blue:active{background:#3b79dd;}
+.x-button.tool.red,.x-button.ui.red{
+	border-color:#932a23;
 	background: #d73d32;
 }
-.x-button.ui.red:hover,.x-button.ui.red:active{background:#D32A2D;}
+.x-button.tool.red:hover,.x-button.tool.red:active,.x-button.ui.red:hover,.x-button.ui.red:active{background:#b7352c;}
+.x-button.ui.green{
+	border-color:#3e7f2d;
+	background: #53a93f;
+}
+.x-button.ui.green:hover,.x-button.ui.green:active{background:#499336;}
+
+
+
+
+.x-button.x-button-back,.x-toolbar-dark .x-button.x-button-back:after{
+	border-color:#932a23;
+	background: #d73d32;
+	background-image:none;
+	background-color:none;
+}
+.x-button.x-button-back.x-button-pressing,.x-toolbar-dark .x-button.x-button-pressing:after{
+	background:#b7352c;
+}
