@@ -3,7 +3,6 @@ Ext.define("app.view.Login", {
     extend: 'Ext.form.Panel',
     xtype: 'userLogin',
     config: {
-    	layout: 'vbox', 
         scrollable: null,
         padding: '10',  
         cls:'userLogin',
@@ -18,13 +17,7 @@ Ext.define("app.view.Login", {
 			}]
 		},{
             xtype: 'fieldset',
-            flex:1,
-            layout: 'vbox', 
-            defaults: {
-                labelWidth: '35%'
-            },
             items: [{
-            	flex:1,
 				xtype:'panel',
 				html:'<div class="login-logo"><img src="resources/images/logo.png" style="width:120px;"/></div>'
 			},{
@@ -50,10 +43,11 @@ Ext.define("app.view.Login", {
         },
         {
         	xtype:'button',
+        	cls:'ui red',
         	action: 'login',
+        	height:40,
             margin:'0 5px 0 5px',
-            text: '登录',
-            ui: 'action'
+            text: '登录'
         },{
         	height:35,
 			xtype:'container',

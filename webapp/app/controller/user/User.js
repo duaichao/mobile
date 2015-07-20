@@ -67,6 +67,20 @@ Ext.define('app.controller.user.User', {
             		this.openFileSelector();
             	}
             },
+            'home dataview':{
+            	itemtap:function(dv, index, target, record, e, eOpts){
+            		if(e.target.className.indexOf('kclx')!=-1){
+            			var params = Ext.applyIf(config.user,{
+            				course_id:record.get('course_id'),
+            				course_offse:0,
+            				course_num:20
+            			});
+            			util.request(config.url.getExercise,params,function(data){
+            	        	console.log(data);
+            	    	},this);
+            		}
+            	}
+            },
             'userInfo button[action=saveInfo]':{
             	tap: 'saveInfo'
             },
@@ -146,37 +160,38 @@ Ext.define('app.controller.user.User', {
     },
     //图片选择失败 
     uploadBroken: function (message) {
-        util.err(message);
+        util.err('图片选取失败');
     },
     //选择图片后上传
     uploadFile: function (fileURI) {
-        var options = new FileUploadOptions();
-        options.fileKey = "userfile";
-        options.fileName = 'photo';//fileURI.substr(fileURI.lastIndexOf('/') + 1);
+        var me = this,
+        	options = new FileUploadOptions();
+        options.fileKey = "photo";
+        options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
         options.mimeType = "multipart/form-data";
         options.chunkedMode = false;
         options.params = config.user;
         ft = new FileTransfer();
         var uploadUrl = encodeURI(config.url.setPhoto);
-        util.loader('正在上传中,请等待...');
-        ft.upload(fileURI, uploadUrl, this.uploadSuccess, this.uploadFailed, options);
-    },
-    //文件上传成功
-    uploadSuccess: function (r) {
-    	util.hideMessage();
-        var res = Ext.decode(r.responseText);
-        if(res.state==1){
-        	util.suc(res.info);
-        	config.user.photo = res.result.icon;
-        	this.getHome().down('button[action=face]').setText('<img src="'+config.user.photo+'">');
-        }else{
-        	util.err(res.info);
-        }
-        
-    },
-    //文件上传失败
-    uploadFailed: function (error) {
-    	util.hideMessage();
-        util.err('图片上传失败');
+        util.loader('开始上传...');
+        ft.onprogress = function (progressEvt) {//显示上传进度条
+            if (progressEvt.lengthComputable) {
+            	util.loader('正在上传{0}%',Math.round(( progressEvt.loaded / progressEvt.total ) * 100));
+            }
+        };
+        ft.upload(fileURI, uploadUrl, function(r){
+        	util.hideMessage();
+            var res = Ext.decode(r.response);
+            if(res.state==1){
+            	util.suc(res.info);
+            	config.user.photo = res.result.icon;
+            	this.getHome().down('button[action=face]').setText('<img src="'+config.user.photo+'">');
+            }else{
+            	util.err(res.info);
+            }
+        }, function(e){
+        	util.hideMessage();
+            util.err('图片上传失败');
+        }, options);
     }
 });

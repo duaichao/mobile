@@ -50,18 +50,7 @@
 .tab .x-button-icon{color:#bbb;}
 .tab .x-tabbar-dark.x-docked-bottom .x-tab-active .x-button-label,
 .tab .x-tabbar-dark.x-docked-bottom .x-tab-active .x-button-icon:before{color:#d73d32;}
-.blue{
-	color:#4285f4;
-}
-.yellow{
-	color:#f4b400;
-}
-.red{
-	color:#d73d32;
-}
-.green{
-	color:#53a93f;
-}
+
 .tab .x-tab.x-tab-active{
 	background-color:#ffffff;
 }
@@ -83,7 +72,7 @@
 	-webkit-border-radius: 80px;
 	overflow:hidden;
 }
-.x-button.face img{position:relative;top:-7px;left:-3px;width:64px;height:64px;}
+.x-button.face img{position:relative;top:0px;left:0px;width:64px;height:64px;z-index:-1;}
 
 
 .x-button.hello{
@@ -95,33 +84,56 @@
 	overflow:hidden;
 	text-align:left;
 }
-.x-button.hello:after{
-	font-family:"iconfont" !important;
-	content: "\e60b";
+
+.x-button.hello i.iconfont{
 	font-size:1.125em;
-	position:relative;
+	position :absolute;
 	color:#bbb;
-	background-image:none!important;background-color:none!important;
+	right:15px;
+	top:45px;
 }
 
 .x-button.hello h3,.x-button.hello .time{text-align:left;font-weight:normal;}
 .x-button.hello .time{color:#bbb;}
 
 
-.dv-basic .dv-item{height:120px;margin-top:5px;background:#fff;position: relative;}
-.content{padding:20px 0 0 10px;position: absolute;left:85px;}
-.content h3{font-size:1.125em;color:#fff;}
-.content .detail{color:#fff;}
 
-.dv-basic .dv-item .bars{padding-top:10px;}
-.dv-basic .dv-item .bars button{margin:0px;margin-right:5px;padding:0px;height: 24px !important;line-height:24px;}
-.dv-basic .dv-item .bars button span.label{font-size:0.75em;font-weight:normal;padding:0 5px!important;  line-height: 18px !important;}
 
+
+.dv-basic  .x-dataview-item{height:120px;margin-top:5px;background:#fff;position: relative;}
+.dv-basic  .x-dataview-item .progress-ring {
+  display: inline-block;
+  width: 95px;
+  height: 100%;
+  background-repeat: no-repeat;
+  float: left;
+}
+.dv-basic  .x-dataview-item .content {
+  vertical-align: top;
+  margin-left: 95px;
+  padding: 25px 0px 0px 10px;
+}
+.dv-basic  .x-dataview-item .content .name {
+  font-size: 1.125em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color:#fff;
+}
+.dv-basic  .x-dataview-item .content .affiliation {
+  color: #9d9d9d;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color:#fff;
+}
+
+.dv-basic  .x-dataview-item .content .buttons{padding-top:5px;}
 
 .ht20{line-height:20px;height:20px;}
 .ht30{line-height:30px;height:30px;}
 .ht40{line-height:40px;height:40px;}
-
 
 
 @-webkit-keyframes toggle {
@@ -142,17 +154,10 @@
     opacity: 1;
   }
 }
-.progress-ring {
-  position: absolute;
-  top: 20px;
-  left: 5px;
-  height: 80px;
-  width: 80px;
-}
 .progress-ring div {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 20px;
+  left: 12px;
   height: 80px;
   width: 80px;
   border: 13px solid transparent;

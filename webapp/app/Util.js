@@ -51,7 +51,7 @@ Ext.define('app.Util', {
             });
 
             if (precent > 50) {
-                var animation = 'toggle ' + (duration * 50 / precent) + 'ms'
+                var animation = 'toggle ' + (duration * 50 / precent) + 'ms';
                 target.down('.progress-right').setStyle({
                     'opacity': 1,
                     'animation': animation,
@@ -103,7 +103,7 @@ Ext.define('app.Util', {
 		        } else if (diff < 86400) {
 		            str = String(Math.ceil(diff / (3600)));
 		            return str + (str == "1" ? '小时' : '小时') + '前';
-		        } else if (diff < 60 * 60 * 24 * 30) {
+		        } else if (diff < 60 * 60 * 24) {
 		            str = String(Math.ceil(diff / (60 * 60 * 24)));
 		            return str + (str == "1" ? '天' : '天') + '前';
 		        } else {
@@ -170,9 +170,12 @@ Ext.define('app.Util', {
                 }
             });
         },
-        loader:function(format){
-        	format = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 0));
+        loader:function(format,progress){
+        	format = Ext.String.format(format, progress);
         	if(Ext.get('notification')){
+        		if(progress){
+        			Ext.get('notification').down('span').setHtml(format);
+        		}
         		return;
         	}
     		var dh = Ext.DomHelper,

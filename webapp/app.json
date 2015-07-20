@@ -88,11 +88,11 @@
 	{
 	    "path": "resources/css/default.css",
 	    "update": "delta"
-	},
+	}/*,
 	{
 	    "path": "resources/css/plusbuttons.css",
 	    "update": "delta"
-	}/*,
+	},
 	{
 	    "path": "resources/css/animate.min.css",
 	    "update": "delta"

@@ -8,6 +8,11 @@ Ext.define('app.controller.Main', {
         refs: {
         },
         control: {
+        	'guide button[action=tologin]':{
+        		tap:function(){
+        			util.ePush('userLogin');
+        		}
+        	}
         }
     },
     launch: function () {
@@ -15,15 +20,18 @@ Ext.define('app.controller.Main', {
         //phonepga
         document.addEventListener('deviceready', function(){me.onDeviceReady.call(me);}, false);
         //检测是否第一次启动程序
-        Ext.ModelMgr.getModel('app.model.Config').load(1, {
+        Ext.ModelMgr.getModel('app.model.Local').load(1, {
             scope: this,
             success: function (config) {
             	util.ePush('userLogin');
-            	//this.redirectTo('index');
             },
             failure: function (error) {
-            	util.ePush('userLogin');
-                //this.redirectTo('welcome');
+            	//存储配置信息
+                var local = Ext.create('app.model.Local', {
+                    id: 1
+                });
+                local.save();
+                util.ePush('guide');
             }
         });
     },

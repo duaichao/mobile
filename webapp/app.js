@@ -27,6 +27,7 @@ Ext.application({
 		'user.User'
 	],
 	views:[
+	    'Guide',
 		'Main',
 		'Index'
 	],
@@ -36,7 +37,7 @@ Ext.application({
 		'app.Util'
 	],
 	models:[
-		'Config'
+		'Local'
 	],
     launch: function() {
     	Ext.fly('appLoadingIndicator').destroy();

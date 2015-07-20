@@ -13,10 +13,6 @@ Ext.define('app.view.user.Regist', {
 			items:[{
 				text:'登录',
 				action:'tologin',
-				align:'left'
-			},{
-				text:'保存',
-				action:'save',
 				align:'right'
 			}]
 		},{
@@ -42,6 +38,13 @@ Ext.define('app.view.user.Regist', {
 	            placeHolder: 'example@email.com',
 	            name: 'email'
 	        }]
-		}]
+		},
+        {
+        	xtype:'button',
+        	action: 'save',
+            margin:'0 5px 0 5px',
+            text: '注册',
+            ui: 'confirm'
+        }]
     }
 });

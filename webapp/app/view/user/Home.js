@@ -49,7 +49,7 @@ Ext.define('app.view.user.Home', {
 					cls:'face',
 					xtype:'button',
 					text:[
-					      '<img src="resources/images/noface.png">'
+					      '<img src="resources/images/noface.png" style="top:-7px;left:-3px;">'
 					].join('')
 				},{
 					flex:1,
@@ -58,7 +58,8 @@ Ext.define('app.view.user.Home', {
 					cls:'hello',
 					text:[
 					      '<h3 class="font16">欢迎你，<span class="font20">{0}</span></h3>',
-					      '<div class="ht30 time font14 ">距离考试还有<span class="font20 fnumber blue"> {1} </span>天</div>'
+					      '<div class="ht30 time font14 ">距离考试还有<span class="font20 fnumber blue"> {1} </span>天</div>',
+					      '<i class="iconfont">&#xe60b;</i>'
 					].join('')
 				}]
 			},{
@@ -66,19 +67,15 @@ Ext.define('app.view.user.Home', {
 	            xtype: 'dataview',
 	            cls: 'dv-basic',
 	            itemTpl: [
-	                  '<div class="dv-item">',
 	                  '<div class="progress-ring" data-precent="{passing_percent}"></div>',
 	                  '<div class="content">',
-	                  '<h3>{course_name}</h3>',
-	                  '<div class="ht20 font12 detail">已完成：{process_num}/{total_num}题    平均速度：{average_speed}秒</div>',
-	                  
-	                  '<div class="bars">',
-	                  '<button class="action"><span class="label">顺序练习</span></button>',
-	                  '<button class="action"><span class="label">自定义练习</span></button>',
-	                  '<button class="action"><span class="label">模拟考试</span></button>',
-	                  '</div>',
-	                  
-	                  '</div>',
+	                  		'<div class="name">{course_name}</div>',
+	                  		'<div class="affiliation">已完成：{process_num}/{total_num}题    平均速度：{average_speed}秒</div>',
+		                    '<div class="buttons">',
+			                    '<a href="javascript:;" class="button kclx">练习题</a>',
+			                    '<a href="javascript:;" class="button">自定义练习</a>',
+			                    '<a href="javascript:;" class="button">模拟考试</a>',
+		                    '</div>',
 	                  '</div>'
 	            ].join(''),
 	            loadingText:false,
