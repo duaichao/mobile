@@ -3,6 +3,7 @@ Ext.define("app.view.Index", {
     alternateClassName: 'index',
     xtype:'index',
     config: {
+    	autoDestroy: false,
     	tabBarPosition: 'bottom',
         cls: 'tab',
         items: [

@@ -100,7 +100,11 @@
 
 
 
-.dv-basic  .x-dataview-item{height:120px;margin-top:5px;background:#fff;position: relative;}
+.dv-basic  .x-dataview-item{height:120px;margin-top:5px;background:#fff;}
+.dv-basic  .x-dataview-item .warp{width:100%;height:100%;position: relative;}
+.dv-basic  .x-dataview-item .warp.bg0{background:rgba(41,128,185,1);}
+.dv-basic  .x-dataview-item .warp.bg1{background:rgba(26,188,156,1);}
+.dv-basic  .x-dataview-item .warp.bg2{background:rgba(211,84,0,1);}
 .dv-basic  .x-dataview-item .progress-ring {
   display: inline-block;
   width: 95px;
@@ -166,6 +170,12 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+
+.progress-ring  .progress-track,.progress-ring  .progress-cover{border-color:#fff;}
+.progress-ring  .progress-left,.progress-ring  .progress-right{border-color:#6ec84e;}
+
+
 .progress-ring .progress-left, .progress-ring .progress-right, .progress-ring .progress-cover {
   clip: rect(0 40px 80px 0);
   /* rect( [0 | <width/2> | <height> | 0] ) */
@@ -253,8 +263,8 @@ html:root .exph-suc {
     width: 100px;
     margin-left: -50px;
     background-position: 0 0;
-    -webkit-animation: suc 0.5s ease;
-    -webkit-animation-fill-mode: both
+   /* -webkit-animation: suc 0.5s ease;
+    -webkit-animation-fill-mode: both*/
 }
 
 .exph-war {
@@ -271,8 +281,8 @@ html:root .exph-war {
     width: 16px;
     margin-left: -8px;
     background-position: -100px 0;
-    -webkit-animation: war 1.2s ease 0.3s;
-    -webkit-animation-fill-mode: both
+   /* -webkit-animation: war 1.2s ease 0.3s;
+    -webkit-animation-fill-mode: both*/
 }
 
 .exph-err {
@@ -289,8 +299,8 @@ html:root .exph-err {
     width: 80px;
     margin-left: -40px;
     background-position: -116px 0;
-    -webkit-animation: err 1.2s ease 0.3s;
-    -webkit-animation-fill-mode: both
+    /*-webkit-animation: err 1.2s ease 0.3s;
+    -webkit-animation-fill-mode: both*/
 }
 
 .exph-loader {
@@ -308,26 +318,10 @@ html:root .exph-loader {
     width: 66px;
     height: 66px;
     margin-left: -33px;
-    /*background: url(../images/ext_hint_loader.gif) no-repeat 0 0;
-    -webkit-transform: scale(0);*/
-    
-	  border-radius: 66px;
-	  background-color: #fff;
-	  -webkit-animation: loader 1.0s infinite ease-in-out;
-	  animation: loader 1.0s infinite ease-in-out;
-}
-
-.exph-loader:before {
-    /*content: "";
-    position: absolute;
-    top: 42px;
-    left: 50%;
-    width: 80px;
-    height: 80px;
-    margin-left: -40px;
-    background-image: url(../images/ext_hint_loader.png?v=3);
-    opacity: 0;
-    -webkit-animation: loader 1.5s linear infinite*/
+	border-radius: 66px;
+	background-color: #fff;
+	-webkit-animation: loader 1.0s infinite ease-in-out;
+	animation: loader 1.0s infinite ease-in-out;
 }
 
 @-webkit-keyframes suc {

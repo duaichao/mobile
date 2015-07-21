@@ -13,6 +13,7 @@ Ext.define('app.view.user.Info', {
 				text:'Back'
 			},{
 				action: 'saveInfo',
+				cls:'tool blue',
 				text:'保存',
 				align:'right'
 			}]
