@@ -12,7 +12,7 @@ Ext.define("app.view.Login", {
 			xtype: 'titlebar',
 			items:[{
 				action: 'regist',
-				cls:'tool red',
+				cls:'tool blue',
 				text:'注册',
 				align:'right'
 			}]

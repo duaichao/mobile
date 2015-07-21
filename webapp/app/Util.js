@@ -26,17 +26,7 @@ Ext.define('app.Util', {
             if (!duration)
                 duration = defaultOpt.duration;
             
-            Ext.DomHelper.append(target,'<div class="progress-track"></div><div class="progress-left"></div><div class="progress-right"></div><div class="progress-cover"></div><div class="progress-text"><span class="progress-num">' + oldPrecent +'</span><span class="progress-percent">%</span></div>');
-            
             var x = target.down('.progress-cover').getHeight(); // 触发 Layout
-
-            target.select('.progress-track, .progress-cover').each(function(el){
-            	el.setStyle('border-color', trackColor);
-            });
-            target.select('.progress-left, .progress-right').each(function(el){
-            	el.setStyle('border-color', progressColor);
-            });
-
             target.down('.progress-left').setStyle({
                 'transform': 'rotate(' + precent * 3.6 + 'deg)',
                 '-o-transform': 'rotate(' + precent * 3.6 + 'deg)',
@@ -63,6 +53,8 @@ Ext.define('app.Util', {
                     'animation-timing-function': 'step-start'
                 });
             }
+    	},
+    	dragRing :function(canvas){
     	},
     	lastDays :function(date){
     		var now,dateTime;
@@ -144,19 +136,19 @@ Ext.define('app.Util', {
             return valid;
         },
         //Viewport添加新项,Viewport之中始终只有一项
-        ePush: function (xtype) {
+        ePush: function (xtype,params,turn) {
             var me = Ext.Viewport,
             view = me.getActiveItem();
             if (view && view.getItemId() == xtype) {
                 return;
             }
-            view = Ext.create(xtype, {
+            view = Ext.create(xtype, params||{
                 itemId: xtype
             });
             //切换
             me.animateActiveItem(view, {
                 type: 'slide',
-                direction: 'left'
+                direction: turn||'left'
             });
         },
         //监控Viewport界面切换,切换时销毁旧项
@@ -231,7 +223,7 @@ Ext.define('app.Util', {
     		});
     		setTimeout(function(){
     			util.hideMessage();
-    		},3000);
+    		},1500);
         },
         hideMessage:function(){
         	Ext.Viewport.setMasked(false);
@@ -254,30 +246,6 @@ Ext.define('app.Util', {
             Ext.Ajax.on('requestexception',function (connection, options) {
                 util.hideMessage();
                 util.err('加载失败，请稍后再试');
-            });
-        },
-        //重写list
-        overrideList: function () {
-            //重写分页插件
-            Ext.define("dac.app.plugin.ListPaging", {
-                override: "Ext.plugin.ListPaging",
-                config: {
-                    //自动加载
-                    autoPaging: true,
-                    loadMoreText:'更多',
-	        		noMoreRecordsText:'没有更多数据了'
-                }
-            });
-            //重写List
-            Ext.define("dac.app.List", {
-                override: "Ext.List",
-                config: {
-                    //取消选择效果
-                    //selectedCls: '',
-                    //禁用加载遮罩，防止跳转时页面卡顿，使用统一的遮罩效果
-                    loadingText: false,
-                    emptyText: '<p class="no-searches">没有数据，请刷新重试</p>'
-                }
             });
         },
         //重写Pick相关
@@ -336,7 +304,6 @@ Ext.define('app.Util', {
         //app初始化执行
         init: function () {
             this.eActiveitemchange();
-            this.overrideList();
             this.overrideAjax();
             this.overridePick();
         }

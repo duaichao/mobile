@@ -7,7 +7,7 @@ Ext.define('app.view.exercise.List', {
 		'Ext.plugin.ListPaging'
 	],
     config: {
-        plugins: [{ 
+        plugins: [/*{ 
         	xclass: 'Ext.plugin.PullRefresh',
         	pullText:'下拉可以手动刷新...',
         	releaseText:'可以松手了，等待刷新',
@@ -15,13 +15,22 @@ Ext.define('app.view.exercise.List', {
         	loadedText:'加载完成',
         	lastUpdatedText:'更新于:',
         	lastUpdatedDateFormat:'Y-m-d h:m:s'
-        }, {
+        },{
             xclass: 'Ext.plugin.ListPaging',
-            autoPaging: true
-        }],
-        loadingText:false,
+            autoPaging: false,
+            loadMoreText:'下一页',
+    		noMoreRecordsText:'没有更多数据了',
+            listeners:{
+            	loadmorecmpadded:function(lp,list){
+            		console.log(list);
+            	}
+            }
+        }*/],
+        loadingText: false,
+        emptyText: '<p class="no-searches">没有更多数据了</p>',
         store: Ext.create("Ext.data.Store", {
         	pageSize: 10,
+        	clearOnPageLoad:true,
             model: "app.model.Exercise",
             proxy: {
                 type: "ajax",

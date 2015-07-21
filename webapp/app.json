@@ -45,11 +45,11 @@
 		"path": "cordova.plugin.js",
 	    "update": "delta"
 	},*/{
-	    "path": "touch/sencha-touch.js",
+	    "path": "touch/sencha-touch-all.js",
 	    "x-bootstrap": true
-	},{
+	}/*,{
 		"path":"bootstrap.js"
-	}
+	}*/
 	,
 	{
 	    "path": "app.js",

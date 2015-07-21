@@ -6,7 +6,7 @@ Ext.define('app.model.Exercise', {
             type: 'string'
         },{
         	name:'id',
-        	type:'string'
+        	type:'int'
         },{
         	name:'type',
         	type:'int'

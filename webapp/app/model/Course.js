@@ -1,6 +1,7 @@
 Ext.define('app.model.Course', {
     extend: 'Ext.data.Model',
     config: {
+    	identifier: 'sequential',
         fields: [{
             name: 'course_id',
             type: 'string'

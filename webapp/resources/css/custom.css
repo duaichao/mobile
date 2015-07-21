@@ -136,20 +136,25 @@ a.button:active {
 	background: #d73d32;
 }
 .x-button.tool.red:hover,.x-button.tool.red:active,.x-button.ui.red:hover,.x-button.ui.red:active{background:#b7352c;}
-.x-button.ui.green{
+.x-button.tool.green,.x-button.ui.green{
 	border-color:#3e7f2d;
 	background: #53a93f;
 }
-.x-button.ui.green:hover,.x-button.ui.green:active{background:#499336;}
+.x-button.tool.green:hover,.x-button.tool.green:active,.x-button.ui.green:hover,.x-button.ui.green:active{background:#499336;}
+.x-button.tool.gray,.x-button.ui.gray{
+	border-color:#d1d1d1;
+	background: #f3f3f3;
+}
+.x-button.tool.gray:hover,.x-button.tool.gray:active,.x-button.ui.gray:hover,.x-button.ui.gray:active{background:#e1e1e1;}
+.x-button.ui.gray .x-button-label,.x-button.tool.gray  .x-button-label{color:#6e6e6e;}
 
-
-
-
+.x-toolbar-dark .x-button.x-button-back:before{
+	background: #932a23;
+}
 .x-button.x-button-back,.x-toolbar-dark .x-button.x-button-back:after{
 	border-color:#932a23;
-	background: #d73d32;
+	background-color: #d73d32;
 	background-image:none;
-	background-color:none;
 }
 .x-button.x-button-back.x-button-pressing,.x-toolbar-dark .x-button.x-button-pressing:after{
 	background:#b7352c;

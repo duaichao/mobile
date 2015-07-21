@@ -1,13 +1,14 @@
 Ext.define('app.controller.user.User', {
     extend: 'Ext.app.Controller',
     config: {
-        views: ['Login','user.Regist','user.Home','user.Info','app.view.exercise.Main'],
+        views: ['Login','user.Regist','user.Home','user.Info','exercise.Main'],
         models: ['user.User','Course','Exercise'],
         refs: {
         	home:'home',
         	userLogin: 'userLogin',
         	userRegist: 'userRegist',
-        	userInfo:'userInfo'
+        	userInfo:'userInfo',
+        	exerciseView:'exerciseview'
         },
         control: {
             'userLogin button[action=login]': {
@@ -47,7 +48,7 @@ Ext.define('app.controller.user.User', {
             },
             'userRegist button[action=tologin]':{
             	tap: function(){
-            		util.ePush('userLogin');
+            		util.ePush('userLogin',null,'right');
             	}
             },
             'home button[action=hello]':{
@@ -66,15 +67,9 @@ Ext.define('app.controller.user.User', {
             		if(e.target.className.indexOf('kclx')!=-1){
             			var params = config.user;
             			params.course_id = record.get('course_id');
-            			
-            			dv.up('home').push({
-            				xtype:'exerciseview',
+            			util.ePush('exerciseview',{
             				defaultParams:params
             			});
-            			
-            			/*util.request(config.url.getExercise,params,function(data){
-            	        	console.log(data);
-            	    	},this);*/
             		}
             	}
             },
@@ -83,7 +78,12 @@ Ext.define('app.controller.user.User', {
             },
             'userInfo button[action=backHome]':{
             	tap:function(){
-            		util.ePush('index');
+            		util.ePush('index',null,'right');
+            	}
+            },
+            'exerciseview button[action=backhome]':{
+            	tap:function(){
+            		util.ePush('index',null,'right');
             	}
             }
         }

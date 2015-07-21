@@ -96,7 +96,9 @@ Ext.define('app.controller.Main', {
     onMenuButton :function(){
     	var items = [{
 	        text: '退出程序',
-	        ui: 'decline-round',
+	        height:40,
+	        ui: 'decline',
+	        cls:'ui red',
 	        scope: this,
 	        handler: function() {
 	        	this.actions.hide();
@@ -105,8 +107,9 @@ Ext.define('app.controller.Main', {
 	    },
 	    {
 	        xtype: 'button',
-	        ui: 'round',
 	        text: '取消',
+	        cls:'ui gray',
+	        height:40,
 	        scope: this,
 	        handler: function() {
 	            this.actions.hide();

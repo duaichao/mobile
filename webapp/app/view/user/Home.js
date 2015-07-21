@@ -12,9 +12,8 @@ Ext.define('app.view.user.Home', {
 		    		st = dv.getStore();
 		    	st.getProxy().setExtraParams(config.user);
 		    	st.load({callback:function(){
-		    		dv.el.select('.progress-ring').each(function(ring,c,i){
+		    		dv.element.select('.progress-ring').each(function(ring,c,i){
 		    			util.loadingRing(ring);
-		    			ring.parent().setStyle('background',config.color[i]||'#53a93f');
 		    		});
 		    	}});
 		    	var btn = this.down('button[action=hello]'),
@@ -57,7 +56,10 @@ Ext.define('app.view.user.Home', {
 	            xtype: 'dataview',
 	            cls: 'dv-basic',
 	            itemTpl: [
-	                  '<div class="progress-ring" data-precent="{passing_percent}"></div>',
+	                  '<div class="warp bg{xindex}"">',
+	                  '<div class="progress-ring" data-precent="{passing_percent}">',
+	                  '<div class="progress-track"></div><div class="progress-left"></div><div class="progress-right"></div><div class="progress-cover"></div><div class="progress-text"><span class="progress-num">{passing_percent}</span><span class="progress-percent">%</span></div>',
+	                  '</div>',
 	                  '<div class="content">',
 	                  		'<div class="name">{course_name}</div>',
 	                  		'<div class="affiliation">已完成：{process_num}/{total_num}题    平均速度：{average_speed}秒</div>',
@@ -66,6 +68,7 @@ Ext.define('app.view.user.Home', {
 			                    '<a href="javascript:;" class="button">自定义练习</a>',
 			                    '<a href="javascript:;" class="button">模拟考试</a>',
 		                    '</div>',
+	                  '</div>',
 	                  '</div>'
 	            ].join(''),
 	            loadingText:false,
