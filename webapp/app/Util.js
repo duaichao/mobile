@@ -1,10 +1,34 @@
 Ext.define('app.Util', {
     alternateClassName: 'util',
     statics: {
+    	drawScore : function(target) {
+    		var oldPrecent = target.getAttribute('data-precent');
+            var a = parseInt(oldPrecent, 10); // 百分比
+            var b = 360 * parseInt(a) / 100,
+    	    c = [{
+    	        value: b,
+    	        color: "#53a93f"
+    	    },
+    	    {
+    	        value: 360 - b,
+    	        color: "#ffffff"
+    	    }],
+    	    d = {
+    	        percentageInnerCutout: 75,
+    	        segmentShowStroke: !1,
+    	        animationEasing: "easeOutQuart"
+    	    };
+    	    function e() {
+    	        var b = target.down('canvas').dom.getContext("2d");
+    	        new Chart(b).Doughnut(c, d);
+    	        target.down(".score").setHtml(a+'<span>%</span>');
+    	    }
+    	    e();
+    	},
     	loadingRing :function(target){
     		var defaultOpt = {
 	            trackColor: '#fff',
-	            progressColor: '#6ec84e',
+	            progressColor: '#53a93f',
 	            precent: 75,
 	            duration: 1500
 	        }; // 默认选项
@@ -303,7 +327,7 @@ Ext.define('app.Util', {
         },
         //app初始化执行
         init: function () {
-            this.eActiveitemchange();
+            //this.eActiveitemchange();
             this.overrideAjax();
             this.overridePick();
         }
