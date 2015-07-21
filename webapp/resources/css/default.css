@@ -105,6 +105,9 @@
 .dv-basic  .x-dataview-item .warp.bg0{background:rgba(41,128,185,1);}
 .dv-basic  .x-dataview-item .warp.bg1{background:rgba(26,188,156,1);}
 .dv-basic  .x-dataview-item .warp.bg2{background:rgba(211,84,0,1);}
+
+
+
 .dv-basic  .x-dataview-item .progress-ring {
   display: inline-block;
   width: 95px;
@@ -112,6 +115,21 @@
   background-repeat: no-repeat;
   float: left;
 }
+.dv-basic  .x-dataview-item .progress-ring canvas{
+	position: absolute;
+	top: 15px;
+	left: 3px;
+}
+.dv-basic  .x-dataview-item .progress-ring .score{
+	height:100%;
+	line-height:120px;
+	font-family: "Arial", sans-serif;
+	text-align: center;
+	font-size: 24px;
+	color: #fff;
+}
+.dv-basic  .x-dataview-item .progress-ring .score span{font-size:14px;}
+
 .dv-basic  .x-dataview-item .content {
   vertical-align: top;
   margin-left: 95px;
@@ -135,11 +153,7 @@
 
 .dv-basic  .x-dataview-item .content .buttons{padding-top:5px;}
 
-.ht20{line-height:20px;height:20px;}
-.ht30{line-height:30px;height:30px;}
-.ht40{line-height:40px;height:40px;}
-
-
+/*
 @-webkit-keyframes toggle {
   0% {
     opacity: 0;
@@ -157,7 +171,7 @@
   100% {
     opacity: 1;
   }
-}
+}*/
 .progress-ring div {
   position: absolute;
   top: 20px;
@@ -178,7 +192,6 @@
 
 .progress-ring .progress-left, .progress-ring .progress-right, .progress-ring .progress-cover {
   clip: rect(0 40px 80px 0);
-  /* rect( [0 | <width/2> | <height> | 0] ) */
 }
 .progress-ring .progress-right {
   opacity: 0;
@@ -252,7 +265,6 @@
 .exph-suc {
     background-image: url(about:blank);
     background-color: rgba(47,183,70,0.95);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F22FB746', endColorstr='#F22FB746')
 }
 
 html:root .exph-suc {
@@ -270,7 +282,6 @@ html:root .exph-suc {
 .exph-war {
     background-image: url(about:blank);
     background-color: rgba(248,149,0,0.95);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2F89500', endColorstr='#F2F89500')
 }
 
 html:root .exph-war {
@@ -288,7 +299,6 @@ html:root .exph-war {
 .exph-err {
     background-image: url(about:blank);
     background-color: rgba(181,12,3,0.95);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2B50C03', endColorstr='#F2B50C03')
 }
 
 html:root .exph-err {
@@ -304,9 +314,8 @@ html:root .exph-err {
 }
 
 .exph-loader {
-    background-image: url(about:blank);
+    background-image: none;
     background-color: rgba(102,102,102,0.95);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2666666', endColorstr='#F2666666')
 }
 
 html:root .exph-loader {
@@ -322,6 +331,7 @@ html:root .exph-loader {
 	background-color: #fff;
 	-webkit-animation: loader 1.0s infinite ease-in-out;
 	animation: loader 1.0s infinite ease-in-out;
+	background-image:none;
 }
 
 @-webkit-keyframes suc {
