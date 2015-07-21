@@ -14,6 +14,7 @@ Ext.define('app.view.user.Home', {
 		    	st.load({callback:function(){
 		    		dv.element.select('.progress-ring').each(function(ring,c,i){
 		    			util.loadingRing(ring);
+		    			//util.drawScore(ring);
 		    		});
 		    	}});
 		    	var btn = this.down('button[action=hello]'),
@@ -57,6 +58,10 @@ Ext.define('app.view.user.Home', {
 	            cls: 'dv-basic',
 	            itemTpl: [
 	                  '<div class="warp bg{xindex}"">',
+	                  /*'<div class="progress-ring" data-precent="{passing_percent}">',
+	          			'<canvas height="90" width="90" style="width:90px; height: 90px;" aa="{xindex}"></canvas>',
+	         				'<div class="score">{passing_percent}%</div>',
+	          		  '</div>',	*/
 	                  '<div class="progress-ring" data-precent="{passing_percent}">',
 	                  '<div class="progress-track"></div><div class="progress-left"></div><div class="progress-right"></div><div class="progress-cover"></div><div class="progress-text"><span class="progress-num">{passing_percent}</span><span class="progress-percent">%</span></div>',
 	                  '</div>',
