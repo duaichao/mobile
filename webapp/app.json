@@ -51,7 +51,11 @@
 	    "path": "app.js",
 	    "bundle": true,
 	    "update": "delta"
-	}],
+	}/*,{
+	    "path": "Chart.min.js",
+	    "bundle": true,
+	    "update": "delta"
+	}*/],
 
     /**
      * List of all CSS assets in the right inclusion order.

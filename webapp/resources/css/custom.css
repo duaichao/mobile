@@ -1,9 +1,7 @@
 *{
-	font-size-adjust: none;
-	-webkit-text-size-adjust: none;
-	-moz-font-size-adjust: none;
-	-ms-font-size-adjust: none;
-	-o-font-size-adjust: none;
+	-webkit-text-size-adjust:100%;
+	-webkit-user-select: none;
+}
 }
 i, cite, em, var, address, dfn{font-style:normal;}
 html,body {

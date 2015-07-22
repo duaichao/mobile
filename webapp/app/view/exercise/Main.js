@@ -4,7 +4,7 @@ Ext.define('app.view.exercise.Main', {
     requires: ['app.view.exercise.List'],
     xtype: 'exerciseview',
     config: {
-    	autoDestroy: false,
+    	autoDestroy: true,
     	defaultParams:{},
         layout: 'vbox',
         items: [{

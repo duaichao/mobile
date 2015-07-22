@@ -152,26 +152,6 @@
 }
 
 .dv-basic  .x-dataview-item .content .buttons{padding-top:5px;}
-
-/*
-@-webkit-keyframes toggle {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes toggle {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}*/
 .progress-ring div {
   position: absolute;
   top: 20px;
@@ -329,6 +309,8 @@ html:root .exph-loader {
     margin-left: -33px;
 	border-radius: 66px;
 	background-color: #fff;
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility:hidden;
 	-webkit-animation: loader 1.0s infinite ease-in-out;
 	animation: loader 1.0s infinite ease-in-out;
 	background-image:none;

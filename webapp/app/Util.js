@@ -182,7 +182,10 @@ Ext.define('app.Util', {
             function (t, value, oldValue, eOpts) {
                 if (oldValue) {
                     //强制销毁，防止销毁不完全引发错误
-                    me.remove(oldValue, true);
+                	Ext.defer(function () {
+                		//me.remove(oldValue, true);
+                		if(oldValue.getAutoDestroy()){oldValue.destroy();}
+                	}, 500);
                 }
             });
         },
@@ -327,7 +330,7 @@ Ext.define('app.Util', {
         },
         //app初始化执行
         init: function () {
-            //this.eActiveitemchange();
+            this.eActiveitemchange();
             this.overrideAjax();
             this.overridePick();
         }
