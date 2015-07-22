@@ -24,7 +24,8 @@ Ext.application({
     },
 	controllers: [
 		'Main',
-		'user.User'
+		'user.User',
+		'Exercise'
 	],
 	views:[
 	    'Guide',

@@ -29,7 +29,7 @@ Ext.define('app.view.exercise.List', {
         loadingText: false,
         emptyText: '<p class="no-searches">没有更多数据了</p>',
         store: Ext.create("Ext.data.Store", {
-        	pageSize: 10,
+        	pageSize: 5,
         	clearOnPageLoad:true,
             model: "app.model.Exercise",
             proxy: {
@@ -51,7 +51,7 @@ Ext.define('app.view.exercise.List', {
         }),
         emptyText: '<p class="no-searches">没有数据，请刷新重试</p>',
         itemTpl: [
-            '<div>{content}</div>'
+            '<div>{xindex}、{content}</div>'
         ].join('')
     }
 });

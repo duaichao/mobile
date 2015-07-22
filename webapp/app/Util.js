@@ -30,7 +30,7 @@ Ext.define('app.Util', {
 	            trackColor: '#fff',
 	            progressColor: '#53a93f',
 	            precent: 75,
-	            duration: 1500
+	            duration: 500
 	        }; // 默认选项
             var color = target.getAttribute('data-color'); // 颜色
             var oldPrecent = target.getAttribute('data-precent');
@@ -53,6 +53,8 @@ Ext.define('app.Util', {
             var x = target.down('.progress-cover').getHeight(); // 触发 Layout
             target.down('.progress-left').setStyle({
                 'transform': 'rotate(' + precent * 3.6 + 'deg)',
+                '-webkit-transform-style':'preserve-3d', 
+            	'-webkit-backface-visibility':'hidden',
                 '-o-transform': 'rotate(' + precent * 3.6 + 'deg)',
                 '-ms-transform': 'rotate(' + precent * 3.6 + 'deg)',
                 '-moz-transform': 'rotate(' + precent * 3.6 + 'deg)',
@@ -328,11 +330,23 @@ Ext.define('app.Util', {
 
             });
         },
+        overrideList:function(){
+        	Ext.define('xxx.overrides.dataview.DataView', {
+                override: 'Ext.dataview.DataView',
+                prepareData: function(data, index, record) {
+                    if(Ext.isObject(data)) {
+                        data.xindex = index + 1;
+                    }
+                    return data;
+                }
+            });
+        },
         //app初始化执行
         init: function () {
             this.eActiveitemchange();
             this.overrideAjax();
             this.overridePick();
+            this.overrideList();
         }
     }
 });

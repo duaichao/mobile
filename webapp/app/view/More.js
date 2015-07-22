@@ -1,17 +1,8 @@
 Ext.define('app.view.More', {
-
-    extend: 'Ext.navigation.View',
+    extend: 'Ext.Container',
     xtype: 'moreContainer',
-
     config: {
-
         title: '更多',
-        iconCls: 'icon-gengduo',
-
-        autoDestroy: false,
-
-        items: [{
-			title: '更多'
-		}]
+        iconCls: 'icon-gengduo'
     }
 });

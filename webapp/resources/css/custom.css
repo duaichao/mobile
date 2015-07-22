@@ -82,6 +82,12 @@ body.x-desktop {
 .green{
 	color:#53a93f;
 }
+.gray{
+	color:#D8D8D8;
+}
+.white{
+	color:#ffffff;
+}
 .ht20{line-height:20px;height:20px;}
 .ht30{line-height:30px;height:30px;}
 .ht40{line-height:40px;height:40px;}
@@ -202,10 +208,10 @@ a.button:active {
 }
 .x-button.ui.gray .x-button-label,.x-button.tool.gray  .x-button-label{color:#444;}
 
-.x-toolbar-dark .x-button.x-button-back:before{
+.x-toolbar-dark .x-button.x-button-back:before,.x-toolbar-dark .x-button.x-button-forward:before{
 	background: #D14836;
 }
-.x-button.x-button-back,.x-toolbar-dark .x-button.x-button-back:after{
+.x-button.x-button-back,.x-toolbar-dark .x-button.x-button-back:after,.x-button.x-button-forward,.x-toolbar-dark .x-button.x-button-forward:after{
 	border-color:#D14836;
 	background: #D64937;
 	background: -webkit-linear-gradient(top, #DC4A38, #D14836);
@@ -213,7 +219,8 @@ a.button:active {
 	background: -ms-linear-gradient(top, #DC4A38, #D14836);
 	background: -o-linear-gradient(top, #DC4A38, #D14836);
 }
-.x-button.x-button-back.x-button-pressing,.x-toolbar-dark .x-button.x-button-pressing:after{
+.x-button.x-button-back.x-button-pressing,.x-toolbar-dark .x-button.x-button-pressing:after,
+.x-button.x-button-forward.x-button-pressing{
 	border-color:#B0281A;
 	background: #D14130;
 	background: -webkit-linear-gradient(top, #DC4A38, #C53727);

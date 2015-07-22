@@ -1,17 +1,8 @@
 Ext.define('app.view.App', {
-
-    extend: 'Ext.navigation.View',
+    extend: 'Ext.Container',
     xtype: 'appContainer',
-
     config: {
-
-        title: '应用中心',
-        iconCls: 'icon-yingyong',
-
-        autoDestroy: false,
-
-        items: [{
-			title: '应用中心'
-		}]
+    	title: '应用中心',
+        iconCls: 'icon-yingyong'
     }
 });
