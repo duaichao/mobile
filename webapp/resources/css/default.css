@@ -1,5 +1,17 @@
-
-.x-toolbar{
+.copyright{
+	margin-top:10px;
+	color:#999;
+	font-size:12px;
+	text-align:center;
+	width:100%;
+}
+.login-logo{
+	width:100%;
+	text-align:center;
+	padding:10px;
+}
+.x-layout-card-item{background:#fff;}
+.ui.x-tabbar,.x-toolbar{
 	background-color: #404040;
 	background-image: -webkit-linear-gradient(top, #404040,#606060 3%,#303030);
 	background-image: -moz-linear-gradient(top, #dadada,#dbdbdb 3%,#d1d1d1);
@@ -7,7 +19,7 @@
 	background-image: linear-gradient(top, #dadada,#dbdbdb 3%,#d1d1d1);
 	border-color: #eff1f3;
 }
-.x-toolbar.gray{
+.ui.x-tabbar.gray,.x-toolbar.gray{
 	background: #F2F2F2;
 	background: -webkit-linear-gradient(top, #F5F5F5, #F1F1F1);
 	background: -moz-linear-gradient(top, #F5F5F5, #F1F1F1);
@@ -15,29 +27,23 @@
 	background: -o-linear-gradient(top, #F5F5F5, #F1F1F1);
 	border-color: #D8D8D8;
 }
-.x-toolbar-dark.x-docked-top{border-color: #eff1f3;}
-.x-toolbar .x-innerhtml{
+.ui.x-tabbar,.x-toolbar .x-innerhtml{
 	font-weight:normal;
 	text-shadow:none;
 	color:#fff;
 }
-/*Tab设置*/
-.x-tabbar.x-docked-bottom{
+.ui.tab{
 	height:45px;
-}
-.tab{
-	height:100%;
 	background:#fff;
 }
-.tab .x-layout-card-item{background:#fff;}
-.tab .x-tabbar-dark {
+.ui.tab .x-tabbar {
 	background-image:none;
 	background-color:#f7f7f7;
 	padding:0;
 	border:0;
 	border-top:1px solid #f7f7f7;
 }
-.tab .x-tabbar-dark .x-tab{
+.ui.tab.x-tabbar .x-tab{
 	color:#bbbbbb;
 	height:100%;
 	min-width:25%;
@@ -50,19 +56,18 @@
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-	
 }
-.tab .x-tabbar-dark .x-tab .x-button-label{
+.ui.tab.x-tabbar .x-tab .x-button-label{
 	font-weight:normal;
 }
-.tab .x-button-icon{color:#bbb;}
-.tab .x-tabbar-dark.x-docked-bottom .x-tab-active .x-button-label,
-.tab .x-tabbar-dark.x-docked-bottom .x-tab-active .x-button-icon:before{color:#d73d32;}
+.ui.tab.x-button-icon{color:#bbb;}
+.ui.tab.x-tabbar .x-tab-active .x-button-label,
+.ui.tab.x-tabbar .x-tab-active .x-button-icon:before{color:#d73d32;}
 
-.tab .x-tab.x-tab-active{
+.ui.tab .x-tab.x-tab-active{
 	background-color:#ffffff;
 }
-.x-button.white{
+.ui.x-button.white{
 	border-radius:0px;
 	-webkit-border-radius: 0px;
 	height:100%;
@@ -70,8 +75,7 @@
 	background-image:none;
 	border:1px solid #eff1f3;
 }
-
-.x-button.face{
+.ui.x-button.face{
 	margin:10px;
 	background-color:#c5c5c5;
 	border-radius:80px;
@@ -80,10 +84,8 @@
 	-webkit-border-radius: 80px;
 	position:relative;
 }
-.x-button.face img{position:absolute;top:7px;left:7px;width:64px;height:64px;z-index:-1;}
-
-
-.x-button.hello{
+.ui.x-button.face img{position:absolute;top:7px;left:7px;width:64px;height:64px;}
+.ui.x-button.hello{
 	background-color:#fff;
 	border-radius:0px;
 	border:none;
@@ -92,8 +94,8 @@
 	overflow:hidden;
 	text-align:left;
 }
-
-.x-button.hello i.iconfont{
+.ui.x-button.hello h3{color:#404040;}
+.ui.x-button.hello i.iconfont{
 	font-size:1.125em;
 	position :absolute;
 	color:#bbb;
@@ -101,10 +103,8 @@
 	top:45px;
 }
 
-.x-button.hello h3,.x-button.hello .time{text-align:left;font-weight:normal;}
-.x-button.hello .time{color:#bbb;}
-
-
+.ui.x-button.hello h3,.x-button.hello .time{text-align:left;font-weight:normal;}
+.ui.x-button.hello .time{color:#bbb;}
 
 
 
@@ -160,6 +160,7 @@
 }
 
 .dv-basic  .x-dataview-item .content .buttons{padding-top:5px;}
+/*
 .progress-ring div {
   position: absolute;
   top: 20px;
@@ -199,188 +200,8 @@
   font-size: .55em;
   font-style: italic;
   font-family: "Microsoft Yahei", sans-serif;
-}
+}*/
 
-/*V2*/
-.ex-popoup-hint {
-    position: fixed;
-    z-index: 11111111;
-    width: 200px;
-    height: 200px;
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.3)
-}
-
-.ex-popoup-hint:after {
-    content: "";
-    display: inline-block;
-    height: 48px;
-    vertical-align: middle
-}
-
-.ex-popoup-hint s {
-    position: absolute;
-    top: 42px;
-    left: 50%;
-    height: 80px;
-    overflow: hidden;
-    background-image: url(../images/ext_hint_icon.png?v=6);
-    background-repeat: no-repeat
-}
-
-.ex-popoup-hint span {
-    position: relative;
-    top: 138px;
-    display: inline-block;
-    margin: 0 15px;
-    max-height: 48px;
-    line-height: 24px;
-    vertical-align: middle;
-    overflow: hidden;
-    word-wrap: break-word;
-    word-break: break-all;
-    font-size: 18px;
-    font-family: "Yuanti SC","Microsoft Yahei","Heiti";
-    color: white
-}
-
-.ex-popoup-hint span b {
-    font-weight: normal;
-    color: white
-}
-
-.exph-suc {
-    background-image: url(about:blank);
-    background-color: rgba(47,183,70,0.95);
-}
-
-html:root .exph-suc {
-    filter: none
-}
-
-.exph-suc s {
-    width: 100px;
-    margin-left: -50px;
-    background-position: 0 0;
-   /* -webkit-animation: suc 0.5s ease;
-    -webkit-animation-fill-mode: both*/
-}
-
-.exph-war {
-    background-image: url(about:blank);
-    background-color: rgba(248,149,0,0.95);
-}
-
-html:root .exph-war {
-    filter: none
-}
-
-.exph-war s {
-    width: 16px;
-    margin-left: -8px;
-    background-position: -100px 0;
-   /* -webkit-animation: war 1.2s ease 0.3s;
-    -webkit-animation-fill-mode: both*/
-}
-
-.exph-err {
-    background-image: url(about:blank);
-    background-color: rgba(181,12,3,0.95);
-}
-
-html:root .exph-err {
-    filter: none
-}
-
-.exph-err s {
-    width: 80px;
-    margin-left: -40px;
-    background-position: -116px 0;
-    /*-webkit-animation: err 1.2s ease 0.3s;
-    -webkit-animation-fill-mode: both*/
-}
-
-.exph-loader {
-    background-image: none;
-    background-color: rgba(102,102,102,0.95);
-}
-
-html:root .exph-loader {
-    filter: none
-}
-
-.exph-loader s {
-    top: 54px;
-    width: 66px;
-    height: 66px;
-    margin-left: -33px;
-	border-radius: 66px;
-	background-color: #fff;
-	-webkit-transform-style: preserve-3d;
-	-webkit-backface-visibility:hidden;
-	-webkit-animation: loader 1.0s infinite ease-in-out;
-	animation: loader 1.0s infinite ease-in-out;
-	background-image:none;
-}
-
-@-webkit-keyframes suc {
-    0% {
-        width: 0
-    }
-
-    100% {
-        width: 100px
-    }
-}
-
-@-webkit-keyframes war {
-    0%,33.33%,66.66%,100% {
-        opacity: 1
-    }
-
-    16.66%,50% {
-        opacity: 0
-    }
-}
-
-@-webkit-keyframes err {
-    0% {
-        -webkit-transform: scale(1)
-    }
-
-    15% {
-        -webkit-transform: scale(0.8)
-    }
-
-    30% {
-        -webkit-transform: scale(1.2)
-    }
-
-    45% {
-        -webkit-transform: scale(1)
-    }
-}
-
-@-webkit-keyframes loader {
-  0% { -webkit-transform: scale(0) }
-  100% {
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
-}
-
-@keyframes loader {
-  0% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 100% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-    opacity: 0;
-  }
-}
-}
 
 
 

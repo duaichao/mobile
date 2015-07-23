@@ -38,13 +38,17 @@
      *
      *      }
      */
-    "js": [/*{
-	    "path": "cordova.min.js",
+    "js": [{
+	    "path": "cordova.js",
 	    "update": "delta"
 	},{
-		"path": "cordova.plugin.js",
+		"path": "cordova.plugins.js",
 	    "update": "delta"
-	},*/{
+	},{
+	    "path": "Chart.min.js",
+	    "bundle": true,
+	    "update": "delta"
+	},{
 	    "path": "touch/sencha-touch-all.js",
 	    "x-bootstrap": true
 	},{

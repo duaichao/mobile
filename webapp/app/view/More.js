@@ -1,8 +1,12 @@
 Ext.define('app.view.More', {
     extend: 'Ext.Container',
     xtype: 'moreContainer',
+    alternateClassName: 'moreContainer',
     config: {
-        title: '更多',
-        iconCls: 'icon-gengduo'
+    	items:[{
+        	title:'更多',
+			docked: 'top',
+			xtype: 'titlebar'
+        }]
     }
 });

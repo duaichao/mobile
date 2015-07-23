@@ -1,10 +1,23 @@
 Ext.define('app.controller.Exercise', {
     extend: 'Ext.app.Controller',
     config: {
+    	views: ['exercise.List'],
         refs: {
         	exerciseView:'exerciseview'
         },
         control: {
+        	'exerciseview':{
+        		activate:function(p){;
+        			var lt = p.down('exerciselist'),
+        				st = lt.getStore();
+        			st.getProxy().setExtraParams(Ext.applyIf(p.getDefaultParams(),st.getProxy().getExtraParams()));
+        			st.loadPage(1);
+        			lt.hide();
+        			st.on('load',function(){
+        				lt.show();
+        			});
+        		}
+        	},
         	'exerciseview button#prev':{
         		tap:'doPage'
         	},'exerciseview button#next':{

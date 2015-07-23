@@ -10,7 +10,7 @@ Ext.define('app.view.user.Info', {
 			items:[{
 				action: 'backHome',
 				ui:'back',
-				text:'Back'
+				text:'返回'
 			},{
 				action: 'saveInfo',
 				cls:'tool blue',

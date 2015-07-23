@@ -1,8 +1,12 @@
 Ext.define('app.view.App', {
     extend: 'Ext.Container',
+    alternateClassName: 'appContainer',
     xtype: 'appContainer',
     config: {
-    	title: '应用中心',
-        iconCls: 'icon-yingyong'
+    	items:[{
+        	title:'应用中心',
+			docked: 'top',
+			xtype: 'titlebar'
+        }]
     }
 });

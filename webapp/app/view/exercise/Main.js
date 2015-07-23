@@ -1,10 +1,8 @@
 Ext.define('app.view.exercise.Main', {
     alternateClassName: 'exerciseview',
     extend: 'Ext.Container',
-    requires: ['app.view.exercise.List'],
     xtype: 'exerciseview',
     config: {
-    	autoDestroy: true,
     	defaultParams:{},
     	layout:'fit',
         items: [{
@@ -14,7 +12,7 @@ Ext.define('app.view.exercise.Main', {
 			items:[{
 				action: 'backhome',
 				ui:'back',
-				text:'Back'
+				text:'返回'
 			},{
 				itemId: 'prev',
 				//text:'上一页',
@@ -35,13 +33,6 @@ Ext.define('app.view.exercise.Main', {
 			}]
         },{
         	xtype: 'exerciselist'
-        }],
-	    listeners:{
-	    	'activate':function(p, eOpts){
-	    		var st = p.down('exerciselist').getStore();
-	    		st.getProxy().setExtraParams(Ext.applyIf(p.getDefaultParams(),st.getProxy().getExtraParams()));
-	    		st.loadPage(1);
-	       	}
-	    }
+        }]
     }
 });

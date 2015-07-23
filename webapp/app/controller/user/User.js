@@ -1,9 +1,10 @@
 Ext.define('app.controller.user.User', {
     extend: 'Ext.app.Controller',
     config: {
-        views: ['Login','user.Regist','user.Home','user.Info','exercise.Main'],
+        views: ['Login','user.Regist','App','Setting','More','user.Home','user.Info','exercise.Main'],
         models: ['user.User','Course','Exercise'],
         refs: {
+        	index:'index',
         	home:'home',
         	userLogin: 'userLogin',
         	userRegist: 'userRegist',
@@ -51,6 +52,20 @@ Ext.define('app.controller.user.User', {
             		util.ePush('userLogin',null,'right');
             	}
             },
+        	'index tabbar':{
+        		activetabchange :function(tb,newView,oldView){
+        			var me = this,xtype=newView.getItemId();
+        			var view = Ext.create(xtype,{});
+        			this.getIndex().animateActiveItem(view, {
+                        type: 'slide',
+                        direction: 'left'
+                    });
+        			Ext.defer(function () {
+        				var old = me.getIndex().down(oldView.getItemId());
+        				if(old.getAutoDestroy()){me.getIndex().remove(old,true);}
+        			}, 500);
+        		}
+        	},
             'home button[action=hello]':{
             	tap: function(){
             		util.ePush('userInfo');

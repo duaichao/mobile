@@ -1,9 +1,9 @@
 Ext.define('app.view.user.Home', {
     extend: 'Ext.Container',
+    alternateClassName: 'home',
     xtype: 'home',
     config: {
-        iconCls: 'icon-gerenzhongxin',
-        title:'首页',
+        autoDestroy:false,
         listeners:{
 		    activate:function(){
 		    	var btn = this.down('button[action=hello]'),
@@ -16,8 +16,8 @@ Ext.define('app.view.user.Home', {
 		    	st.getProxy().setExtraParams(config.user);
 		    	st.load({callback:function(){
 		    		dv.element.select('.progress-ring').each(function(ring,c,i){
-		    			util.loadingRing(ring);
-		    			//util.drawScore(ring);
+		    			//util.loadingRing(ring);
+		    			util.drawScore(ring);
 		    		});
 		    	}});
 		    }
@@ -37,16 +37,16 @@ Ext.define('app.view.user.Home', {
 				width:80,
 				height:80,
 				action:'face',
-				cls:'face',
+				cls:'ui face',
 				xtype:'button',
 				text:[
-				      '<img src="resources/images/noface.png" style="top:0px;">'
+				      '<img src="resources/images/noface.png" style="top:8px;left:15px;height:50px;width:50px;">'
 				].join('')
 			},{
 				flex:1,
 				action:'hello',
 				xtype:'button',
-				cls:'hello',
+				cls:'ui hello',
 				text:[
 				      '<h3 class="font16">欢迎你，<span class="font20">{0}</span></h3>',
 				      '<div class="ht30 time font14 ">距离考试还有<span class="font20 fnumber blue"> {1} </span>天</div>',
@@ -59,20 +59,20 @@ Ext.define('app.view.user.Home', {
             cls: 'dv-basic',
             itemTpl: [
                   '<div class="warp bg{xindex}"">',
-                  /*'<div class="progress-ring" data-precent="{passing_percent}">',
-          			'<canvas height="90" width="90" style="width:90px; height: 90px;" aa="{xindex}"></canvas>',
-         				'<div class="score">{passing_percent}%</div>',
-          		  '</div>',	*/
                   '<div class="progress-ring" data-precent="{passing_percent}">',
+          			'<canvas height="90" width="90" style="width:90px; height: 90px;" aa="{xindex}"></canvas>',
+         				'<div class="score"></div>',
+          		  '</div>',	
+                  /*'<div class="progress-ring" data-precent="{passing_percent}">',
                   '<div class="progress-track"></div><div class="progress-left"></div><div class="progress-right"></div><div class="progress-cover"></div><div class="progress-text"><span class="progress-num">{passing_percent}</span><span class="progress-percent">%</span></div>',
-                  '</div>',
+                  '</div>',*/
                   '<div class="content">',
                   		'<div class="name">{course_name}</div>',
                   		'<div class="affiliation">已完成：{process_num}/{total_num}题    平均速度：{average_speed}秒</div>',
 	                    '<div class="buttons">',
-		                    '<a href="javascript:;" class="button kclx">练习题</a>',
-		                    '<a href="javascript:;" class="button">自定义练习</a>',
-		                    '<a href="javascript:;" class="button">模拟考试</a>',
+		                    '<button class="ui button kclx">练习题</button>',
+		                    '<button class="ui button">自定义练习</button>',
+		                    '<button class="ui button">模拟考试</button>',
 	                    '</div>',
                   '</div>',
                   '</div>'
