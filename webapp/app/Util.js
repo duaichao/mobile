@@ -191,6 +191,173 @@ Ext.define('app.Util', {
                 }
             });
         },
+        log:function(message){
+        	 if (Ext.os.is('iPhone'))
+                 console.log(message);
+             else
+                 console.info(message);
+        },
+        mediaVar:null,
+        mediaTimmer:null,
+        recordFileName:'recording.wav',
+        startRecord:function(){
+        	if(util.mediaVar){
+        		util.mediaVar.release();
+        	}
+        	util.recer('正在录音...{0}','00:00');
+        	if (Ext.os.is('iPhone')) {
+                //first create the file
+                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+                    fileSystem.root.getFile(util.recordFileName, {
+                        create: true,
+                        exclusive: false
+                    }, function(fileEntry){
+                        util.log("File " + util.recordFileName + " created at " + fileEntry.fullPath);
+                        util.mediaVar = new Media(fileEntry.fullPath, 
+                        		util.succseeRecord,
+                        		util.errorRecord
+            			); //of new Media
+                        util.mediaVar.startRecord();
+                    }, util.errorRecord); //of getFile
+                }, util.errorRecord); //of requestFileSystem
+            } else{
+                util.mediaVar = new Media(
+                		util.recordFileName, 
+    					util.succseeRecord, 
+    					util.errorRecord
+    			);
+                util.mediaVar.startRecord();
+                var recTime=0;
+        	    util.mediaTimmer = setInterval(function() {
+        	    	recTime++;
+        	        util.recer('正在录音...{0}','00:'+(recTime<10?'0'+recTime:recTime));
+        	    }, 1000);
+            }
+        },
+        stopRecord:function(){
+        	if (util.mediaVar){
+        		util.mediaVar.stopRecord(); 
+        		util.hideMessage();
+    		}
+        	if (util.mediaTimmer) {
+    	        clearInterval(util.mediaTimmer);
+    	        util.mediaTimmer = null;
+    	    } 
+        },
+        statusRecord:function(){
+        },
+        errorRecord:function(err){
+        	if (typeof err.message != 'undefined')
+                err = err.message;
+        	util.log(err);
+        },
+        successRecord:function(){
+        	util.log('success');
+        },
+        playRecord:function(){
+        	if(util.mediaVar){
+        		util.mediaVar.release();
+        		util.mediaVar = null;
+        	}
+        	if (Ext.os.is('iPhone')) {
+        		util.mediaVar = new Media(util.recordFileName, util.successRecord, util.errorRecord);
+            } else{
+            	util.mediaVar = new Media("/sdcard/" + util.recordFileName, util.successRecord, util.errorRecord);
+            }
+        	util.mediaVar.play();
+        },
+        stopPlay:function(){
+        	util.mediaVar.stop();
+        },
+        mediaPlayer:function(){
+        	Ext.Viewport.add({
+        		xtype:'container',
+        		modal: true,
+                hideOnMaskTap: true,
+                centered: true,
+                width:150,
+                height:100,
+                listeners:{
+                	show:function(p){
+                		setTimeout(function(){
+                			var ad = p.down('audio'),di=parseInt(ad.getDuration());
+                			p.down('button').setText('<i class="iconfont green font20">&#xe61b;</i> '+di+'秒');
+                		},500);
+                		
+                	},
+                	hide:function(p){
+                		p.down('audio').stop();
+                		Ext.Viewport.remove(p,true);
+                	}
+                },
+                layout: Ext.os.is.Android ? {
+                    type: 'vbox',
+                    pack: 'center',
+                    align: 'center'
+                } : 'fit',
+                items: Ext.os.is.Android ? [
+                    {
+                        xtype: 'audio',
+                        url: "/sdcard/" + util.recordFileName,
+                        loop: true,
+                        enableControls: false
+                    },
+                    {
+                        xtype : 'button',
+                        text  : '<i class="iconfont green font20">&#xe61b;</i> 秒',
+                        margin: 20,
+                        handler: function() {
+                            var audio = this.getParent().down('audio'),
+                            	di = parseInt(audio.getCurrentTime()),
+                            	tmr = null,me=this;
+                            di = di<10?'0'+di:di;
+                            util.log('播放器当前状态'+audio.isPlaying());
+                            if (audio.isPlaying()) {
+                                audio.pause();
+                                this.setText('<i class="iconfont green font20">&#xe61b;</i> '+di+'秒');
+                                clearInterval(tmr);tmr=null;
+                            } else {
+                                audio.play();
+                                tmr = setInterval(function(){
+                                	var ci = parseInt(audio.getCurrentTime());
+                                	ci = parseInt(di)-ci;
+                                	ci = ci<10?'0'+ci:ci;
+                                	me.setText('<i class="iconfont red font20">&#xe61d;</i> '+ci+'秒');
+                                },1000);
+                            }
+                        }
+                    }
+                ] : [
+                    {
+                        xtype: 'audio',
+                        url: util.recordFileName,
+                        loop: true
+                    }
+                ]
+        	}).show();
+        },
+        recer:function(format,progress){
+        	format = Ext.String.format(format, progress);
+        	if(Ext.get('notification')){
+        		if(progress){
+        			Ext.get('notification').down('span').setHtml(format);
+        		}
+        		return;
+        	}
+    		var dh = Ext.DomHelper,
+    			notification = {
+				    tag:'div',
+				    id:'notification',
+				    cls: 'ex-popoup-hint exph-recer',
+				    children: [    
+				        {tag: 's'},
+				        {tag: 'i', class:'iconfont',html:'&#xe618;'},
+	    				{tag: 'span', html: format||'正在录音...{0}'} 
+				    ]
+				};
+    		var nf = dh.append(Ext.getBody(),notification,true);
+    			nf.setXY(nf.getAlignToXY(document,'c-c'));
+        },
         loader:function(format,progress){
         	format = Ext.String.format(format, progress);
         	if(Ext.get('notification')){

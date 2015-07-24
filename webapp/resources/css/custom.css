@@ -308,7 +308,27 @@ html:root .exph-err {
     -webkit-animation: err 1.2s ease 0.3s;
     -webkit-animation-fill-mode: both
 }
-
+.exph-recer{
+	background-image: none;
+    background-color: rgba(102,102,102,0.95);
+}
+.exph-recer i{
+	font-size:80px;
+	color:#fff;
+	position:absolute;
+	top:50px;
+	left:15px;
+}
+.exph-recer s {
+	width: 50px;
+	left:95px;
+	top:50px;
+    background-image: none;
+    -webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility:hidden;
+    -webkit-animation: suc 0.5s ease;
+    -webkit-animation-fill-mode: both
+}
 .exph-loader {
     background-image: none;
     background-color: rgba(102,102,102,0.95);

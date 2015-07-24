@@ -3,6 +3,9 @@ Ext.define('app.view.demo.Demo', {
 	alternateClassName: 'demo',
 	xtype:'demo',
 	requires: 'Ext.layout.VBox',
+	listeners:{
+		
+	},
     config: {
     	layout: {
             type : 'vbox',
@@ -25,16 +28,18 @@ Ext.define('app.view.demo.Demo', {
         items: [{
 			items: [{
 				xtype:'button',
+				action:'rec',
 				text:'录音',
-				handler:function(){
-					navigator.device.capture.captureAudio(function(files){
-						//成功回调函数
-				 		Ext.getCmp("video_files_mainview").config.param.sourceobj.startUpload(files[0].fullPath, 2);
-					},function(error){
-						//失败回调函数
-						//navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
-			        }, {limit:1});//一次最多录制的文件个数
-				}
+				listeners : {
+	                element : 'element',
+	                taphold : function() {
+	                	util.startRecord();
+	                }
+	            }
+			},{
+	          	xtype:'button',
+	          	text:'播放录音',
+	          	action:'play'		        
 			},{
 	          	xtype:'button',
 	          	text:'录相',
@@ -48,23 +53,6 @@ Ext.define('app.view.demo.Demo', {
 						//navigator.notification.alert('错误码：' + err.code, null, 'Uh oh!');
 					});
 				}  				        
-			},{
-	          	xtype:'button',
-	          	text:'拍照',
-	          	handler:function(){
-					navigator.camera.getPicture(function(imgtemp){
-						//向列表中放圖片
-					   	var acqimage =imgtemp;
-				   		//acqimage.src = "data:image/jpeg;base64," + imageData;
-						param.config.param.sourceobj.startUpload(imgtemp, 0);
-					}, function(){
-						console.log('什麼都沒有得到');
-					}, { 
-					   	quality: 5,
-					   	destinationType:Camera.DestinationType.FILE_URL,
-					   	sourceType:Camera.PictureSourceType.CAMERA 
-			  		});
-				}
 			}]
           },{
 			items: [{
@@ -81,6 +69,23 @@ Ext.define('app.view.demo.Demo', {
 		       			sourceType:Camera.PictureSourceType.PHOTOLIBRARY, 
 		       			mediaType:Camera.MediaType.PICTURE
 					});
+				}
+			},{
+	          	xtype:'button',
+	          	text:'拍照',
+	          	handler:function(){
+					navigator.camera.getPicture(function(imgtemp){
+						//向列表中放圖片
+					   	var acqimage =imgtemp;
+				   		//acqimage.src = "data:image/jpeg;base64," + imageData;
+						param.config.param.sourceobj.startUpload(imgtemp, 0);
+					}, function(){
+						console.log('什麼都沒有得到');
+					}, { 
+					   	quality: 5,
+					   	destinationType:Camera.DestinationType.FILE_URL,
+					   	sourceType:Camera.PictureSourceType.CAMERA 
+			  		});
 				}
 			},{
 	          	xtype:'button',

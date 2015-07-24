@@ -24,10 +24,12 @@ Ext.application({
     },
 	controllers: [
 		'Main',
+		'demo.Demo',
 		'user.User',
 		'Exercise'
 	],
 	views:[
+	    'demo.Demo',
 	    'Guide',
 		'Main',
 		'Index'
