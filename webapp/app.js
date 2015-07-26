@@ -22,26 +22,31 @@ Ext.application({
         114: 'resources/icons/icon@2x.png',
         144: 'resources/icons/icon@144.png'
     },
+    requires: [
+   		'Ext.MessageBox',
+   		'app.Config',
+   		'app.Util'
+   	],
 	controllers: [
 		'Main',
 		'demo.Demo',
 		'user.User',
 		'Exercise'
 	],
-	views:[
-	    'demo.Demo',
-	    'Guide',
-		'Main',
-		'Index'
+	views: [
+        //'demo.Demo',
+        'Guide','Main','Index',
+        'Login','user.Regist','App','Setting',
+        'More','user.Home','user.Info',
+        'exercise.Main','exercise.List'
 	],
-	requires: [
-		'Ext.MessageBox',
-		'app.Config',
-		'app.Util'
-	],
-	models:[
-		'Local'
-	],
+    models: [
+         'Local',
+         'user.User',
+         'Course',
+         'Exercise',
+         'App'
+    ],
     launch: function() {
     	Ext.fly('appLoadingIndicator').destroy();
     	//Ext.Viewport.add(Ext.create('app.view.Main'));

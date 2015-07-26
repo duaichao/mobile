@@ -15,7 +15,8 @@ Ext.define('app.Config', {
     		setPersonalInfo:'http://211.101.20.203/api/setPersonalInfo',
     		getCourseList:'http://211.101.20.203/api/CourseList',
     		setPhoto:'http://211.101.20.203/api/setPhoto',
-    		getExercise:'http://211.101.20.203/api/Exercise'
+    		getExercise:'http://211.101.20.203/api/Exercise',
+    		getApps:'http://211.101.20.203/api/Apps'
     	}
     }
 });

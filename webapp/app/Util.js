@@ -80,8 +80,6 @@ Ext.define('app.Util', {
                 });
             }
     	},
-    	dragRing :function(canvas){
-    	},
     	lastDays :function(date){
     		var now,dateTime;
     		if(Ext.isString(date)){
@@ -197,81 +195,75 @@ Ext.define('app.Util', {
              else
                  console.info(message);
         },
-        mediaVar:null,
-        mediaTimmer:null,
-        recordFileName:'recording.wav',
-        startRecord:function(){
-        	if(util.mediaVar){
-        		util.mediaVar.release();
+        audioVar:null,
+        audioTimer:null,
+        audioDir:'duaichao',
+        audioFileName:'recording.wav',
+        audioStart :function(){
+        	if(util.audioVar){
+        		util.audioVar.release();
         	}
-        	util.recer('正在录音...{0}','00:00');
+        	util.audioMessage('正在录音 {0}','00:00');
+        	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+        		fileSystem.root.getDirectory(util.mediaDir, {create:true,exclusive:false},function(dirEntry){
+        			util.log('创建了一个文件夹');
+        		}, util.errorRecord);
+        	}, util.errorRecord);  
         	if (Ext.os.is('iPhone')) {
                 //first create the file
                 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-                    fileSystem.root.getFile(util.recordFileName, {
+                    fileSystem.root.getFile(util.audioFileName, {
                         create: true,
                         exclusive: false
                     }, function(fileEntry){
-                        util.log("File " + util.recordFileName + " created at " + fileEntry.fullPath);
-                        util.mediaVar = new Media(fileEntry.fullPath, 
-                        		util.succseeRecord,
-                        		util.errorRecord
+                        util.log("File " + util.audioFileName + " created at " + fileEntry.fullPath);
+                        util.audioVar = new Media(fileEntry.fullPath, 
+                        		util.audioSuccess,
+                        		util.audioError,
+            					util.audioStatus
             			); //of new Media
-                        util.mediaVar.startRecord();
-                    }, util.errorRecord); //of getFile
-                }, util.errorRecord); //of requestFileSystem
+                        util.audioVar.startRecord();
+                    }, util.audioError); //of getFile
+                }, util.audioError); //of requestFileSystem
             } else{
-                util.mediaVar = new Media(
-                		util.recordFileName, 
-    					util.succseeRecord, 
-    					util.errorRecord
+                util.audioVar = new Media(
+                		util.audioDir+'/'+util.audioFileName, 
+    					util.audioSuccess, 
+    					util.audioError,
+    					util.audioStatus
     			);
-                util.mediaVar.startRecord();
+                util.audioVar.startRecord();
                 var recTime=0;
-        	    util.mediaTimmer = setInterval(function() {
+        	    util.audioTimer = setInterval(function() {
         	    	recTime++;
-        	        util.recer('正在录音...{0}','00:'+(recTime<10?'0'+recTime:recTime));
+        	        util.audioMessage('正在录音 {0}','00:'+(recTime<10?'0'+recTime:recTime));
         	    }, 1000);
             }
         },
-        stopRecord:function(){
-        	if (util.mediaVar){
-        		util.mediaVar.stopRecord(); 
+        audioStop:function(){
+        	if (util.audioVar){
+        		util.audioVar.stopRecord(); 
         		util.hideMessage();
     		}
-        	if (util.mediaTimmer) {
-    	        clearInterval(util.mediaTimmer);
-    	        util.mediaTimmer = null;
+        	if (util.audioTimer) {
+    	        clearInterval(util.audioTimer);
+    	        util.audioTimer = null;
     	    } 
         },
-        statusRecord:function(){
+        audioStatus:function(){
         },
-        errorRecord:function(err){
+        audioError:function(err){
         	if (typeof err.message != 'undefined')
                 err = err.message;
         	util.log(err);
         },
-        successRecord:function(){
+        audioSuccess:function(){
         	util.log('success');
         },
-        playRecord:function(){
-        	if(util.mediaVar){
-        		util.mediaVar.release();
-        		util.mediaVar = null;
-        	}
-        	if (Ext.os.is('iPhone')) {
-        		util.mediaVar = new Media(util.recordFileName, util.successRecord, util.errorRecord);
-            } else{
-            	util.mediaVar = new Media("/sdcard/" + util.recordFileName, util.successRecord, util.errorRecord);
-            }
-        	util.mediaVar.play();
-        },
-        stopPlay:function(){
-        	util.mediaVar.stop();
-        },
-        mediaPlayer:function(){
+        audioPlayer:function(url){
         	Ext.Viewport.add({
         		xtype:'container',
+        		itemId:'mediaContainer',
         		modal: true,
                 hideOnMaskTap: true,
                 centered: true,
@@ -280,14 +272,16 @@ Ext.define('app.Util', {
                 listeners:{
                 	show:function(p){
                 		setTimeout(function(){
-                			var ad = p.down('audio'),di=parseInt(ad.getDuration());
-                			p.down('button').setText('<i class="iconfont green font20">&#xe61b;</i> '+di+'秒');
+                			var ad = p.down('audio'),di=Math.round(ad.getDuration());
+                			p.down('button').setText('<i class="iconfont green font20">&#xe61e;</i> '+di+'秒');
                 		},500);
                 		
                 	},
                 	hide:function(p){
-                		p.down('audio').stop();
-                		Ext.Viewport.remove(p,true);
+                		var audio = p.down('audio');
+                		audio.stop();
+                		//p.remove(audio,true);
+                		//p.destroy();
                 	}
                 },
                 layout: Ext.os.is.Android ? {
@@ -298,45 +292,45 @@ Ext.define('app.Util', {
                 items: Ext.os.is.Android ? [
                     {
                         xtype: 'audio',
-                        url: "/sdcard/" + util.recordFileName,
-                        loop: true,
-                        enableControls: false
+                        url: url||"/sdcard/" + util.audioDir+'/'+ util.audioFileName,
+                        loop: false,
+                        enableControls: false,
+                        listeners:{
+                        	pause:function(ad,time){
+                        		var p = ad.up('#mediaContainer');
+	                    		time = Math.round(time);
+	                			p.down('button').setText('<i class="iconfont green font20">&#xe61e;</i> '+(time)+' 秒');
+                        	},
+                        	timeupdate:function(ad,time){
+                        		var p = ad.up('#mediaContainer');
+                        		time = Math.round(time);
+	                			p.down('button').setText('<i class="iconfont red font20">&#xe61c;</i> '+(time)+' 秒');
+                        	}
+                        }
                     },
                     {
                         xtype : 'button',
-                        text  : '<i class="iconfont green font20">&#xe61b;</i> 秒',
+                        text  : '<i class="iconfont green font20">&#xe61e;</i> 0 秒',
                         margin: 20,
                         handler: function() {
-                            var audio = this.getParent().down('audio'),
-                            	di = parseInt(audio.getCurrentTime()),
-                            	tmr = null,me=this;
-                            di = di<10?'0'+di:di;
-                            util.log('播放器当前状态'+audio.isPlaying());
+                            var audio = this.getParent().down('audio');
                             if (audio.isPlaying()) {
                                 audio.pause();
-                                this.setText('<i class="iconfont green font20">&#xe61b;</i> '+di+'秒');
-                                clearInterval(tmr);tmr=null;
                             } else {
-                                audio.play();
-                                tmr = setInterval(function(){
-                                	var ci = parseInt(audio.getCurrentTime());
-                                	ci = parseInt(di)-ci;
-                                	ci = ci<10?'0'+ci:ci;
-                                	me.setText('<i class="iconfont red font20">&#xe61d;</i> '+ci+'秒');
-                                },1000);
+                            	audio.play();
                             }
                         }
                     }
                 ] : [
                     {
                         xtype: 'audio',
-                        url: util.recordFileName,
-                        loop: true
+                        url: url||util.audioDir+'/'+util.audioFileName,
+                        loop: false
                     }
                 ]
         	}).show();
         },
-        recer:function(format,progress){
+        audioMessage:function(format,progress){
         	format = Ext.String.format(format, progress);
         	if(Ext.get('notification')){
         		if(progress){
@@ -348,11 +342,21 @@ Ext.define('app.Util', {
     			notification = {
 				    tag:'div',
 				    id:'notification',
-				    cls: 'ex-popoup-hint exph-recer',
+				    cls: 'ex-popoup-hint exph-audio',
 				    children: [    
-				        {tag: 's'},
+				        {
+				        	tag: 'div',
+				        	children:[
+					             {tag:'b', class:'item-1'},
+					             {tag:'b', class:'item-2'},
+					             {tag:'b', class:'item-3'},
+					             {tag:'b', class:'item-4'},
+					             {tag:'b', class:'item-5'},
+					             {tag:'b', class:'item-6'}
+					        ]
+				        },
 				        {tag: 'i', class:'iconfont',html:'&#xe618;'},
-	    				{tag: 'span', html: format||'正在录音...{0}'} 
+	    				{tag: 'span', html: format||'正在录音 {0}'} 
 				    ]
 				};
     		var nf = dh.append(Ext.getBody(),notification,true);

@@ -3,15 +3,7 @@ Ext.define('app.view.demo.Demo', {
 	alternateClassName: 'demo',
 	xtype:'demo',
 	requires: 'Ext.layout.VBox',
-	listeners:{
-		
-	},
     config: {
-    	layout: {
-            type : 'vbox',
-            pack : 'center',
-            align: 'stretch'
-        },
         defaults: {
             xtype: 'container',
             flex : 1,
@@ -33,13 +25,17 @@ Ext.define('app.view.demo.Demo', {
 				listeners : {
 	                element : 'element',
 	                taphold : function() {
-	                	util.startRecord();
+	                	util.audioStart();
 	                }
 	            }
 			},{
 	          	xtype:'button',
 	          	text:'播放录音',
 	          	action:'play'		        
+			},{
+	          	xtype:'button',
+	          	text:'在线播放',
+	          	action:'playonline'		        
 			},{
 	          	xtype:'button',
 	          	text:'录相',

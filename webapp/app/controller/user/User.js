@@ -1,8 +1,6 @@
 Ext.define('app.controller.user.User', {
     extend: 'Ext.app.Controller',
     config: {
-        views: ['Login','user.Regist','App','Setting','More','user.Home','user.Info','exercise.Main'],
-        models: ['user.User','Course','Exercise'],
         refs: {
         	index:'index',
         	home:'home',
@@ -54,7 +52,7 @@ Ext.define('app.controller.user.User', {
             },
         	'index tabbar':{
         		activetabchange :function(tb,newView,oldView){
-        			var me = this,xtype=newView.getItemId();
+        			var me = this,xtype=newView.getItemId(xtype);
         			var view = Ext.create(xtype,{});
         			this.getIndex().animateActiveItem(view, {
                         type: 'slide',

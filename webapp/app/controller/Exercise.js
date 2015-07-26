@@ -1,7 +1,6 @@
 Ext.define('app.controller.Exercise', {
     extend: 'Ext.app.Controller',
     config: {
-    	views: ['exercise.List'],
         refs: {
         	exerciseView:'exerciseview'
         },

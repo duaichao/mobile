@@ -23,11 +23,11 @@ Ext.define('app.controller.Main', {
         Ext.ModelMgr.getModel('app.model.Local').load(1, {
             scope: this,
             success: function (config) {
-            	util.ePush('demo');
-            	//util.ePush('userLogin');
+            	//util.ePush('demo');
+            	util.ePush('userLogin');
             },
             failure: function (error) {
-            	util.ePush('demo');
+            	//util.ePush('demo');
             	//存储配置信息
                 var local = Ext.create('app.model.Local', {
                     id: 1

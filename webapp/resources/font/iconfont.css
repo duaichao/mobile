@@ -26,7 +26,6 @@
 .icon-user:before { content: "\e605"; }
 .icon-luyin1:before { content: "\e619"; }
 .icon-iconfontyoujiantou:before { content: "\e60b"; }
-.icon-bofang:before { content: "\e61b"; }
 .icon-duijiangji:before { content: "\e61a"; }
 .icon-shangjiantou2:before { content: "\e60c"; }
 .icon-shangjiantou1:before { content: "\e60d"; }
@@ -41,7 +40,7 @@
 .icon-zuojiantou1:before { content: "\e616"; }
 .icon-zuojiantou2:before { content: "\e617"; }
 .icon-svgliebiao:before { content: "\e609"; }
+.icon-bofang:before { content: "\e61e"; }
 .icon-zanting:before { content: "\e61c"; }
 .icon-gerenzhongxin:before { content: "\e603"; }
-.icon-zanting1:before { content: "\e61d"; }
 .icon-geren:before { content: "\e604"; }
