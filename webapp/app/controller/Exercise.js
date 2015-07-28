@@ -6,7 +6,7 @@ Ext.define('app.controller.Exercise', {
         },
         control: {
         	'exerciseview':{
-        		activate:function(p){;
+        		activate:function(p){
         			var lt = p.down('exerciselist'),
         				st = lt.getStore();
         			st.getProxy().setExtraParams(Ext.applyIf(p.getDefaultParams(),st.getProxy().getExtraParams()));

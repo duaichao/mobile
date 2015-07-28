@@ -2,12 +2,12 @@ Ext.define('app.view.exercise.List', {
 	extend: 'Ext.List',
 	alternateClassName: 'exerciselist',
 	xtype:'exerciselist',
-	requires: [
+	/*requires: [
 		'Ext.plugin.PullRefresh',
 		'Ext.plugin.ListPaging'
-	],
+	],*/
     config: {
-        plugins: [/*{ 
+    	/*plugins: [{ 
         	xclass: 'Ext.plugin.PullRefresh',
         	pullText:'下拉可以手动刷新...',
         	releaseText:'可以松手了，等待刷新',
@@ -25,11 +25,11 @@ Ext.define('app.view.exercise.List', {
             		console.log(list);
             	}
             }
-        }*/],
+        }],*/
         loadingText: false,
         emptyText: '<p class="no-searches">没有更多数据了</p>',
         store: Ext.create("Ext.data.Store", {
-        	pageSize: 5,
+        	pageSize: 1,
         	clearOnPageLoad:true,
             model: "app.model.Exercise",
             proxy: {
@@ -51,7 +51,7 @@ Ext.define('app.view.exercise.List', {
         }),
         emptyText: '<p class="no-searches">没有数据，请刷新重试</p>',
         itemTpl: [
-            '<div>{xindex}、{content}</div>'
+            '<div >{xindex}、{content}</div>'
         ].join('')
     }
 });

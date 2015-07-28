@@ -6,44 +6,32 @@ Ext.define('app.view.Guide', {
     config: {
     	fullscreen: true,
         defaults: {
+        	xtype:'container',
             styleHtmlContent: true
         },
-        items: [
-            {
-                html : 'Item 1',
-                style: 'background-color: #2980b9'
-            },
-            {
-                html : 'Item 2',
-                style: 'background-color: #7f8c8d'
-            },
-            {
-                html : 'Item 3',
-                style: 'background-color: #d35400'
-            },
-            {
-        		styleHtmlContent: false,
-        		layout:{
-        			type:'vbox',
-        			align:'center',
-        			pack:'center'
-        		},
-        	    style: 'background-color: #1abc9c',
-        	    items:[{
-        	    	flex:1,
-        	    	width:100,
-        	    	items:[{
-        	    		xtype:'button',
-        	    		action:'tologin',
-        	    		cls:'ui red',
-        	    		height:40,
-        	        	bottom:40,
-        	        	width:100,
-        	        	text:'点击进入'
-        	    	}]
-        	    	
-        	    }]
-            }
-        ]
+        items: [{
+            style: 'background: url(resources/images/img_spalsh_01.jpg) no-repeat center 0;'
+        },{
+            style: 'background: url(resources/images/img_spalsh_02.jpg) no-repeat center 0;'
+        },{
+            style: 'background: url(resources/images/img_spalsh_03.jpg) no-repeat center 0;'
+        },{
+            style: 'background: url(resources/images/img_spalsh_04.jpg) no-repeat center 0;'
+        },{
+    		styleHtmlContent: false,
+    		style: 'background: url(resources/images/img_spalsh_05.jpg) no-repeat center 0;',
+    	    layout:{
+    	    	type:'vbox',
+    	    	align: 'center', //垂直方向停靠起始位置
+    	        pack: 'center' 
+    	    },
+    		items:[{
+    	    	xtype:'button',
+	    		action:'tologin',
+	    		ui:'plain',
+	    		height:150,
+	        	width:150
+    	    }]
+        }]
     }
 });

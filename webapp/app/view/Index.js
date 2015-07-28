@@ -9,6 +9,9 @@ Ext.define("app.view.Index", {
     		cls:'ui tab',
     		activeTab:0,
     		docked:'bottom',
+    		defaults:{
+    			minWidth:'25%'
+    		},
     		items:[{
     			iconCls: 'icon-gerenzhongxin',
     			itemId:'home',
