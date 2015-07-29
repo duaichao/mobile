@@ -19,7 +19,11 @@ Ext.define('app.model.Course', {
         	type:'string'
         },{
         	name:'average_speed',
-        	type:'string'
+        	type:'string',
+        	convert: function(value){
+        		value = Math.floor(value);
+	        	return value;
+	        }
         },{
         	name:'correct_percent',
         	type:'string'

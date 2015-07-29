@@ -8,9 +8,21 @@ Ext.define('app.controller.Main', {
         refs: {
         },
         control: {
-        	'guide button[action=tologin]':{
-        		tap:function(){
-        			util.ePush('userLogin');
+        	'guide':{
+        		activeitemchange:function(ca, value, oldValue, eOpts){
+        			if(value.getItemId()=='last'){
+	        			var dh = Ext.DomHelper,
+		        			inbtn = {
+		    				    tag:'div',
+		    				    style:'position:absolute;',
+		    				    children: [    
+		    	    				{cls: 'inbutton scaleout',tag: 'div'} 
+		    				    ]
+		    				};
+	        			var nf = dh.append(value.element,inbtn,true);
+	        			nf.setXY(nf.getAlignToXY(value.element,'c-c',[0,10]));
+	        			nf.on('tap',function(){util.ePush('userLogin');});
+        			}
         		}
         	}
         }
@@ -22,9 +34,20 @@ Ext.define('app.controller.Main', {
         //检测是否第一次启动程序
         Ext.ModelMgr.getModel('app.model.Local').load(1, {
             scope: this,
-            success: function (config) {
+            success: function (cache) {
             	//util.ePush('demo');
-            	util.ePush('userLogin');
+            	//检测是否自动登录
+                Ext.ModelMgr.getModel('app.model.user.User').load(1, {
+                    scope: this,
+                    success: function (cfg) {
+                    	config.user = cfg.data;
+                    	//console.log(config.user);
+                    	util.ePush('index');
+                    },
+        			failure: function(record, operation) {
+        				util.ePush('userLogin');
+        			}
+                });
             },
             failure: function (error) {
             	//util.ePush('demo');

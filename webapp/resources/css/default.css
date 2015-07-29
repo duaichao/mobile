@@ -5,10 +5,10 @@
 	text-align:center;
 	width:100%;
 }
+.inbutton{width:150px;height:150px;background-color: rgba(48,48,48, 0.5);}
 .login-logo{
 	width:100%;
 	text-align:center;
-	padding:10px;
 }
 .x-layout-card-item{background:#fff;}
 .ui.x-tabbar,.x-toolbar{

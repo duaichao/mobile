@@ -17,11 +17,12 @@ Ext.define("app.view.Login", {
 				align:'right'
 			}]
 		},{
+			xtype:'container',
+			styleHtmlContent: true,
+			html:'<div class="login-logo"><img src="resources/images/login_logo.png" style="width:120px;"/><h3>全国会计从业资格全真模拟考试系统</h3></div>'
+		},{
             xtype: 'fieldset',
             items: [{
-				xtype:'panel',
-				html:'<div class="login-logo"><img src="resources/images/logo.png" style="width:120px;"/></div>'
-			},{
                 xtype: 'textfield',
                 name: 'username',
                 clearIcon:false,
@@ -33,27 +34,14 @@ Ext.define("app.view.Login", {
                 name: 'password',
                 clearIcon:false,
                 placeHolder: '输入密码'
-            }/*,
-            {
-                xtype: 'togglefield',
-                label: '记住我',
-                labelWidth: '60%',
-                name: 'keepUser',
-                value:true
-            }*/]
+            }]
         },
         {
         	xtype:'button',
         	cls:'ui red',
         	action: 'login',
         	height:40,
-            margin:'0 5px 0 5px',
             text: '登录'
-        },{
-        	height:35,
-			xtype:'container',
-			cls:'copyright',
-			html:'Copyright ©2015-2015 All Rights Reserved <br> 版权所有'
-		}]
+        }]
     }
 });

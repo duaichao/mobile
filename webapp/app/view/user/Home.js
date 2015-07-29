@@ -8,7 +8,7 @@ Ext.define('app.view.user.Home', {
 		    activate:function(){
 		    	var btn = this.down('button[action=hello]'),
 		    		text = btn.getText();
-		    	btn.setText(Ext.String.format(text, (config.user.nickname||config.user.username), util.lastDays(config.user.examtime)));
+		    	btn.setText(Ext.String.format(text, (config.user.nickname||config.user.username), util.lastDays(config.user.exam_time)));
 		    },
 		    painted:function(){//该事件发生在dom加载完成时 
 		    	var dv = this.down('dataview'),
@@ -59,7 +59,7 @@ Ext.define('app.view.user.Home', {
             cls: 'dv-basic',
             itemTpl: [
                   '<div class="warp bg{xindex}"">',
-                  '<div class="progress-ring" data-precent="{passing_percent}">',
+                  '<div class="progress-ring" data-finish="{process_num}" data-total="{total_num}">',
           			'<canvas height="90" width="90" style="width:90px; height: 90px;" aa="{xindex}"></canvas>',
          				'<div class="score"></div>',
           		  '</div>',	

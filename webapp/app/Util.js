@@ -2,8 +2,9 @@ Ext.define('app.Util', {
     alternateClassName: 'util',
     statics: {
     	drawScore : function(target) {
-    		var oldPrecent = target.getAttribute('data-precent');
-            var a = parseInt(oldPrecent, 10); // 百分比
+    		var finish = target.getAttribute('data-finish');
+    		var total = target.getAttribute('data-total');
+            var a = parseInt(finish/total*100, 10); // 百分比
             var b = 360 * parseInt(a) / 100,
     	    c = [{
     	        value: b,

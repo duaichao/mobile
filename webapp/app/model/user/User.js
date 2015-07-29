@@ -3,7 +3,10 @@ Ext.define('app.model.user.User', {
     config: {
         fields: [{
             name: 'id',
-            type: 'string'
+            type: 'int'
+        },{
+        	name:'token',
+        	type:'string'
         },{
         	name:'nickname',
         	type:'string'
@@ -43,9 +46,6 @@ Ext.define('app.model.user.User', {
             type: 'string'
         },{
         	name:'email',
-        	type:'string'
-        },{
-        	name:'keepUser',
         	type:'string'
         }],
         validations: [{

@@ -105,21 +105,40 @@ Ext.define('app.controller.user.User', {
     	util.request(config.url.login,params,function(data){
         	params.token = data.result.token;
         	config.user = params;
+        	var logUser = Ext.create('app.model.user.User', {
+                id: 1
+            });
+            logUser.set(config.user);
+            logUser.save();
         	util.ePush('index');
     	},this);
     },
     loadPersonInfo:function(params){
     	util.request(config.url.getPersonalInfo,params,function(data){
-    		data.result.examtime = data.result.exam_time;
-        	var d = config.user = Ext.applyIf(params,data.result),
+        	var d = config.user = Ext.applyIf(data.result,params),
         		f = this.getUserInfo();
-        	if(d.birthday!=''&&!Ext.isDate(d.birthday)){
-        		d.birthday = Ext.Date.parse(d.birthday, "Y-m-d");
+        	if(d.birthday!=''){
+        		if(!Ext.isDate(d.birthday)){
+        			d.birthday = Ext.Date.parse(d.birthday,'Y-m-d');
+        		}
         	}
-        	if(d.examtime!=''&&!Ext.isDate(d.examtime)){
-        		d.examtime = Ext.Date.parse(d.examtime, "Y-m-d");
+        	if(d.exam_time!=''){
+        		if(!Ext.isDate(d.exam_time)){
+        			d.exam_time = Ext.Date.parse(d.exam_time,'Y-m-d');
+        		}
         	}
+        	d.examtime = d.exam_time;
+        	d.examadd = d.district;
         	f.setValues(d);
+        	Ext.ModelMgr.getModel('app.model.user.User').load(1, {
+                scope: this,
+                success: function (cfg) {
+                	d.birthday = Ext.Date.format(d.birthday,'Y-m-d');
+                	d.exam_time = Ext.Date.format(d.examtime,'Y-m-d');
+                	cfg.setData(d);
+                	cfg.save();
+                }
+            });
     	},this);
     },
     logRegist: function(params){
@@ -134,6 +153,21 @@ Ext.define('app.controller.user.User', {
     	var params = this.getUserInfo().getValues();
     	util.request(config.url.setPersonalInfo,params,function(data){
     		util.suc('保存成功');
+    		Ext.ModelMgr.getModel('app.model.user.User').load(1, {
+                scope: this,
+                success: function (cfg) {
+                	console.log(params);
+                	var d = params;
+                	d.birthday = Ext.Date.format(d.birthday,'Y-m-d');
+                	d.district = params.examadd;
+                	d.exam_time = Ext.Date.format(d.examtime,'Y-m-d');
+                	
+                	delete d.examtime;
+                	delete d.examadd;
+                	cfg.setData(d);
+                	cfg.save();
+                }
+            });
     	},this);
     },
     //上传图片
@@ -164,7 +198,10 @@ Ext.define('app.controller.user.User', {
             //图像质量[0-100]
             destinationType: destinationType,
             sourceType: source,
-            mediaType: mediaType
+            mediaType: mediaType,
+            allowEdit:true, //出现裁剪框
+		    targetWidth:100,//图片裁剪高度
+		    targetHeight:100 //图片裁剪高度
         };
         navigator.camera.getPicture(this.uploadFile, this.uploadBroken, options);
     },
