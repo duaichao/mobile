@@ -79,7 +79,7 @@ Ext.define('app.controller.user.User', {
             	itemtap:function(dv, index, target, record, e, eOpts){
             		if(e.target.className.indexOf('kclx')!=-1){
             			var params = config.user;
-            			params.course_id = record.get('course_id');
+            			params = Ext.applyIf(record.data,params)
             			util.ePush('exerciseview',{
             				defaultParams:params
             			});

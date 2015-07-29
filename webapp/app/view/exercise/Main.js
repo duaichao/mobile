@@ -56,8 +56,6 @@ Ext.define('app.view.exercise.Main', {
     			itemId:'next',
     	        title:'下一题'
     		}]
-        },{
-        	xtype: 'exerciselist'
         }]
     }
 });

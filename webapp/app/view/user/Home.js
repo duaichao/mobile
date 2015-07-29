@@ -59,7 +59,7 @@ Ext.define('app.view.user.Home', {
             cls: 'dv-basic',
             itemTpl: [
                   '<div class="warp bg{xindex}"">',
-                  '<div class="progress-ring" data-finish="{process_num}" data-total="{total_num}">',
+                  '<div class="progress-ring" data-percent="{correct_percent}">',
           			'<canvas height="90" width="90" style="width:90px; height: 90px;" aa="{xindex}"></canvas>',
          				'<div class="score"></div>',
           		  '</div>',	

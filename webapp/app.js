@@ -38,7 +38,7 @@ Ext.application({
         'Guide','Main','Index',
         'Login','user.Regist','App','Setting',
         'More','user.Home','user.Info',
-        'exercise.Main','exercise.List'
+        'exercise.Main','exercise.View'
 	],
     models: [
          'Local',
@@ -49,6 +49,7 @@ Ext.application({
     ],
     launch: function() {
     	Ext.fly('appLoadingIndicator').destroy();
+    	 
     	//Ext.Viewport.add(Ext.create('app.view.Main'));
     	util.init();
     },onUpdated: function() {

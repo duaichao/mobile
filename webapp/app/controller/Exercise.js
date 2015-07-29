@@ -6,15 +6,63 @@ Ext.define('app.controller.Exercise', {
         },
         control: {
         	'exerciseview':{
-        		activate:function(p){
-        			var lt = p.down('exerciselist'),
-        				st = lt.getStore();
-        			st.getProxy().setExtraParams(Ext.applyIf(p.getDefaultParams(),st.getProxy().getExtraParams()));
-        			st.loadPage(1);
-        			lt.hide();
-        			st.on('load',function(){
-        				lt.show();
+        		initialize:function(p){
+        			var cardlist = Ext.create('app.view.exercise.View',{
+    		        	store: Ext.create("Ext.data.Store", {
+    		            	pageSize: 5,
+    		            	clearOnPageLoad:true,
+    		                model: "app.model.Exercise",
+    		                proxy: {
+    		                    type: "ajax",
+    		                    actionMethods : 'POST',
+    		                    startParam:'course_offset',
+    		                    limitParam: 'course_num', //设置limit参数，默认为limit
+    		                    pageParam: 'page', //设置page参数，默认为page
+    		                    url : config.url.getExercise,
+    		                    reader: {
+    		                        type: "json",
+    		                        messageProperty:'info',
+    		                        successProperty:'state',
+    		                        totalProperty:"QuestNum",
+    		                        rootProperty: "result"
+    		                    }
+    		                },
+    		                autoLoad: false
+    		            })
         			});
+        			p.add(cardlist);
+        			cardlist.on('activeitemchange',function(cl, value, oldValue, eOpts ){
+            			var st = cl.getStore(),
+        					ind = cl.getActiveIndex();
+            			//开始加载下一页数据
+            			if(ind+1==st.getCount()){
+            				st.nextPage();
+            			}
+            			console.log(ind+'=='+st.getCount());
+	        		});
+        		},
+        		activate:function(p){
+        			var lt = p.down('cardlist'),
+        				st = lt.getStore(),
+        				pagerBtn = p.down('button#pager'),
+        				params = p.getDefaultParams(),
+        				pageSize = st.getPageSize(),
+        				totalCount = parseInt(params.total_num),
+        				currCount = parseInt(params.process_num),
+        				currPage = currCount/pageSize,
+        				pp = {
+        					course_id:params.course_id,
+        					token:params.token,
+        					username:params.username
+        				};
+        			if(currCount%pageSize>0){currPage++;}
+        			st.getProxy().setExtraParams(pp);
+        			st.loadPage(currPage+1,{
+        				callback:function(){
+        					//时间计时
+        				}
+        			});
+        			pagerBtn.setText((currCount+1)+'/'+totalCount);
         		}
         	},
         	'exerciseview button#prev':{
@@ -26,7 +74,7 @@ Ext.define('app.controller.Exercise', {
     },
     doPage :function(btn){
     	var p=this.getExerciseView(),
-		st = p.down('exerciselist').getStore(),
+		st = p.down('carousellist').getStore(),
 		pbtn = p.down('button#prev'),
 		nbtn = p.down('button#next'),
 		total = st.getTotalCount(),pageSize = st.getPageSize(),

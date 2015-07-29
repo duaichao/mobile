@@ -201,6 +201,10 @@
   font-family: "Microsoft Yahei", sans-serif;
 }*/
 
+.x-form-fieldset .x-field.answer{background-color: #f7f7f7;}
+.answer .x-form-label span{font-weight:normal;}
+.answer .x-form-label span i:before{font-size:1.4em!important;}
 
 
-
+.answer .x-input-el:checked+.x-field-mask::after{color:#d73d32;}
+.answer .x-input-radio:checked+.x-field-mask::after{background: #d73d32!important;}
