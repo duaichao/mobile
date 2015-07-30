@@ -23,7 +23,7 @@ Ext.define('app.model.user.User', {
         	name:'photo',
         	type:'string',
         	convert: function(value){
-        		value = value ||'resources/images/noface.png';
+        		value = config.url.host+value || 'resources/images/noface.png';
 	        	return value;
 	        }
         },{

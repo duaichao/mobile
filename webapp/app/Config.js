@@ -9,6 +9,7 @@ Ext.define('app.Config', {
     		version:1
     	},
     	url:{
+    		host:'http://211.101.20.203',
     		login:'http://211.101.20.203/api/Login',
     		regist:'http://211.101.20.203/api/Register',
     		getPersonalInfo:'http://211.101.20.203/api/getPersonalInfo',

@@ -14,7 +14,7 @@ Ext.define('app.Util', {
     	        color: "#ffffff"
     	    }],
     	    d = {
-    	        percentageInnerCutout: 75,
+    	        percentageInnerCutout: 70,
     	        segmentShowStroke: !1,
     	        animationEasing: "easeOutQuart"
     	    };

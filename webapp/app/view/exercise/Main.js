@@ -13,20 +13,7 @@ Ext.define('app.view.exercise.Main', {
 				action: 'backhome',
 				ui:'back',
 				text:'返回'
-			}/*,{
-				itemId: 'prev',
-				disabled:true,
-				padding:0,
-				align:'right',
-				ui:'plain',
-				iconCls:'icon-zuojiantou2 white'
-			},{
-				itemId: 'next',
-				padding:0,
-				ui:'plain',
-				align:'right',
-				iconCls:'icon-youjiantou2 white'
-			}*/]
+			}]
         },{
         	xtype:'tabbar',
     		cls:'ui tab',
@@ -36,23 +23,23 @@ Ext.define('app.view.exercise.Main', {
     			minWidth:'20%'
     		},
     		items:[{
-    			iconCls: 'icon-zuojiantou2',
+    			iconCls: 'icon-wwwzuojiantou',
     			itemId:'prev',
     	        title:'上一题'
     		},{
     			itemId:'anwser',
     	    	title: '显示答案',
-    	        iconCls: 'icon-show'
+    	        iconCls: 'icon-xianshi'
     	    },{
     	    	itemId:'pager',
     	    	title: '0/100',
-    	        iconCls: 'icon-svgliebiao'
+    	        iconCls: 'icon-list'
     	    },{
     	    	itemId:'favorite',
 	   			title: '收藏',
 			    iconCls: 'icon-shoucang'
 			},{
-    			iconCls: 'icon-youjiantou2',
+    			iconCls: 'icon-wwwyoujiantou',
     			itemId:'next',
     	        title:'下一题'
     		}]

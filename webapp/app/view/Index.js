@@ -15,7 +15,7 @@ Ext.define("app.view.Index", {
     		items:[{
     			iconCls: 'icon-gerenzhongxin',
     			itemId:'home',
-    	        title:'首页'
+    	        title:'个人中心'
     		},{
     			itemId:'appContainer',
     	    	title: '应用中心',
