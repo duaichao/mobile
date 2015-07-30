@@ -114,7 +114,7 @@
 	line-height:110px;
 	font-family: "Arial", sans-serif;
 	text-align: center;
-	font-size: 1.4em;
+	font-size: 1.2em;
 	color: #fff;
 }
 .dv-basic  .x-dataview-item .progress-ring .score span{font-size:0.6em;}
@@ -140,53 +140,12 @@
 }
 
 .dv-basic  .x-dataview-item .content .buttons{padding-top:5px;}
-/*
-.progress-ring div {
-  position: absolute;
-  top: 20px;
-  left: 12px;
-  height: 80px;
-  width: 80px;
-  border: 13px solid transparent;
-  border-radius: 50%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 
-
-.progress-ring  .progress-track,.progress-ring  .progress-cover{border-color:#fff;}
-.progress-ring  .progress-left,.progress-ring  .progress-right{border-color:#6ec84e;}
-
-
-.progress-ring .progress-left, .progress-ring .progress-right, .progress-ring .progress-cover {
-  clip: rect(0 40px 80px 0);
-}
-.progress-ring .progress-right {
-  opacity: 0;
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-.progress-ring .progress-text {
-  border: none;
-  font-family: "Arial", sans-serif;
-  text-align: center;
-  font-size: 16.5px;
-  color: #fff;
-  line-height: 80px;
-}
-.progress-ring .progress-percent {
-  font-size: .55em;
-  font-style: italic;
-  font-family: "Microsoft Yahei", sans-serif;
-}*/
-
-.qe-title .x-html{font-size:1em;padding:1.2em 0.6em;}
+.qe-title .x-html{font-size:0.85em;padding:0.6em;}
 /*.x-field.qe-answer{background-color: #f7f7f7;}*/
 .qe-answer .x-form-label{background-color: #fff;}
 
-.qe-answer .x-form-label span{font-weight:normal;font-size:1em!important;}
+.qe-answer .x-form-label span{font-weight:normal;font-size:0.85em!important;}
 
 .x-field-radio .x-field-mask::before{background-color:none;width:0;height:0;}
 .x-field-checkbox .x-field-mask::after, .x-field-radio .x-field-mask::after{

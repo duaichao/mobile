@@ -4,7 +4,7 @@ Ext.define('app.Util', {
     	drawScore : function(target) {
     		var percent = target.getAttribute('data-percent');
             var a = parseInt(Math.round(percent), 10); // 百分比
-            var b = 360 * parseInt(a) / 100,
+            var b = 360 * parseInt(a) / 100 || 1,
     	    c = [{
     	        value: b,
     	        color: "#53a93f"
@@ -24,61 +24,6 @@ Ext.define('app.Util', {
     	        target.down(".score").setHtml(a+'<span>%</span>');
     	    }
     	    e();
-    	},
-    	loadingRing :function(target){
-    		var defaultOpt = {
-	            trackColor: '#fff',
-	            progressColor: '#53a93f',
-	            precent: 75,
-	            duration: 500
-	        }; // 默认选项
-            var color = target.getAttribute('data-color'); // 颜色
-            var oldPrecent = target.getAttribute('data-precent');
-            var precent = parseInt(oldPrecent, 10); // 百分比
-            var duration = parseFloat(target.getAttribute('data-duration'), 10) * 1000; // 持续时间
-            var trackColor, progressColor;
-            if (color && color.split(',').length === 2) {
-                var colorSet = color.split(',');
-                trackColor = colorSet[0];
-                progressColor = colorSet[1];
-            } else {
-                trackColor = defaultOpt.trackColor;
-                progressColor = defaultOpt.progressColor;
-            }
-            if (!precent)
-                precent = defaultOpt.precent;
-            if (!duration)
-                duration = defaultOpt.duration;
-            
-            var x = target.down('.progress-cover').getHeight(); // 触发 Layout
-            target.down('.progress-left').setStyle({
-                'transform': 'rotate(' + precent * 3.6 + 'deg)',
-                '-webkit-transform-style':'preserve-3d', 
-            	'-webkit-backface-visibility':'hidden',
-                '-o-transform': 'rotate(' + precent * 3.6 + 'deg)',
-                '-ms-transform': 'rotate(' + precent * 3.6 + 'deg)',
-                '-moz-transform': 'rotate(' + precent * 3.6 + 'deg)',
-                '-webkit-transform': 'rotate(' + precent * 3.6 + 'deg)',
-                'transition': 'transform ' + duration + 'ms linear',
-                '-o-transition': '-o-transform ' + duration + 'ms linear',
-                '-ms-transition': '-ms-transform ' + duration + 'ms linear',
-                '-moz-transition': '-moz-transform ' + duration + 'ms linear',
-                '-webkit-transition': '-webkit-transform ' + duration + 'ms linear'
-            });
-
-            if (precent > 50) {
-                var animation = 'toggle ' + (duration * 50 / precent) + 'ms';
-                target.down('.progress-right').setStyle({
-                    'opacity': 1,
-                    'animation': animation,
-                    'animation-timing-function': 'step-end'
-                });
-                target.down('.progress-cover').setStyle({
-                    'opacity': 0,
-                    'animation': animation,
-                    'animation-timing-function': 'step-start'
-                });
-            }
     	},
     	lastDays :function(date){
     		var now,dateTime;

@@ -35,7 +35,7 @@ Ext.define('app.view.App', {
             })
         }],
         listeners:{
-        	painted:function(){alert(222);
+        	painted:function(){
     	    	var dv = this.down('dataview'),
         		st = dv.getStore();
     	    	st.getProxy().setExtraParams(config.user);

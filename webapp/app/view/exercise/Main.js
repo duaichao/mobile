@@ -1,8 +1,9 @@
 Ext.define('app.view.exercise.Main', {
     alternateClassName: 'exerciseview',
     xtype: 'exerciseview',
-    extend: 'Ext.Container',
+    extend: 'Ext.form.Panel',
     config: {
+    	scrollable:null,
     	defaultParams:{},
     	layout:'fit',
         items: [{

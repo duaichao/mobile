@@ -3,19 +3,21 @@ Ext.define('app.view.exercise.View', {
 	alternateClassName: 'exerciselist',
 	xtype:'exerciselist',
 	config:{
+		currNo:1,
 		indicator:false
 	},
 	onLoad:function(store){
 		var me = this,
         item;
 		store.each(function (record, index, length) {
-        	var idx = index + 1+((store.currentPage - 1) * store.getPageSize()),
+        	var idx = index +1+ me.getCurrNo(),
         		data = record.data,
+        		types = {'01':'单选','02':'多选','03':'判断','06':'综合'},
         		fields = [{
             		xtype:'container',
             		styleHtmlContent:true,
             		cls:'qe-title',
-            		html:idx+'、'+data.content
+            		html:idx+'、('+types[data.type]+')'+data.content
             	}],
         		answer = data.answer_array,
         		zm = ['A','B','C','D','E','F','G'];
@@ -30,6 +32,16 @@ Ext.define('app.view.exercise.View', {
         				label:''+zm[p]+' '+answer[p].content
         			});
         		}
+        	}
+        	if(data.type=='02'){
+        		//多选题需要手动提交答案
+        		fields.push({
+        			xtype:'button',
+        			height:40,
+        			cls:'ui blue',
+        			margin:'1.2em 0.6em',
+        			text:'提交答案'
+        		});
         	}
             item = Ext.factory({
             	record:record,
