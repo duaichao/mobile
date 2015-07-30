@@ -17,7 +17,7 @@ Ext.define('app.view.exercise.View', {
             		xtype:'container',
             		styleHtmlContent:true,
             		cls:'qe-title',
-            		html:idx+'、('+types[data.type]+')'+data.content
+            		html:idx+'.('+types[data.type]+')'+data.content
             	}],
         		answer = data.answer_array,
         		zm = ['A','B','C','D','E','F','G'];
