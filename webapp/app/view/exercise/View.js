@@ -27,9 +27,15 @@ Ext.define('app.view.exercise.View', {
         				cls:'qe-answer',
         				xtype:data.type=='02'?'checkboxfield':'radiofield',
         				name:'user_answer',
-        				labelWidth:'83%',
+        				labelWidth:'100%',
         				labelWrap:true,
-        				label:''+zm[p]+' '+answer[p].content
+        				label:''+zm[p]+' '+answer[p].content,
+        				listeners:{
+        					change:function(f, newValue, oldValue, eOpts){
+        						if(newValue){f.addCls('selected');}else{f.removeCls('selected');}
+        						
+        					}
+        				}
         			});
         		}
         	}
@@ -38,7 +44,7 @@ Ext.define('app.view.exercise.View', {
         		fields.push({
         			xtype:'button',
         			height:40,
-        			cls:'ui blue',
+        			cls:'ob-btn ob-btn-success',
         			margin:'1.2em 0.6em',
         			text:'提交答案'
         		});

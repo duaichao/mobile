@@ -49,7 +49,7 @@
 	    "bundle": true,
 	    "update": "delta"
 	},{
-	    "path": "touch/sencha-touch-all.js",
+	    "path": "touch/sencha-touch-all-mydebug.js",
 	    "x-bootstrap": true
 	},{
 	    "path": "app.js",
@@ -76,27 +76,19 @@
     "css": [{
 	    "path": "resources/css/sencha-touch.css",
 	    "update": "delta"
-	},
-	{
-	    "path": "resources/font/iconfont.css",//
+	},{
+	    "path": "resources/font/iconfont.css",
 	    "update": "delta"
-	},
-	{
+	},{
+	    "path": "resources/css/obvious-buttons.css",
+	    "update": "delta"
+	},{
 	    "path": "resources/css/custom.css",
 	    "update": "delta"
-	},
-	{
+	},{
 	    "path": "resources/css/default.css",
 	    "update": "delta"
-	}/*,
-	{
-	    "path": "resources/css/plusbuttons.css",
-	    "update": "delta"
-	},
-	{
-	    "path": "resources/css/animate.min.css",
-	    "update": "delta"
-	}*/],
+	}],
 
     /**
      * Used to automatically generate cache.manifest (HTML 5 application cache manifest) file when you build

@@ -1,4 +1,4 @@
-Ext.define('app.controller.user.User', {
+Ext.define('app.controller.User', {
     extend: 'Ext.app.Controller',
     config: {
         refs: {
@@ -53,7 +53,8 @@ Ext.define('app.controller.user.User', {
         	'index tabbar':{
         		activetabchange :function(tb,newView,oldView){
         			var me = this,xtype=newView.getItemId(xtype);
-        			var view = Ext.create(xtype,{});
+        			
+        			var view = Ext.create(xtype);
         			this.getIndex().animateActiveItem(view, {
                         type: 'slide',
                         direction: 'left'
@@ -66,9 +67,9 @@ Ext.define('app.controller.user.User', {
         	},
             'home dataview':{
             	itemtap:function(dv, index, target, record, e, eOpts){
-            		if(e.target.className.indexOf('kclx')!=-1){
+            		if(e.target.className.indexOf('blue')!=-1){
             			var params = config.user;
-            			params = Ext.applyIf(record.data,params)
+            			params = Ext.applyIf(record.data,params);
             			util.ePush('exerciseview',{
             				defaultParams:params
             			});
@@ -93,41 +94,24 @@ Ext.define('app.controller.user.User', {
     logUserIn: function (params) {
     	util.request(config.url.login,params,function(data){
         	params.token = data.result.token;
-        	config.user = params;
-        	var logUser = Ext.create('app.model.user.User', {
-                id: 1
-            });
-            logUser.set(config.user);
-            logUser.save();
-        	util.ePush('index');
-    	},this);
-    },
-    loadPersonInfo:function(params){
-    	util.request(config.url.getPersonalInfo,params,function(data){
-        	var d = config.user = Ext.applyIf(data.result,params),
-        		f = this.getUserInfo();
-        	if(d.birthday!=''){
-        		if(!Ext.isDate(d.birthday)){
-        			d.birthday = Ext.Date.parse(d.birthday,'Y-m-d');
-        		}
-        	}
-        	if(d.exam_time!=''){
-        		if(!Ext.isDate(d.exam_time)){
-        			d.exam_time = Ext.Date.parse(d.exam_time,'Y-m-d');
-        		}
-        	}
-        	d.examtime = d.exam_time;
-        	d.examadd = d.district;
-        	f.setValues(d);
-        	Ext.ModelMgr.getModel('app.model.user.User').load(1, {
-                scope: this,
-                success: function (cfg) {
-                	d.birthday = Ext.Date.format(d.birthday,'Y-m-d');
-                	d.exam_time = Ext.Date.format(d.examtime,'Y-m-d');
-                	cfg.setData(d);
-                	cfg.save();
-                }
-            });
+        	Ext.fly('appLoadingIndicator').show();
+        	//加载个人信息
+        	util.request(config.url.getPersonalInfo,params,function(data){
+            	var d = Ext.applyIf(data.result,params);
+            	var logUser = Ext.create('app.model.User', {
+                    id: 1
+                });
+                logUser.set(d);
+                logUser.save();
+                //关闭加载进度
+            	Ext.fly('appLoadingIndicator').destroy();
+            	//初始化配置参数
+            	config.user = d;
+            	//加载个人信息成功后 跳转页面
+            	util.ePush('index');
+        	},this);
+        	
+        	
     	},this);
     },
     logRegist: function(params){
@@ -136,23 +120,23 @@ Ext.define('app.controller.user.User', {
         	util.ePush('userLogin');
     	},this);
     },
-    keepUser: function (user) {
-    },
     saveInfo :function(){
     	var params = this.getUserInfo().getValues();
     	util.request(config.url.setPersonalInfo,params,function(data){
     		util.suc('保存成功');
-    		Ext.ModelMgr.getModel('app.model.user.User').load(1, {
+    		Ext.ModelMgr.getModel('app.model.User').load(1, {
                 scope: this,
                 success: function (cfg) {
-                	console.log(params);
                 	var d = params;
                 	d.birthday = Ext.Date.format(d.birthday,'Y-m-d');
                 	d.district = params.examadd;
                 	d.exam_time = Ext.Date.format(d.examtime,'Y-m-d');
                 	
-                	d.examtime = null;
-                	d.examadd = null;
+                	delete d.examtime;
+                	delete d.examadd;
+                	
+                	d = Ext.applyIf(d,cfg.data)
+                	config.user = d;
                 	cfg.setData(d);
                 	cfg.save();
                 }
@@ -204,7 +188,7 @@ Ext.define('app.controller.user.User', {
             	config.user.photo = data.result.icon;
             	Ext.get('u-face').dom.src = config.url.host+config.user.photo;
             	//放入缓存
-            	Ext.ModelMgr.getModel('app.model.user.User').load(1, {
+            	Ext.ModelMgr.getModel('app.model.User').load(1, {
                     scope: this,
                     success: function (cfg) {
                     	cfg.set('photo',data.result.icon);

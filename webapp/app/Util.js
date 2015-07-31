@@ -108,12 +108,19 @@ Ext.define('app.Util', {
         ePush: function (xtype,params,turn) {
             var me = Ext.Viewport,
             view = me.getActiveItem();
-            if (view && view.getItemId() == xtype) {
-                return;
+            if(Ext.isString(xtype)){
+		        if (view && view.getItemId() == xtype) {
+		            return;
+		        }
+		        view = Ext.create(xtype, params||{
+		            itemId: xtype
+		        });
+            }else{
+            	if (view && view.getItemId() == xtype.getItemId) {
+		            return;
+		        }
+            	view = xtype;
             }
-            view = Ext.create(xtype, params||{
-                itemId: xtype
-            });
             //切换
             me.animateActiveItem(view, {
                 type: 'slide',
@@ -129,6 +136,7 @@ Ext.define('app.Util', {
                     //强制销毁，防止销毁不完全引发错误
                 	Ext.defer(function () {
                 		//me.remove(oldValue, true);
+                		//console.log(oldValue.getAutoDestroy());
                 		if(oldValue.getAutoDestroy()){oldValue.destroy();}
                 	}, 500);
                 }
@@ -309,6 +317,7 @@ Ext.define('app.Util', {
         },
         loader:function(format,progress){
         	format = Ext.String.format(format, progress);
+        	format ='';
         	if(Ext.get('notification')){
         		if(progress){
         			Ext.get('notification').down('span').setHtml(format);
@@ -368,7 +377,7 @@ Ext.define('app.Util', {
     		});
     		setTimeout(function(){
     			util.hideMessage();
-    		},1500);
+    		},1000);
         },
         hideMessage:function(){
         	Ext.Viewport.setMasked(false);
