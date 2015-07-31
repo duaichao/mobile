@@ -3,6 +3,24 @@ Ext.define('app.view.user.Info', {
 	xtype:'userInfo',
     extend: 'Ext.form.Panel',
     config: {
+    	listeners:{
+		    activate:function(){
+		    	var d = config.user;
+		    	if(d.birthday!=''){
+	        		if(!Ext.isDate(d.birthday)){
+	        			d.birthday = Ext.Date.parse(d.birthday,'Y-m-d');
+	        		}
+	        	}
+	        	if(d.exam_time!=''){
+	        		if(!Ext.isDate(d.exam_time)){
+	        			d.exam_time = Ext.Date.parse(d.exam_time,'Y-m-d');
+	        		}
+	        	}
+	        	d.examtime = d.exam_time;
+	        	d.examadd = d.district;
+	        	this.setValues(d);
+		    }
+    	},
         items: [{
         	title:'个人信息',
 			docked: 'top',
@@ -27,10 +45,8 @@ Ext.define('app.view.user.Info', {
 	            xtype: 'hiddenfield',
 	            name: 'token'
 	        },{
-	            xtype: 'textfield',
-	            name: 'username',
-	            readOnly:true,
-	            label: '用户名'
+	            xtype: 'hiddenfield',
+	            name: 'username'
 	        },{
 	            xtype: 'textfield',
 	            name: 'nickname',
@@ -66,7 +82,14 @@ Ext.define('app.view.user.Info', {
 	            xtype: 'numberfield',
 	            name: 'telphone',
 	            label: '手机'
-	        },{
+	        }]
+		},{
+			xtype: 'fieldset',
+            layout: 'vbox', 
+            defaults: {
+                labelWidth: '25%'
+            },
+			items:[{
 	            label: '考试时间',
             	name: 'examtime',
 	            xtype: 'datepickerfield',

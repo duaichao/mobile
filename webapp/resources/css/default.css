@@ -10,6 +10,7 @@
 	width:100%;
 	text-align:center;
 }
+.login-logo h3{font-size:1.4em;margin-bottom: 0.3em;}
 .x-layout-card-item{background:#fff;}
 .ui.x-tabbar,.x-toolbar{
 	background-color: #404040;
@@ -90,11 +91,7 @@
 .u-person #u-info  #u-other{color:#bbb;}
 
 
-.dv-basic  .x-dataview-item{height:100px;margin-bottom:0.6em;background:#fff;}
-.dv-basic  .x-dataview-item .warp{width:100%;height:100%;position: relative;}
-.dv-basic  .x-dataview-item .warp.bg1{background:rgba(41,128,185,1);}
-.dv-basic  .x-dataview-item .warp.bg2{background:rgba(26,188,156,1);}
-.dv-basic  .x-dataview-item .warp.bg3{background:rgba(211,84,0,1);}
+.dv-basic  .x-dataview-item{position: relative;height:100px;margin-bottom:0.6em;background:#fff;}
 
 
 .dv-basic  .x-dataview-item .progress-ring {
@@ -140,25 +137,75 @@
 }
 
 .dv-basic  .x-dataview-item .content .buttons{padding-top:5px;}
+.dv-basic  .x-dataview-item .content .buttons a{margin-right:0.5em;font-size: 15px;}
+.dv-basic  .x-dataview-item .content .buttons a.ob-btn:hover,
+.dv-basic  .x-dataview-item .content .buttons a.ob-btn:focus {
+}
+
+.x-form-fieldset{  margin: .5em;}
+.x-input-el{font-size:0.85em;  padding: .9em;}
+.x-form-label span{font-size:0.75em;font-weight:700;}
+
+.x-field-radio .x-field-mask::after,
+.x-field-radio .x-field-mask::before,
+.x-field-checkbox .x-field-mask::after, .x-field-radio .x-field-mask::after{
+	content: '';
+	font-size:0px;
+	width:0px;
+	height:0px;
+	display:none;
+}
+
+
+.about .x-list-item{background:#fff;border-top:1px solid #ddd;}
+.about.x-list .x-list-item.x-item-selected .x-dock-horizontal, .about.x-list .x-list-item.x-item-selected.x-list-item-tpl{
+	background-image:none;
+	background-color:#006bb6;
+}
+
+
+
 
 .qe-title .x-html{font-size:0.85em;padding:0.6em;}
-/*.x-field.qe-answer{background-color: #f7f7f7;}*/
 .qe-answer .x-form-label{background-color: #fff;}
+.qe-answer.x-field-checkbox .x-form-label::before,.qe-answer.x-field-radio .x-form-label::before{
+	font-family: "iconfont";
+	color:#ddd;
+	content: "\e62d";
+	font-size:1.25em;
+	padding:0.5em;
+	margin-right:.2em;
+	background:#f7f7f7;
+}
+.qe-answer.x-field-checkbox.selected .x-form-label::before{
+	content: "\e631";
+	color:#53a93f;
+}
+.qe-answer.x-field-radio .x-form-label::before{
+	content: "\e62a";
+}
+.qe-answer.x-field-radio.selected .x-form-label::before{
+	content: "\e62e";
+	color:#53a93f;
+}
+
 
 .qe-answer .x-form-label span{font-weight:normal;font-size:0.85em!important;}
 
-.x-field-radio .x-field-mask::before{background-color:none;width:0;height:0;}
-.x-field-checkbox .x-field-mask::after, .x-field-radio .x-field-mask::after{
-	color:#ddd;
-	font-family:"iconfont";
-	content: "\e62f";
-	top:4px;
-	font-size:1.4em;
-}
-.x-field-radio .x-field-mask::after{content: "\e62b";background:none;width:auto;height:auto;top:4px;}
-.x-input-el:checked+.x-field-mask::after{color:#d73d32;content: "\e630";}
-.x-input-radio:checked+.x-field-mask::after{color:#d73d32;background:none;content: "\e62c";}
 
+
+
+
+
+
+
+.x-tabbar.x-docked-bottom .x-tab .x-button-icon:before {
+  font-size: 1.4em;
+  line-height: 1em;
+}
+.x-tabbar.x-docked-bottom .x-tab .x-button-label{
+	font-size: 11px;
+}
 
 
 

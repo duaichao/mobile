@@ -5,8 +5,6 @@ Ext.define('app.controller.Main', {
             'go/:view': 'handleRoute',
             'go/:view/:isPop': 'handleRoute',
         },
-        refs: {
-        },
         control: {
         	'guide':{
         		activeitemchange:function(ca, value, oldValue, eOpts){
@@ -37,20 +35,39 @@ Ext.define('app.controller.Main', {
             success: function (cache) {
             	//util.ePush('demo');
             	//检测是否自动登录
-                Ext.ModelMgr.getModel('app.model.user.User').load(1, {
+                Ext.ModelMgr.getModel('app.model.User').load(1, {
                     scope: this,
                     success: function (cfg) {
-                    	config.user = cfg.data;
-                    	//console.log(config.user);
-                    	util.ePush('index');
+                    	//创建课程数据源
+                    	app.app.getApplication().createCourseStore(cfg.data);
+                    	//加载个人信息
+                    	util.request(config.url.getPersonalInfo,cfg.data,function(data){
+                        	var d = Ext.applyIf(data.result,cfg.data);
+                        	Ext.ModelMgr.getModel('app.model.User').load(1, {
+                                scope: this,
+                                success: function (cfg) {
+                                	cfg.setData(d);
+                                	cfg.save();
+                                	//关闭加载进度
+                                	Ext.fly('appLoadingIndicator').destroy();
+                                	//初始化配置参数
+                                	config.user = d;
+                                	//加载个人信息成功后 跳转页面
+                                	util.ePush('index');
+                                }
+                            });
+                    	},this);
+                    	
                     },
         			failure: function(record, operation) {
+        				Ext.fly('appLoadingIndicator').hide();
         				util.ePush('userLogin');
         			}
                 });
             },
             failure: function (error) {
             	//util.ePush('demo');
+            	Ext.fly('appLoadingIndicator').destroy();
             	//存储配置信息
                 var local = Ext.create('app.model.Local', {
                     id: 1

@@ -11,12 +11,11 @@ Ext.define('app.view.user.Regist', {
 			docked: 'top',
 			xtype: 'titlebar',
 			items:[{
-				text:'登录',
+				text:'返回',
 				ui:'back',
 				action:'tologin'
 			},{
 				text:'保存',
-				cls:'tool blue',
 				action:'save',
 				align:'right'
 			}]

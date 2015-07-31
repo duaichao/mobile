@@ -1,4 +1,4 @@
-Ext.define('app.model.user.User', {
+Ext.define('app.model.User', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{
@@ -23,7 +23,7 @@ Ext.define('app.model.user.User', {
         	name:'photo',
         	type:'string',
         	convert: function(value){
-        		value = config.url.host+value || 'resources/images/noface.png';
+        		value = value || 'resources/images/noface.png';
 	        	return value;
 	        }
         },{
