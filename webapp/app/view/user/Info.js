@@ -24,6 +24,7 @@ Ext.define('app.view.user.Info', {
         items: [{
         	title:'个人信息',
 			docked: 'top',
+			ui:'fred',
 			xtype: 'titlebar',
 			items:[{
 				action: 'backHome',

@@ -9,16 +9,18 @@ Ext.define("app.view.user.Login", {
         items: [{
 			title:'登录',
 			docked: 'top',
+			ui:'fblack',
 			xtype: 'titlebar',
 			items:[{
 				action: 'regist',
 				text:'注册',
+				ui:'fred',
 				align:'right'
 			}]
 		},{
 			xtype:'container',
 			styleHtmlContent: true,
-			html:'<div class="login-logo"><img src="resources/images/login_logo.png" style="width:120px;"/><h3>全国会计从业资格全真模拟考试系统</h3></div>'
+			html:'<div class="login-logo"><img src="resources/images/login_logo.png" style="width:80px;"/><h3>全国会计从业资格全真模拟考试系统</h3></div>'
 		},{
             xtype: 'fieldset',
             items: [{
@@ -37,8 +39,8 @@ Ext.define("app.view.user.Login", {
         },
         {
         	xtype:'button',
-        	cls:'ob-btn ob-btn-danger',
         	action: 'login',
+        	cls:'ob-btn ob-btn-danger',
         	height:40,
             text: '登录'
         }]

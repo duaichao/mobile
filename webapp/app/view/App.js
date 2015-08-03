@@ -5,7 +5,8 @@ Ext.define('app.view.App', {
     config: {
     	layout:'fit',
     	items:[{
-        	title:'应用中心',
+        	title:'应用精选',
+        	ui:'fred',
 			docked: 'top',
 			xtype: 'titlebar'
         },{

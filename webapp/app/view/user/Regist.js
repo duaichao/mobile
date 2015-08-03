@@ -9,13 +9,15 @@ Ext.define('app.view.user.Regist', {
         items: [{
 			title:'注册',
 			docked: 'top',
+			ui:'fblack',
 			xtype: 'titlebar',
 			items:[{
 				text:'返回',
-				ui:'back',
+				ui:'back fgray',
 				action:'tologin'
 			},{
 				text:'保存',
+				ui:'fblue',
 				action:'save',
 				align:'right'
 			}]

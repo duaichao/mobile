@@ -34,17 +34,8 @@ Ext.define('app.model.Exercise', {
         	name:'is_favorite',
         	type:'int'
         },{
-            name: 'username',
-            type: 'string'
-        },{
-            name: 'password',
-            type: 'string'
-        },{
-        	name:'email',
-        	type:'string'
-        },{
-        	name:'keepUser',
-        	type:'string'
+            name: 'finish',
+            type: 'int'
         }]
     }
 });

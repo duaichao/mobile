@@ -6,28 +6,27 @@ Ext.define("app.view.Index", {
     	layout:'card',
     	items:[{
     		xtype:'tabbar',
-    		cls:'ui tab',
     		activeTab:0,
     		docked:'bottom',
     		defaults:{
     			minWidth:'25%'
     		},
     		items:[{
-    			iconCls: 'icon-gerenzhongxin',
+    			iconCls: 'home',
     			itemId:'home',
     	        title:'个人中心'
     		},{
-    			itemId:'appContainer',
-    	    	title: '应用中心',
-    	        iconCls: 'icon-yingyong'
+    			itemId:'favoriteContainer',
+    	    	title: '我的收藏',
+    	        iconCls: 'favorite'
     	    },{
-    	    	itemId:'settingContainer',
-    	    	title: '设置',
-    	        iconCls: 'icon-shezhi'
+    	    	itemId:'appContainer',
+    	    	title: '应用精选',
+    	        iconCls: 'apps'
     	    },{
     	    	itemId:'moreContainer',
 	   			title: '更多',
-			    iconCls: 'icon-gengduo'
+			    iconCls: 'more'
 			}]
     	},{
         	xclass: 'app.view.user.Home'

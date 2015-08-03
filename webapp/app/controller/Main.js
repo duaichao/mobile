@@ -39,9 +39,17 @@ Ext.define('app.controller.Main', {
                     scope: this,
                     success: function (cfg) {
                     	//创建课程数据源
-                    	app.app.getApplication().createCourseStore(cfg.data);
+                    	app.app.getApplication().createCourseStore(cfg.data).load();
                     	//加载个人信息
-                    	util.request(config.url.getPersonalInfo,cfg.data,function(data){
+                    	
+                    	
+                    	//debug
+                    	//util.ePush('index',null,'left','no');
+                    	//return;
+                    	
+                    	
+                    	//去除遮罩
+                    	util.request(config.url.getPersonalInfo,Ext.applyIf({noloader:false},cfg.data),function(data){
                         	var d = Ext.applyIf(data.result,cfg.data);
                         	Ext.ModelMgr.getModel('app.model.User').load(1, {
                                 scope: this,
@@ -49,25 +57,23 @@ Ext.define('app.controller.Main', {
                                 	cfg.setData(d);
                                 	cfg.save();
                                 	//关闭加载进度
-                                	Ext.fly('appLoadingIndicator').destroy();
                                 	//初始化配置参数
                                 	config.user = d;
                                 	//加载个人信息成功后 跳转页面
-                                	util.ePush('index');
+                                	util.ePush('index',null,'left','no');
+                                	
                                 }
                             });
                     	},this);
                     	
                     },
         			failure: function(record, operation) {
-        				Ext.fly('appLoadingIndicator').hide();
         				util.ePush('userLogin');
         			}
                 });
             },
             failure: function (error) {
             	//util.ePush('demo');
-            	Ext.fly('appLoadingIndicator').destroy();
             	//存储配置信息
                 var local = Ext.create('app.model.Local', {
                     id: 1

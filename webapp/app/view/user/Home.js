@@ -19,29 +19,20 @@ Ext.define('app.view.user.Home', {
 		    	//该事件发生在dom加载完成时 
 		    	var me = this,
 			    	dv = this.down('dataview');
-		    	var styles = ['rgba(41,128,185,1)','rgba(26,188,156,1)','rgba(211,84,0,1)'];
-	    		//设置背景色 画圆环 子按钮监听
+		    	//画圆环 
 	    		dv.element.select('.x-dataview-item').each(function(item,c,i){
-	    			item.setStyle({background:styles[i]});
-	    			util.drawScore(item.down('.progress-ring'));
-	    			var blue = item.down('.blue'),
-	    				green = item.down('.green'),
-	    				red = item.down('.red');
-	    			green.on('touchstart', me.onPress, green);
-	    			red.on('touchstart', me.onPress, red);
-	    			blue.on('touchstart', me.onPress, blue);
-	    			green.on('touchend', me.onRelease, green);
-	    			red.on('touchend', me.onRelease, red);
-	    			blue.on('touchend', me.onRelease, blue);
+	    			//util.drawScore(item.down('.progress-ring'));
 	    		});
 		    }
         },
         scrollable: {
             direction: 'vertical'
         },
+        layout:'vbox',
         items: [{
         	title:'个人中心',
 			docked: 'top',
+			ui:'fred',
 			xtype: 'titlebar'
         },{
 			xtype:'container',
@@ -69,37 +60,9 @@ Ext.define('app.view.user.Home', {
 			      '</div>'
 			].join('')
         },{
-			scrollable:null,
-            xtype: 'dataview',
-            cls: 'dv-basic',
-            itemTpl: [
-                  '<div class="progress-ring" data-percent="{correct_percent}">',
-          			'<canvas height="80" width="80"></canvas>',
-         				'<div class="score"></div>',
-          		  '</div>',	
-                  '<div class="content">',
-                  		'<div class="name">{course_name}</div>',
-                  		'<div class="affiliation">已完成：{process_num}/{total_num}题    平均速度：{average_speed}秒</div>',
-	                    '<div class="buttons">',
-		                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small blue"><span>练习题</span></a>',
-		                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small green"><span>自定义练习</span></a>',
-		                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small red"><span>模拟考试</span></a>',
-	                    '</div>',
-                  '</div>'
-            ].join(''),
-            loadingText:false,
-            store: 'Course'
+			scrollable:false,
+            xtype: 'course',
+            flex:1
 		}]
-    },
-    onPress:function(){console.log(1);
-    	var cls = this.dom.className,
-    		key = cls.substring(cls.lastIndexOf(' ')+1,cls.length),
-			o = {'red':'ob-btn-danger','blue':'ob-btn-primary','green':'ob-btn-success'};
-    	this.addCls(o[key]);
-    },
-    onRelease:function(){
-    	var cls = this.dom.className,
-		key = cls.substring(cls.lastIndexOf(' ')+1,cls.length);
-    	this.removeCls(key);
     }
 });

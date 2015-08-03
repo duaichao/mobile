@@ -52,12 +52,21 @@ Ext.define('app.controller.User', {
             },
         	'index tabbar':{
         		activetabchange :function(tb,newView,oldView){
-        			var me = this,xtype=newView.getItemId(xtype);
+        			var ni=0,oi=0;
+        			for(var i=0;i<tb.items.length;i++){
+        				if(tb.items.get(i).getItemId()==newView.getItemId()){ni=i;}
+        				if(tb.items.get(i).getItemId()==oldView.getItemId()){oi=i;}
+        			}
         			
-        			var view = Ext.create(xtype);
+        			var me = this,xtype=newView.getItemId(),view;
+    				if(me.getIndex().down(xtype)&&!me.getIndex().down(xtype).getAutoDestroy()){
+    	            	view = me.getIndex().down(xtype);
+    	            }else{
+        				view = Ext.create(xtype);
+    	            }
         			this.getIndex().animateActiveItem(view, {
                         type: 'slide',
-                        direction: 'left'
+                        direction: (oi<ni)?'left':'right'
                     });
         			Ext.defer(function () {
         				var old = me.getIndex().down(oldView.getItemId());
@@ -81,12 +90,7 @@ Ext.define('app.controller.User', {
             },
             'userInfo button[action=backHome]':{
             	tap:function(){
-            		util.ePush('index',null,'right');
-            	}
-            },
-            'exerciseview button[action=backhome]':{
-            	tap:function(){
-            		util.ePush('index',null,'right');
+            		util.ePush('index',null,'right','no');
             	}
             }
         }
@@ -94,7 +98,8 @@ Ext.define('app.controller.User', {
     logUserIn: function (params) {
     	util.request(config.url.login,params,function(data){
         	params.token = data.result.token;
-        	Ext.fly('appLoadingIndicator').show();
+			//创建课程数据源
+        	app.app.getApplication().createCourseStore(params).load();
         	//加载个人信息
         	util.request(config.url.getPersonalInfo,params,function(data){
             	var d = Ext.applyIf(data.result,params);
@@ -103,12 +108,11 @@ Ext.define('app.controller.User', {
                 });
                 logUser.set(d);
                 logUser.save();
-                //关闭加载进度
-            	Ext.fly('appLoadingIndicator').destroy();
+            	
             	//初始化配置参数
             	config.user = d;
             	//加载个人信息成功后 跳转页面
-            	util.ePush('index');
+            	util.ePush('index',null,'left','no');
         	},this);
         	
         	

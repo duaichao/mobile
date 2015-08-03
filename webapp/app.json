@@ -49,7 +49,7 @@
 	    "bundle": true,
 	    "update": "delta"
 	},{
-	    "path": "touch/sencha-touch-all-mydebug.js",
+	    "path": "touch/sencha-touch-all.js",
 	    "x-bootstrap": true
 	},{
 	    "path": "app.js",
@@ -74,10 +74,7 @@
      *      }
      */
     "css": [{
-	    "path": "resources/css/sencha-touch.css",
-	    "update": "delta"
-	},{
-	    "path": "resources/font/iconfont.css",
+	    "path": "resources/css/app.css",
 	    "update": "delta"
 	},{
 	    "path": "resources/css/obvious-buttons.css",

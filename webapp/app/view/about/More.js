@@ -3,7 +3,11 @@ Ext.define('app.view.about.More', {
     xtype: 'moreContainer',
     alternateClassName: 'moreContainer',
     config:{
-    	autoDestroy: false,
+    	navigationBar: {
+    	    ui: 'fred',
+    	    docked: 'top'
+    	},
+    	autoDestroy: true,
     	title: '更多',
     	items: [{
 			scrollable:false,

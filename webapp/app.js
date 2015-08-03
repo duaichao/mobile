@@ -16,9 +16,9 @@ Ext.application({
     },
     createCourseStore:function(data){
     	//读取课程列表
-    	Ext.create("Ext.data.Store", {
+    	return Ext.create("Ext.data.Store", {
     		id:'Course',
-    		params:data,
+    		params:Ext.applyIf({noloader:true},data),
             model: "app.model.Course",
             proxy: {
                 type: "ajax",
@@ -31,7 +31,7 @@ Ext.application({
                     rootProperty: "result"
                 }
             },
-            autoLoad: true
+            autoLoad: false
         });
     },
     isIconPrecomposed: false,
@@ -55,14 +55,16 @@ Ext.application({
 	views: [
         //'demo.Demo',
         'Guide','Main','Index',
-        'App','Setting',
+        'App','Favorite',
         
         'exercise.Main',
         'exercise.View',
+        'exercise.Answer',
         
         'user.Login',
         'user.Regist',
         'user.Home',
+        'user.Course',
         'user.Info',
         
         
@@ -78,6 +80,7 @@ Ext.application({
          'App'
     ],
     launch: function() {
+    	Ext.fly('appLoadingIndicator').destroy();
     	util.init();
     },onUpdated: function() {
         Ext.Msg.confirm(

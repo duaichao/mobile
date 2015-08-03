@@ -105,21 +105,27 @@ Ext.define('app.Util', {
             return valid;
         },
         //Viewport添加新项,Viewport之中始终只有一项
-        ePush: function (xtype,params,turn) {
+        ePush: function (xtype,params,turn,destory) {
+        	destory = destory || 'yes';
             var me = Ext.Viewport,
             view = me.getActiveItem();
-            if(Ext.isString(xtype)){
-		        if (view && view.getItemId() == xtype) {
-		            return;
-		        }
-		        view = Ext.create(xtype, params||{
-		            itemId: xtype
-		        });
+            if(me.down(xtype)&&!me.down(xtype).getAutoDestroy()){
+            	view = me.down(xtype);
             }else{
-            	if (view && view.getItemId() == xtype.getItemId) {
-		            return;
-		        }
-            	view = xtype;
+            	if(Ext.isString(xtype)){
+    		        if (view && view.getItemId() == xtype) {
+    		            return;
+    		        }
+    		        view = Ext.create(xtype, params||{
+    		            itemId: xtype,
+    		            autoDestroy:destory=='yes'
+    		        });
+                }else{
+                	if (view && view.getItemId() == xtype.getItemId) {
+    		            return;
+    		        }
+                	view = xtype;
+                }
             }
             //切换
             me.animateActiveItem(view, {
@@ -133,6 +139,7 @@ Ext.define('app.Util', {
             me.onAfter('activeitemchange',
             function (t, value, oldValue, eOpts) {
                 if (oldValue) {
+                	
                     //强制销毁，防止销毁不完全引发错误
                 	Ext.defer(function () {
                 		//me.remove(oldValue, true);
@@ -317,7 +324,6 @@ Ext.define('app.Util', {
         },
         loader:function(format,progress){
         	format = Ext.String.format(format, progress);
-        	format ='';
         	if(Ext.get('notification')){
         		if(progress){
         			Ext.get('notification').down('span').setHtml(format);
@@ -390,11 +396,15 @@ Ext.define('app.Util', {
             //开始加载
             Ext.Ajax.on('beforerequest',function (connection, options) {
             	options.params = Ext.applyIf(options.params,config.defaultParams);
-            	util.loader('加载中...');
+            	if(!options.params.noloader){
+            		util.loader('加载中...');
+            	}
             });
             //加载成功
             Ext.Ajax.on('requestcomplete',function (conn, response, options, eOpts) {
-                util.hideMessage();
+            	if(!options.params.noloader){
+            		util.hideMessage();
+            	}
             });
             //加载失败
             Ext.Ajax.on('requestexception',function (connection, options) {

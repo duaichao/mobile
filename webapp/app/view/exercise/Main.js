@@ -8,6 +8,7 @@ Ext.define('app.view.exercise.Main', {
     	layout:'fit',
         items: [{
         	title:'练习题',
+        	ui:'fred',
 			docked: 'top',
 			xtype: 'titlebar',
 			items:[{
@@ -17,30 +18,28 @@ Ext.define('app.view.exercise.Main', {
 			}]
         },{
         	xtype:'tabbar',
-    		cls:'ui tab',
-    		activeTab:0,
     		docked:'bottom',
     		defaults:{
     			minWidth:'20%'
     		},
     		items:[{
-    			iconCls: 'icon-wwwzuojiantou',
+    			iconCls: 'prev',
     			itemId:'prev',
     	        title:'上一题'
     		},{
     			itemId:'anwser',
     	    	title: '显示答案',
-    	        iconCls: 'icon-xianshi'
+    	        iconCls: 'visible'
     	    },{
     	    	itemId:'pager',
     	    	title: '0/100',
-    	        iconCls: 'icon-list'
+    	        iconCls: 'flist'
     	    },{
     	    	itemId:'favorite',
 	   			title: '收藏',
-			    iconCls: 'icon-shoucang'
+			    iconCls: 'fav'
 			},{
-    			iconCls: 'icon-wwwyoujiantou',
+    			iconCls: 'next',
     			itemId:'next',
     	        title:'下一题'
     		}]
