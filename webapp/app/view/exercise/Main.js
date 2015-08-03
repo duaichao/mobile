@@ -4,7 +4,8 @@ Ext.define('app.view.exercise.Main', {
     extend: 'Ext.form.Panel',
     config: {
     	scrollable:null,
-    	defaultParams:{},
+    	//defaultParams:{},
+    	record:null,
     	layout:'fit',
         items: [{
         	title:'练习题',
@@ -19,6 +20,7 @@ Ext.define('app.view.exercise.Main', {
         },{
         	xtype:'tabbar',
     		docked:'bottom',
+    		cls:'noactive',
     		defaults:{
     			minWidth:'20%'
     		},

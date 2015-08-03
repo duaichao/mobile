@@ -32,7 +32,7 @@ Ext.define('app.view.user.Info', {
 				text:'返回'
 			},{
 				action: 'saveInfo',
-				cls:'tool blue',
+				ui:'fblack',
 				text:'保存',
 				align:'right'
 			}]

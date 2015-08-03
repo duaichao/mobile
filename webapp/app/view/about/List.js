@@ -11,7 +11,6 @@ Ext.define('app.view.about.List', {
 
 	initialize: function() {
 		this.callParent();
-		console.log(config.aboutPages);
 		this.setData(config.aboutPages);
 	}
 });

@@ -50,7 +50,9 @@ Ext.application({
 		'Main',
 		//'demo.Demo',
 		'User',
-		'Exercise'
+		//'Exercise',
+		'Questions',
+		'About'
 	],
 	views: [
         //'demo.Demo',
@@ -58,14 +60,15 @@ Ext.application({
         'App','Favorite',
         
         'exercise.Main',
-        'exercise.View',
-        'exercise.Answer',
+      //  'exercise.View',
+        //'exercise.Answer',
+        'exercise.QuestionsList',
+        'exercise.Questions',
         
         'user.Login',
         'user.Regist',
         'user.Home',
         'user.Course',
-        'user.CustomItem',
         'user.Info',
         
         
@@ -73,11 +76,15 @@ Ext.application({
         'about.List',
         'about.HtmlPage'
 	],
+	stores:[
+        'Questions'
+	],
     models: [
          'Local',
          'User',
          'Course',
-         'Exercise',
+         //'Exercise',
+         'Questions',
          'App'
     ],
     launch: function() {

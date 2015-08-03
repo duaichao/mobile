@@ -48,9 +48,11 @@ Ext.define('app.controller.Exercise', {
         			this._exerciseQuestion.on('activeitemchange',function(cl, value, oldValue, eOpts ){
             			var st = cl.getStore(),
         					ind = cl.getActiveIndex(),
-        					currNo = cl.getCurrNo();
+        					currNo = cl.getCurrNo(),
+        					fav = value.getRecord().data.is_favorite;
             			pagerBtn.setText((currCount+ind+1)+'/'+totalCount);
-            			favoriteBtn.setIconCls(value.getRecord().data.is_favorite==1?'icon-shoucang1':'icon-shoucang');
+            			favoriteBtn.setIconCls(fav==1?'fav1':'fav');
+            			favoriteBtn.setText(fav==1?'已收藏':'未收藏');
             			if(me._exerciseAnswerBox){
             				if(value.getRecord().get('finish')){
             					me._exerciseAnswerBox.show();
@@ -126,6 +128,24 @@ Ext.define('app.controller.Exercise', {
         			}
         		}
         	},
+        	'exerciseview button#favorite':{
+        		tap:function(btn){
+        			var list = btn.up('formpanel').down('exerciselist'),
+    				item = list.getActiveItem(),
+    				record = item.getRecord();
+        			var params = {
+        					username:config.user.username,
+        					token:config.user.token,
+        					course_id:record.get('course_id'),
+        					id:record.get('id'),
+        					do_favorite:parseInt(record.get('is_favorite'))==1?0:1
+        			};
+        			util.request(config.url.doFavorite,params,function(data){
+        	    		util.suc(params.do_favorite==1?'成功收藏题目':'取消题目收藏');
+        	    		record.set('is_favorite',params.do_favorite);
+        	    	},this);
+        		}
+        	},
         	'exerciselist container[itemId=questionOptionsContainer]':{
         		activate:function(c){
         			var btn = c.down('button[itemId=submit]'),me = this;
@@ -183,6 +203,7 @@ Ext.define('app.controller.Exercise', {
     				radio.addCls('qe-answer-wrong');
     			}
     		}else{
+    			util.suc('回答正确');
     			radio.addCls('qe-answer-right');
     		}
     		radio.disable();

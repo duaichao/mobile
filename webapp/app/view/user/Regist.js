@@ -13,7 +13,7 @@ Ext.define('app.view.user.Regist', {
 			xtype: 'titlebar',
 			items:[{
 				text:'返回',
-				ui:'back fgray',
+				ui:'back',
 				action:'tologin'
 			},{
 				text:'保存',

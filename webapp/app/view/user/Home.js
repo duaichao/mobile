@@ -21,7 +21,7 @@ Ext.define('app.view.user.Home', {
 			    	dv = this.down('dataview');
 		    	//画圆环 
 	    		dv.element.select('.x-dataview-item').each(function(item,c,i){
-	    			//util.drawScore(item.down('.progress-ring'));
+	    			util.drawScore(item.down('.progress-ring'));
 	    		});
 		    }
         },

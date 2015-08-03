@@ -24,7 +24,7 @@ Ext.define('app.Config', {
 			cls:''
     	},{
     		title: '退出当前账号',
-    		xtype: '',
+    		xtype: 'button',
     		url: '',
     		cls:'ob-btn ob-btn-danger'
     	}],
@@ -37,7 +37,8 @@ Ext.define('app.Config', {
     		getCourseList:'http://211.101.20.203/api/CourseList',
     		setPhoto:'http://211.101.20.203/api/setPhoto',
     		getExercise:'http://211.101.20.203/api/Exercise',
-    		getApps:'http://211.101.20.203/api/Apps'
+    		getApps:'http://211.101.20.203/api/Apps',
+    		doFavorite:'http://211.101.20.203/api/DoFavorite'
     	}
     }
 });

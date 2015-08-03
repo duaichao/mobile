@@ -77,10 +77,13 @@ Ext.define('app.controller.User', {
             'home dataview':{
             	itemtap:function(dv, index, target, record, e, eOpts){
             		if(e.target.className.indexOf('blue')!=-1){
-            			var params = config.user;
+            			/*var params = config.user;
             			params = Ext.applyIf(record.data,params);
             			util.ePush('exerciseview',{
-            				defaultParams:params
+            				record:params
+            			});*/
+            			util.ePush('exerciseview',{
+            				record:record
             			});
             		}
             	}

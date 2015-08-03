@@ -3,7 +3,7 @@ Ext.define('app.view.exercise.View', {
 	alternateClassName: 'exerciselist',
 	xtype:'exerciselist',
 	config:{
-		currNo:1,
+		currNo:0,
 		indicator:false
 	},
 	onLoad:function(store){
@@ -37,7 +37,7 @@ Ext.define('app.view.exercise.View', {
         			fields.push(Ext.factory({
         				cls:'qe-options',
         				correct:options[p].is_right,
-        				name:'qeoptions-'+data.id,
+        				name:'qeoptions-'+options[p].parent_id,
         				labelWidth:'100%',
         				labelWrap:true,
         				label:''+zm[p]+' '+options[p].content,
@@ -60,6 +60,7 @@ Ext.define('app.view.exercise.View', {
         			text:'提交答案'
         		});
         	}
+        	console.log(fields);
             item = Ext.factory({
             	record:record,
             	itemId:'questionOptionsContainer',
@@ -74,7 +75,6 @@ Ext.define('app.view.exercise.View', {
 	},
 	finishAnswer:function(record){
 		Ext.Viewport.add(this._movieDetails);
-        Ext.util.InputBlocker.blockInputs();
 
         this._movieDetails.on({
             show: {
