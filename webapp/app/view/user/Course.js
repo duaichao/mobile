@@ -3,9 +3,11 @@ Ext.define('app.view.user.Course', {
     alternateClassName: 'course',
     xtype: 'course',
     config: {
+    	useComponents: true,
+    	defaultType: 'customitem',
     	bgColors : ['rgba(41,128,185,1)','rgba(26,188,156,1)','rgba(211,84,0,1)'],
     	cls: 'dv-basic',
-        itemTpl: [
+        /*itemTpl: [
               '<div style="background:{bgcolor};width:100%;height:100%;">',
               '<div class="progress-ring" data-percent="{correct_percent}">',
       			'<canvas height="80" width="80"></canvas>',
@@ -22,7 +24,7 @@ Ext.define('app.view.user.Course', {
               '</div>',
               '</div>'
         ].join(''),
-        loadingText:false,
+        loadingText:false,*/
         store:'Course'
     },
     prepareData: function(data, index, record) {

@@ -304,18 +304,7 @@ Ext.define('app.Util', {
 				    id:'notification',
 				    cls: 'ex-popoup-hint exph-audio',
 				    children: [    
-				        {
-				        	tag: 'div',
-				        	children:[
-					             {tag:'b', class:'item-1'},
-					             {tag:'b', class:'item-2'},
-					             {tag:'b', class:'item-3'},
-					             {tag:'b', class:'item-4'},
-					             {tag:'b', class:'item-5'},
-					             {tag:'b', class:'item-6'}
-					        ]
-				        },
-				        {tag: 'i', class:'iconfont',html:'&#xe618;'},
+				        {tag: 's'},
 	    				{tag: 'span', html: format||'正在录音 {0}'} 
 				    ]
 				};
@@ -336,7 +325,7 @@ Ext.define('app.Util', {
 				    id:'notification',
 				    cls: 'ex-popoup-hint exph-loader',
 				    children: [    
-				        {tag: 's'},
+				        {tag: 'div'},
 	    				{tag: 'span', html: format||''} 
 				    ]
 				};

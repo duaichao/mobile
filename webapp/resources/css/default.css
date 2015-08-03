@@ -116,7 +116,9 @@
 	height:0px;
 	display:none;
 }
-
+.x-chart-watermark {
+    display: none;
+}
 
 .about .x-list-item{background:#fff;border-top:1px solid #ddd;}
 .about.x-list .x-list-item.x-item-selected .x-dock-horizontal, .about.x-list .x-list-item.x-item-selected.x-list-item-tpl{

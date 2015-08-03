@@ -65,6 +65,7 @@ Ext.application({
         'user.Regist',
         'user.Home',
         'user.Course',
+        'user.CustomItem',
         'user.Info',
         
         
