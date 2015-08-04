@@ -13,7 +13,7 @@ Ext.define('app.view.exercise.Main', {
 			docked: 'top',
 			xtype: 'titlebar',
 			items:[{
-				action: 'backhome',
+				itemId: 'backhome',
 				ui:'back',
 				text:'返回'
 			}]
@@ -34,7 +34,7 @@ Ext.define('app.view.exercise.Main', {
     	        iconCls: 'visible'
     	    },{
     	    	itemId:'pager',
-    	    	title: '0/100',
+    	    	title: '0/0',
     	        iconCls: 'flist'
     	    },{
     	    	itemId:'favorite',

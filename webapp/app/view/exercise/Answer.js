@@ -1,6 +1,6 @@
 Ext.define('app.view.exercise.Answer', {
-    alternateClassName: 'answer',
-    xtype: 'answer',
+    alternateClassName: 'questionanswer',
+    xtype: 'questionanswer',
     extend: 'Ext.Container',
     config: {
         tabBarPosition: "bottom",
@@ -57,7 +57,7 @@ Ext.define('app.view.exercise.Answer', {
         if (!this._header) {
         	this._header = Ext.create("Ext.Container", {
                 layout: "vbox",
-                cls:'header'
+                cls:'qe-answer-header'
             });
         }
         return this._header;
@@ -81,7 +81,7 @@ Ext.define('app.view.exercise.Answer', {
             this._content = Ext.create("Ext.Container", {
                 scrollable: true,
                 flex:1,
-                cls: "content"
+                cls: "qe-answer-content"
             });
         }
         return this._content;

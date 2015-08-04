@@ -163,9 +163,9 @@
 .qe-options .x-form-label span{font-weight:normal;font-size:0.85em!important;}
 
 
-.qe-answerbox{bottom:55px;top:auto;background:#f7f7f7;border-top:1px solid #ea0101;}
-.qe-answerbox .header,.qe-answerbox .content .x-innerhtml{padding:0.5em;}
-.qe-answerbox .content .x-innerhtml{padding-top:0em;font-size:.825em;}
+.qe-answerbox{  z-index: 2;position:absolute;bottom:0px;top:auto;background:#f7f7f7;border-top:1px solid #ea0101;}
+.qe-answerbox .qe-answer-header,.qe-answerbox .qe-answer-content .x-innerhtml{padding:0.5em;}
+.qe-answerbox .qe-answer-content .x-innerhtml{padding-top:0em;font-size:.825em;}
 .qe-answerbox .title{float:left;}
 .qe-answerbox .rating{float:right;font-size:.825em;}
 .qe-answerbox .rating i{font-size:1.25em;color:#f4b400;}
