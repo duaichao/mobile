@@ -147,7 +147,7 @@
 .qe-options.x-field-radio .x-form-label::before{
 	content: "\e62a";
 }
-.qe-options.qe-answer-right.x-field-radio .x-form-label::before，
+.qe-options.qe-answer-right.x-field-radio .x-form-label::before,
 .qe-options.x-field-radio.selected .x-form-label::before{
 	content: "\e62e";
 	color:#53a93f;

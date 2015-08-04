@@ -10,6 +10,15 @@ Ext.define('app.view.exercise.QuestionsList', {
         count: 1,
         startCount:0,
         totalCount:0,
+        //答案格式
+		/*[{
+			id:'',
+			type:'',
+			user_answer_array:[{
+				user_answer:'A'//多选 ABD 判断题 中文字 正确/错误
+			}]
+		}]*/
+        valueMaps:[],
         offsetLimit: 10,
         store: null,
         animation: {
@@ -68,20 +77,21 @@ Ext.define('app.view.exercise.QuestionsList', {
 	    	var	pagerBtn = view.down('button#pager'),
 	    		favoriteBtn = view.down('button#favorite'),
 	    		answerBtn = view.down('button#anwser'),
-	    		isFavorite = itemRecord.get('is_favorite');
+	    		isFavorite = itemRecord.get('is_favorite'),
+	    		finishBtn = newItem.down('button#finish');
 	    	pagerBtn.setText((parseInt(this.getStartCount())+index+1)+'/'+this.getTotalCount());
 	    	favoriteBtn.setIconCls(isFavorite==1?'fav1':'fav');
 			favoriteBtn.setText(isFavorite==1?'已收藏':'未收藏');
 			if(itemRecord.get('finish')){
-				newItem.setMasked({transparent:true});
-				newItem.down('questionanswer').show();
-				answerBtn.setIconCls('hidden');
-		    	answerBtn.setText('隐藏答案');
+				newItem.fireEvent('finishQuestion',newItem);
 			}else{
-				newItem.setMasked(false);
+				newItem.enable();
 				newItem.down('questionanswer').hide();
 				answerBtn.setIconCls('visible');
 		    	answerBtn.setText('显示答案');
+		    	if(finishBtn){
+		    		finishBtn.show();
+		    	}
 			}
     	}
     },

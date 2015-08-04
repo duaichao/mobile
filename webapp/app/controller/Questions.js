@@ -16,7 +16,15 @@ Ext.define('app.controller.Questions', {
             	finishQuestion:'onFinishQuestion'
             },
             'questions button#finish':{
-            	tap:function(btn){this.onFinishQuestion.call(this,btn.up('questions'));}
+            	tap:function(btn){
+            		var item = btn.up('questions'),
+            			checkedOptions = item.query('checkboxfield[checked=true]');
+        			if(checkedOptions.length>1){
+        				item.fireEvent('finishQuestion',item);
+        			}else{
+        				util.war('至少选择两个答案');
+        			}
+            	}
             },
             'exerciseview button#backhome':{
             	tap:'onBackHome'
@@ -105,10 +113,38 @@ Ext.define('app.controller.Questions', {
     },
     onFinishQuestion:function(item){
     	var record = item.getRecord(),
-    		answerBtn = this.getMain().down('button#anwser');
+    		carousel = item.up('questionslist'),
+    		answerBtn = this.getMain().down('button#anwser'),
+    		finishBtn = item.down('button#finish'),options,checkedOptions,rightCount;
+    	if(finishBtn){
+    		finishBtn.hide();
+    	}
+    	options = item.query(record.get('type')=='02'?'checkboxfield':'radiofield');
+    	checkedOptions = item.query(record.get('type')=='02'?'checkboxfield[checked=true]':'radiofield[checked=true]');
+    	rightCount=0;
+    	Ext.Array.each(options, function(option, index) {
+    		if(option.config.isRight==1){
+    			rightCount++;
+    			option.addCls('qe-answer-right');
+    		}else{
+    			if(option.isChecked()){
+    				option.addCls('qe-answer-wrong');
+    			}
+    		}
+    	});
+    	if(rightCount!=checkedOptions.length){
+    		util.err('回答错误');
+    	}
+    	//缓存选中值
+    	carousel.setValueMaps();
+    	
+    	
+    	item.down('questionanswer').show();
     	record.set('finish',1);
-    	item.setMasked({transparent:true});
-    	answerBtn.setIconCls('visible');
-    	answerBtn.setText('显示答案');
+    	item.disable();
+    	answerBtn.setIconCls('hidden');
+    	answerBtn.setText('隐藏答案');
+    	
+    	
     }
 });

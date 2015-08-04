@@ -58,6 +58,10 @@ Ext.define('app.view.exercise.Questions', {
         				label:''+me.getDataPinYin()[index]+' '+option.content,
         				listeners:{
         					change:function(f, newValue, oldValue, eOpts){
+        						if(f.isXType('radiofield')){
+        							var item = f.up('questions');
+        							item.fireEvent('finishQuestion',item);
+        						}
         						if(newValue){f.addCls('selected');}else{f.removeCls('selected');}
         					}
         				}
