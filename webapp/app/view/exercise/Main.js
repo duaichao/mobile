@@ -16,6 +16,11 @@ Ext.define('app.view.exercise.Main', {
 				itemId: 'backhome',
 				ui:'back',
 				text:'返回'
+			},{
+				itemId:'timer',
+				ui:'plain',
+				align:'right',
+				text:'00:00'
 			}]
         },{
         	xtype:'tabbar',

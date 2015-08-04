@@ -41,13 +41,6 @@ Ext.define('app.controller.Main', {
                     	//创建课程数据源
                     	app.app.getApplication().createCourseStore(cfg.data).load();
                     	//加载个人信息
-                    	
-                    	
-                    	//debug
-                    	//util.ePush('index',null,'left','no');
-                    	//return;
-                    	
-                    	
                     	//去除遮罩
                     	util.request(config.url.getPersonalInfo,Ext.applyIf({noloader:false},cfg.data),function(data){
                         	var d = Ext.applyIf(data.result,cfg.data);
@@ -86,10 +79,6 @@ Ext.define('app.controller.Main', {
     onDeviceReady :function(){
     	var me = this;
     	this.checkConnection();
-    	/*Ext.get(document).addListener({
-		    backbutton  : { fn: this.onBackButton, scope: this},
-		    menubutton: { fn: this.onMenuButton, scope: true }
-		});*/
     	document.addEventListener("backbutton", function(){me.onBackButton.apply(me);}, false); //返回键
         document.addEventListener("menubutton", function(){me.onMenuButton.apply(me);}, false); //菜单键
         //document.addEventListener("searchbutton", eventSearchButton, false); //搜索键
@@ -114,20 +103,13 @@ Ext.define('app.controller.Main', {
     onBackButton :function(){
     	var item = Ext.Viewport.getActiveItem(),
     		id = item.getItemId();
-    	if (id == 'main') {
-    		var home = item.down('index').getActiveItem();
+    	if (id == 'index') {
+    		var home = item.getActiveItem();
     		if(home.id.indexOf('home')!=-1){
     			this.doExitApp();
     		}else{
-    			if(home.isXType('navigationview')){
-    				if(home.$backButton){
-    					home.pop(1);
-    				}else{
-    					item.down('index').setActiveItem(0);
-    				}
-    			}else{
-    				item.down('index').setActiveItem(0);
-    			}
+    			this.isExit = false;
+    			util.ePush('index',null,'right','no');
     		}
     	}else{
     		this.doExitApp();
@@ -139,7 +121,13 @@ Ext.define('app.controller.Main', {
 				navigator.app.exitApp();
 			}
 		}, this);*/
-		this.onMenuButton();
+		//this.onMenuButton();
+    	if (this.isExit) {
+    		navigator.app.exitApp();
+    	} else {
+    		this.isExit = true;
+    		util.war('再按一次退出程序','exph-info')
+    	}
     },
     onMenuButton :function(){
     	var items = [{

@@ -123,6 +123,20 @@
 .about .x-list-item{border-top:1px solid #ddd;}
 
 
+.qe-container.qe-answer-wrong:after,.qe-container.qe-answer-right:after{
+	position:absolute;
+	top: 5px;
+	left: 2px;
+	font-size: 32px;
+	font-family: "iconfont";
+	color:rgba(83,169,63,0.7);
+	content: "\e60a";
+}
+.qe-container.qe-answer-wrong:after{
+	color:rgba(215,61,50,0.7);
+	content: "\e608";
+}
+
 .qe-title .x-html{font-size:0.85em;padding:0.6em;}
 .qe-options .x-form-label{background-color: #fff;}
 .qe-options.x-field-checkbox .x-form-label::before,.qe-options.x-field-radio .x-form-label::before{
@@ -164,6 +178,7 @@
 
 
 .qe-answerbox{  z-index: 2;position:absolute;bottom:0px;top:auto;background:#f7f7f7;border-top:1px solid #ea0101;}
+.qe-answerbox .qe-answer-content .x-inner{background:#f7f7f7;}
 .qe-answerbox .qe-answer-header,.qe-answerbox .qe-answer-content .x-innerhtml{padding:0.5em;}
 .qe-answerbox .qe-answer-content .x-innerhtml{padding-top:0em;font-size:.825em;}
 .qe-answerbox .title{float:left;}
@@ -185,7 +200,13 @@
 .x-rating .star.active{-webkit-transform: scale(1,1); opacity:1;}
 
 
-
+@font-face {font-family: "iconfont";
+  src: url('../font/iconfont.eot'); /* IE9*/
+  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../font/iconfont.woff') format('woff'), /* chrome、firefox */
+  url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('../font/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
 .iconfont {
   font-family:"iconfont" !important;
   font-size:16px;
@@ -203,4 +224,4 @@
     box-shadow:none
 }
 .noactive.x-tabbar-dark.x-docked-bottom .x-tab .x-button-icon.fav1:before,
-.noactive.x-tabbar-dark.x-docked-bottom .x-tab-active .x-button-icon.fav1:before{  color: #ea0101;}
+.noactive.x-tabbar-dark.x-docked-bottom .x-tab-active .x-button-icon.fav1:before{  color: #d73d32;}

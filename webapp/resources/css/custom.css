@@ -132,6 +132,8 @@ html,body {
 	font-size: 10px;
 	position: absolute;
 	text-indent: -9999em;
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility:hidden;
 	border-top: 0.6em solid rgba(255, 255, 255, 0.2);
 	border-right: 0.6em solid rgba(255, 255, 255, 0.2);
 	border-bottom: 0.6em solid rgba(255, 255, 255, 0.2);
@@ -153,6 +155,10 @@ html,body {
     background-image: url(about:blank);
     background-color: rgba(248,149,0,0.95);
 }
+.exph-war.exph-info {
+    background-image: none;
+    background-color: rgba(102,102,102,0.85);
+}
 .exph-war s {
 	width: 6px;
 	margin-left: 15px;
@@ -162,6 +168,8 @@ html,body {
     -webkit-animation: war 1.2s ease 0.3s;
     -webkit-animation-fill-mode: both
 }
+.exph-war.exph-info s{background-image: none;-webkit-animation: none;}
+.exph-war.exph-info span{padding-left: 15px;}
 /*成功*/
 .exph-suc {
     background-image: url(about:blank);

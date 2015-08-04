@@ -8,6 +8,7 @@ Ext.define('app.view.exercise.Questions', {
         scrollable: false,
         dataTypes:{'01':'单选','02':'多选','03':'判断','06':'综合'},
         dataPinYin:['A','B','C','D','E','F','G'],
+        dataPanDuan:['正确','错误'],
         name:null,
         options:null
     },
@@ -55,6 +56,7 @@ Ext.define('app.view.exercise.Questions', {
         				name:'qeoptions-'+option.parent_id,
         				labelWidth:'100%',
         				labelWrap:true,
+        				value:(r.get('type')==''?me.getDataPanDuan()[index]:me.getDataPinYin()[index]),
         				label:''+me.getDataPinYin()[index]+' '+option.content,
         				listeners:{
         					change:function(f, newValue, oldValue, eOpts){

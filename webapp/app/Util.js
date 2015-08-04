@@ -4,7 +4,7 @@ Ext.define('app.Util', {
     	drawScore : function(target) {
     		var percent = target.getAttribute('data-percent'),
     			old = target.getAttribute('data-old');
-    		if(old&&old==percent){return;}
+    		if(old==percent){return;}
     		target.set({'data-old':percent});
             var a = parseInt(Math.round(percent), 10); // 百分比
             var b = 360 * parseInt(a) / 100 || 1,
@@ -339,9 +339,10 @@ Ext.define('app.Util', {
                 transparent: true
     		});
         },
-        war:function(format){
+        war:function(format,info){
         	format = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 0));
-    		util.showMessage('exph-war',format);
+        	info = info ||'';
+    		util.showMessage('exph-war '+info,format);
         },
         suc:function(format){
         	format = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 0));

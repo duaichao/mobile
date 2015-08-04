@@ -37,6 +37,7 @@ Ext.define('app.Config', {
     		getCourseList:'http://211.101.20.203/api/CourseList',
     		setPhoto:'http://211.101.20.203/api/setPhoto',
     		getExercise:'http://211.101.20.203/api/Exercise',
+    		commitExcercise:'http://211.101.20.203/api/CommitExcercise',
     		getApps:'http://211.101.20.203/api/Apps',
     		doFavorite:'http://211.101.20.203/api/DoFavorite'
     	}

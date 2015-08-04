@@ -50,7 +50,6 @@ Ext.application({
 		'Main',
 		//'demo.Demo',
 		'User',
-		//'Exercise',
 		'Questions',
 		'About'
 	],
@@ -60,8 +59,7 @@ Ext.application({
         'App','Favorite',
         
         'exercise.Main',
-      //  'exercise.View',
-        //'exercise.Answer',
+        'exercise.Answer',
         'exercise.QuestionsList',
         'exercise.Questions',
         
@@ -83,7 +81,6 @@ Ext.application({
          'Local',
          'User',
          'Course',
-         //'Exercise',
          'Questions',
          'App'
     ],

@@ -10,6 +10,9 @@ Ext.define('app.view.exercise.QuestionsList', {
         count: 1,
         startCount:0,
         totalCount:0,
+        timer:null,
+        beginTime:null,
+        endTime:null,
         //答案格式
 		/*[{
 			id:'',
@@ -38,6 +41,20 @@ Ext.define('app.view.exercise.QuestionsList', {
     },
     initialize: function() {
         Ext.Viewport.on('orientationchange', this.onOrientationChange, this);
+    },
+    applyTimer:function(newValue, oldValue){
+    	if(oldValue){
+    		clearInterval(oldValue);
+    		return oldValue;
+    	}
+    	return newValue;
+    },
+    applyValueMaps:function(newMaps, oldMaps){
+    	if(oldMaps){
+    		oldMaps.push(newMaps);
+    		return oldMaps;
+    	}
+    	return newMaps;
     },
     applyCount: function(count) {
         if (count == "auto") {
@@ -86,6 +103,7 @@ Ext.define('app.view.exercise.QuestionsList', {
 				newItem.fireEvent('finishQuestion',newItem);
 			}else{
 				newItem.enable();
+				newItem.removeCls(['qe-answer-wrong','qe-answer-right']);
 				newItem.down('questionanswer').hide();
 				answerBtn.setIconCls('visible');
 		    	answerBtn.setText('显示答案');
