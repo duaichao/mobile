@@ -2,10 +2,7 @@ Ext.define('app.Util', {
     alternateClassName: 'util',
     statics: {
     	drawScore : function(target) {
-    		var percent = target.getAttribute('data-percent'),
-    			old = target.getAttribute('data-old');
-    		if(old==percent){return;}
-    		target.set({'data-old':percent});
+    		var percent = target.getAttribute('data-percent');
             var a = parseInt(Math.round(percent), 10); // 百分比
             var b = 360 * parseInt(a) / 100 || 1,
     	    c = [{
@@ -391,7 +388,7 @@ Ext.define('app.Util', {
             Ext.Ajax.on('beforerequest',function (connection, options) {
             	options.params = Ext.applyIf(options.params||{},config.defaultParams);
             	if(!options.params.noloader){
-            		util.loader('加载中...');
+            		util.loader(options.params.loaderText||'加载中...');
             	}
             });
             //加载成功

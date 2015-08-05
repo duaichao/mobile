@@ -13,14 +13,14 @@ Ext.define('app.view.Regist', {
 			xtype: 'titlebar',
 			items:[{
 				text:'返回',
-				ui:'back',
+				ui:'back fred',
 				itemId:'tologin'
-			},{
+			}/*,{
 				text:'保存',
 				ui:'fblue',
 				itemId:'save',
 				align:'right'
-			}]
+			}*/]
 		},{
 			xtype: 'fieldset',
             layout: 'vbox', 
@@ -44,14 +44,18 @@ Ext.define('app.view.Regist', {
 	            placeHolder: 'example@email.com',
 	            name: 'email'
 	        }]
-		}/*,
-        {
+		},{
         	xtype:'button',
-        	cls:'ui green',
+        	cls:'ob-btn ob-btn-success',
         	action: 'save',
         	height:40,
             margin:'0 5px 0 5px',
             text: '注册'
-        }*/]
+        }],
+        listeners:{
+        	activate:function(){
+        		this.down('textfield').focus(); 
+        	}
+        }
     }
 });

@@ -42,8 +42,8 @@ Ext.define('app.controller.Home', {
     	},this);
     },
     onDataViewItemTap:function(dv, index, target, record, e, eOpts){
-		if(e.target.className.indexOf('blue')!=-1){
-			this.getMainView().push(Ext.create('app.view.exercise.Main',{title:record.get('course_name'),record:record}));
+		if(e.target.className.indexOf('ob-btn-primary')!=-1){
+			this.getMainView().push(Ext.create('app.view.exercise.Main',{title:'<span class="font14">'+record.get('course_name')+'</span>',record:record}));
 		}
 	},
     //上传图片

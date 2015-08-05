@@ -4,7 +4,7 @@ Ext.define('app.view.home.Course', {
     xtype: 'course',
     config: {
     	scrollable:false,
-    	bgColors : ['rgba(41,128,185,1)','rgba(26,188,156,1)','rgba(211,84,0,1)'],
+    	bgColors : ['rgba(41,128,185,.7)','rgba(26,188,156,.7)','rgba(211,84,0,.7)'],
     	cls: 'dv-basic',
         itemTpl: [
               '<div style="background:{bgcolor};width:100%;height:100%;">',
@@ -16,9 +16,9 @@ Ext.define('app.view.home.Course', {
               		'<div class="name">{course_name}</div>',
               		'<div class="affiliation">已完成：{process_num}/{total_num}题    平均速度：{average_speed}秒</div>',
                     '<div class="buttons">',
-	                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small blue"><span>练习题</span></a>',
-	                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small green"><span>自定义练习</span></a>',
-	                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small red"><span>模拟考试</span></a>',
+	                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small ob-btn-primary"><span>顺序练习</span></a>',
+	                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small ob-btn-success"><span>自定义练习</span></a>',
+	                    '<a href="javascript:;" class="ob-btn ob-btn-inline ob-btn-small ob-btn-danger"><span>模拟考试</span></a>',
                     '</div>',
               '</div>',
               '</div>'

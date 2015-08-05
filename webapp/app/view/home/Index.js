@@ -5,7 +5,7 @@ Ext.define('app.view.home.Index', {
     config: {
     	title:'个人中心',
     	layout:'fit',
-        autoDestroy:false,
+        autoDestroy:true,
 		userInfo:null,
     },
 	applyUserInfo:function(cfg){
@@ -56,9 +56,9 @@ Ext.define('app.view.home.Index', {
 			username:config.user.username
 		});
 	    store.load({
-	    	callback:function(){
-	    		courseView.element.select('.x-dataview-item').each(function(item,c,i){
-	    			util.drawScore(item.down('.progress-ring'));
+	    	callback:function(records, operation, success){
+	    		Ext.Array.each(records,function(record,index){
+	    			util.drawScore(Ext.get(courseView.getItemAt(index)).down('.progress-ring'));
 	    		});
 	    	}
 	    });

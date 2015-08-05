@@ -6,10 +6,6 @@ Ext.define('app.controller.Main', {
         	userRegist: 'userRegist',
     		mainView:'mainView'
     	},
-        routes: {
-            'go/:view': 'handleRoute',
-            'go/:view/:isPop': 'handleRoute',
-        },
         control: {
         	'guide':{
         		activeitemchange:function(ca, value, oldValue, eOpts){
@@ -178,12 +174,22 @@ Ext.define('app.controller.Main', {
         }
     },
     onBackButton :function(){
-    	var item = Ext.Viewport.getActiveItem();
-    	if (item.isXType('userLogin')||item.isXType('userRegist')) {
+    	var item = Ext.Viewport.getActiveItem(),innerTabView;
+    	if (item.isXType('guide')||item.isXType('userLogin')||item.isXType('userRegist')) {
     		this.doExitApp();
     	}else{
-    		
-    		this.isExit = false;
+    		if(item.getInnerItems().length>1){
+    			item.pop();
+    		}else{
+    			//item = mainView
+    			innerTabView = item.getActiveItem();
+    			if(innerTabView.getActiveItem().isXType('homeContainer')){
+    				this.doExitApp();
+    			}else{
+    				this.isExit = false;
+    				innerTabView.setActiveItem(0);
+    			}
+    		}
     	}
     },
     doExitApp :function(){
@@ -195,12 +201,5 @@ Ext.define('app.controller.Main', {
     		util.war('再按一次退出程序','exph-info');
     		setTimeout(function(){me.isExit = false;},2000)
     	}
-    },
-    handleRoute : function (xtype, isPop) {
-        var params = config.tmpParams|| {};
-        this.pushView({ xtype: xtype, params: params, isPop: isPop });
-    },
-    pushView: function (params) {
-        delete config.tmpParams;
     }
 });

@@ -42,75 +42,109 @@ Ext.define('app.controller.Questions', {
             },
             'exerciseview button#favorite':{
             	tap:'onQuestionFavorite'
+            },
+            'favoriteContainer':{
+            	itemtap:'onFavoriteItemTap'
             }
-        }
+        },
+        questionsUrls:['getExercise','','','getFavorite','getWrong']//source值对应
     },
     showQuestions: function(view) {
     	var record = view.getRecord(),
-    		questionsView = Ext.create('app.view.exercise.QuestionsList');
-    	questionsView.setStartCount(record.get('process_num'));
-    	questionsView.setTotalCount(record.get('total_num')),
-    	nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton');
+    		questionsView = Ext.create('app.view.exercise.QuestionsList'),
+	    	nbarRbtn,
+	    	source = record.get('source'),
+	    	beginCount,
+	    	store = Ext.getStore('Questions');
+    	beginCount = 0;
     	
-    	//view.down('titlebar').setTitle(record.get('course_name'));
+    	if(source==0){
+    		questionsView.setStartCount(record.get('process_num'));
+        	questionsView.setTotalCount(record.get('total_num'));
+    		beginCount = record.get('process_num');
+	    	nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton');
+    		nbarRbtn.setText('00:00');
+	    	//nbarRbtn.setUi('plain');
+	    	nbarRbtn.show();
+    	}
     	
-    	nbarRbtn.setText('00:00');
-    	//nbarRbtn.setUi('plain');
-    	nbarRbtn.show();
-    	
-        var store = Ext.getStore('Questions');
+        
+        store.getProxy().setUrl(config.url[this.getQuestionsUrls()[source]]);
+        
         store.getProxy().setExtraParams({
 			course_id:record.get('course_id'),
 			token:config.user.token,
 			username:config.user.username,
-			course_offset:record.get('process_num'),
+			course_offset:beginCount,
 			course_num:store.getPageSize()
 		});
         store.load({
-        	callback:function(){
+        	callback:function(records){
         		//初始化 首次加载第一道题收藏 状态
         		var favoriteBtn = view.down('button#favorite'),
-        			isFavorite = questionsView.getActiveItem().getRecord().get('is_favorite');
-        		favoriteBtn.setIconCls(isFavorite==1?'fav1':'fav');
-        		favoriteBtn.setText(isFavorite==1?'已收藏':'未收藏');
-        		//开启计时器
-        		var beginTime = new Date();
-        		questionsView.setBeginTime(beginTime);
-        		questionsView.setTimer(setInterval(function(){
-        			var endTime = new Date(),h,mi,s;
-        			//h = Ext.Date.diff(beginTime, endTime, 'h');
-        			mi = Ext.Date.diff(beginTime, endTime, 'mi');
-        			s = Ext.Date.diff(beginTime, endTime, 's');
-        			//h = h<10?'0'+h:h;
-        			mi = mi<10?'0'+mi:mi;
-        			s = s>60?s%60:s;
-        			s = s<10?'0'+s:s;
-        			//Ext.String.format('{0}:{1}:{2}',h,mi,s)
-        			//view.down('button#timer').setText(Ext.String.format('{0}:{1}',mi,s));
-        			nbarRbtn.setText(Ext.String.format('{0}:{1}',mi,s));
-        		},1000));
+        			itemRecord = questionsView.getActiveItem().getRecord(),
+        			isFavorite;
+        		if(itemRecord){
+        			isFavorite = itemRecord.get('is_favorite');
+	        		favoriteBtn.setIconCls(isFavorite==1?'fav1':'fav');
+	        		favoriteBtn.setText(isFavorite==1?'已收藏':'未收藏');
+        		}
+        		
+        		if(source==0){
+	        		//开启计时器
+	        		var beginTime = new Date();
+	        		questionsView.setBeginTime(beginTime);
+	        		questionsView.setTimer(setInterval(function(){
+	        			var endTime = new Date(),h,mi,s;
+	        			//h = Ext.Date.diff(beginTime, endTime, 'h');
+	        			mi = Ext.Date.diff(beginTime, endTime, 'mi');
+	        			s = Ext.Date.diff(beginTime, endTime, 's');
+	        			//h = h<10?'0'+h:h;
+	        			mi = mi<10?'0'+mi:mi;
+	        			s = s>60?s%60:s;
+	        			s = s<10?'0'+s:s;
+	        			//Ext.String.format('{0}:{1}:{2}',h,mi,s)
+	        			//view.down('button#timer').setText(Ext.String.format('{0}:{1}',mi,s));
+	        			nbarRbtn.setText(Ext.String.format('{0}:{1}',mi,s));
+	        		},1000));
+        		}else{
+	        		if(records.length==0){
+	        			util.war('没有查询结果','exph-info');
+	        			view.down('button#pager').setText('0/0');
+	        		}else{
+	        			questionsView.setStartCount(0);
+	        	    	questionsView.setTotalCount(records.length);
+	        			view.down('button#pager').setText('1/'+records.length);
+	        		}
+        		}
         	}
         });
 
-        //empty the store before adding the new one
         var productsStore = questionsView.getStore();
         if (productsStore) {
             productsStore.removeAll();
         }
-
         questionsView.setStore(store);
         view.down('button#pager').setText((parseInt(record.get('process_num'))+1)+'/'+record.get('total_num'));
         view.add(questionsView);
     },
     onExerciseViewDeactivate:function(oldActiveItem, ct, newActiveItem){
-    	var nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton')
+    	var questionsView = oldActiveItem.down('questionslist'),
+    		answers,
+    		record = oldActiveItem.getRecord(),
+    		nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton')
     	nbarRbtn.setText('');
     	nbarRbtn.hide();
-    	var questionsView = this.getQuestionsList(),
-			beginTime = questionsView.getBeginTime(),
+    	answers = questionsView.getValueMaps();
+    	
+    	//souce 3 4 不提交答案
+    	if(answers.length==0||record.get('source')==3||record.get('source')==4){
+    		questionsView.setTimer(null);
+    		return;
+    	}
+    	console.log(111);
+    	var beginTime = questionsView.getBeginTime(),
 			speed = Ext.Date.diff(beginTime, new Date(), 's'),
-			answers = questionsView.getValueMaps(),
-			record = this.getMain().getRecord(),
 			params = {
 	    		username:config.user.username,
 	    		token:config.user.token,
@@ -119,7 +153,7 @@ Ext.define('app.controller.Questions', {
 	    		answers:Ext.encode(answers)
 			};
 		questionsView.setTimer(null);
-		util.request(config.url.commitExcercise,params,function(data){
+		util.request(config.url.commitExcercise,Ext.applyIf({loaderText:'正在提交答案...'},params),function(data){
 			//record是传递参数
 			record.set('correct_percent',data.result.correct_percent);
 			record.set('passing_percent',data.result.progress);
@@ -222,7 +256,11 @@ Ext.define('app.controller.Questions', {
     	item.disable();
     	answerBtn.setIconCls('hidden');
     	answerBtn.setText('隐藏答案');
-    	
-    	
+    },
+    onFavoriteItemTap:function(favoriteView, index, target, record){
+    	var sb = favoriteView.down('segmentedbutton').getPressedButtons()[0];
+    	//source 0 顺序1自定义2考试3收藏4错题
+    	record.set('source',sb.getText()=='收藏'?3:4);
+    	this.getMainView().push(Ext.create('app.view.exercise.Main',{title:'<span class="font14">'+record.get('course_name')+'</span>',record:record}));
     }
 });

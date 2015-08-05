@@ -39,7 +39,9 @@ Ext.define('app.Config', {
     		getExercise:'http://211.101.20.203/api/Exercise',
     		commitExcercise:'http://211.101.20.203/api/CommitExcercise',
     		getApps:'http://211.101.20.203/api/Apps',
-    		doFavorite:'http://211.101.20.203/api/DoFavorite'
+    		doFavorite:'http://211.101.20.203/api/DoFavorite',
+    		getFavorite:'http://211.101.20.203/api/Favorite',
+    		getWrong:'http://211.101.20.203/api/Wrong'
     	}
     }
 });

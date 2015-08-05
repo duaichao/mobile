@@ -3,6 +3,7 @@ Ext.define('app.controller.About', {
     config: {
     	refs: {
     		mainView:'mainView',
+    		indexView:'indexView',
     		aboutContainer: 'moreContainer'
 		},
 		control: {
@@ -26,11 +27,13 @@ Ext.define('app.controller.About', {
 	
     logOut:function(){
     	var me = this;
+    	this.getIndexView().setActiveItem(0);
         Ext.ModelMgr.getModel('app.model.User').load(1, {
             success: function (user) {
                 user.erase();
                 config.user = null;
-                util.ePush('userLogin');
+                document.location.reload();
+                //util.ePush('userLogin');
             }
         });
     }

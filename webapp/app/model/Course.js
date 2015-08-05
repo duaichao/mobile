@@ -1,8 +1,12 @@
 Ext.define('app.model.Course', {
     extend: 'Ext.data.Model',
     config: {
-    	identifier: 'sequential',
         fields: [{
+            name: 'id',
+            convert: function(value, record) {
+                return record.get('course_id');
+            }
+        },{
             name: 'course_id',
             type: 'string'
         },{
@@ -27,6 +31,14 @@ Ext.define('app.model.Course', {
         },{
         	name:'correct_percent',
         	type:'string'
+        },{
+        	//0 顺序1自定义2考试3收藏4错题
+        	name:'source',
+        	type:'int',
+        	convert: function(value){
+        		value = value||0;
+	        	return value;
+	        }
         }],
         proxy: {
         	type: "ajax",

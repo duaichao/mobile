@@ -40,8 +40,6 @@
 
 
 .dv-basic  .x-dataview-item{position: relative;height:100px;margin-bottom:0.6em;background:#fff;}
-
-
 .dv-basic  .x-dataview-item .progress-ring {
   display: inline-block;
   width: 95px;
@@ -85,25 +83,16 @@
 }
 
 .dv-basic  .x-dataview-item .content .buttons{padding-top:5px;}
-.dv-basic  .x-dataview-item .content .buttons a{margin-right:0.5em;font-size: 15px;}
-.dv-basic  .x-dataview-item .content .buttons a.red.ob-btn:hover,
-.dv-basic  .x-dataview-item .content .buttons a.red.ob-btn:focus,
-.dv-basic  .x-dataview-item .content .buttons a.red.ob-btn:active{
-	background: #d0312a;
-	color: #fafafa;
+.dv-basic  .x-dataview-item .content .buttons a{
+	padding: 0em 0.5em;
+	margin-right: 0.5em;
+	font-size: 13px;
+	height: 25px;
+	line-height: 23px;
 }
-.dv-basic  .x-dataview-item .content .buttons a.green.ob-btn:hover,
-.dv-basic  .x-dataview-item .content .buttons a.green.ob-btn:focus,
-.dv-basic  .x-dataview-item .content .buttons a.green.ob-btn:active {
-	background: #47a247;
- 	color: #fafafa;
-}
-.dv-basic  .x-dataview-item .content .buttons a.blue.ob-btn:hover,
-.dv-basic  .x-dataview-item .content .buttons a.blue.ob-btn:focus,
-.dv-basic  .x-dataview-item .content .buttons a.blue.ob-btn:active {
-	background: #006da3;
-  	color: #fafafa;
-}
+.fv-data-item{border-bottom:1px solid #fff;}
+.fv-data-item .name{padding:0.6em;color:#fff;}
+.fv-tbar.x-toolbar{overflow:visible;}
 
 .x-form-fieldset{  margin: .5em;}
 .x-input-el{font-size:0.85em;  padding: .9em;}

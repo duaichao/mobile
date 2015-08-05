@@ -119,7 +119,6 @@ html,body {
 /*加载*/
 
 .exph-loader {
-	width:125px;
     background-image: none;
     background-color: rgba(102,102,102,0.85);
 }

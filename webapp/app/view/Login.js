@@ -43,6 +43,11 @@ Ext.define("app.view.Login", {
         	cls:'ob-btn ob-btn-danger',
         	height:40,
             text: '登录'
-        }]
+        }],
+        listeners:{
+        	activate:function(){
+        		this.down('textfield').focus(); 
+        	}
+        }
     }
 });

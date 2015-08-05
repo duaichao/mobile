@@ -90,7 +90,7 @@ Ext.define('app.view.exercise.QuestionsList', {
     	var view = this.up('exerciseview'),
 	    	itemRecord = newItem.getRecord(),
 	    	index = carousel.getActiveIndex();
-    	if(view){
+    	if(view&&itemRecord){
 	    	var	pagerBtn = view.down('button#pager'),
 	    		favoriteBtn = view.down('button#favorite'),
 	    		answerBtn = view.down('button#anwser'),
@@ -121,7 +121,7 @@ Ext.define('app.view.exercise.QuestionsList', {
             storeCount = store.getCount(),
             oldParams = store.getProxy().getExtraParams();
         //当前浏览题目当前数小于offsetLimit 10时，加载下一页
-        if (storeCount - (count * index) < offsetLimit && !store.isLoading()) {
+        if (storeCount>offsetLimit&&(storeCount - (count * index) < offsetLimit && !store.isLoading())) {
         	oldParams.course_offset = parseInt(this.getStartCount())+parseInt(store.getPageSize());
         	store.getProxy().setExtraParams(oldParams);
 			this.setStartCount(oldParams.course_offset);
