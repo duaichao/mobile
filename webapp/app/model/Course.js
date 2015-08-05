@@ -27,6 +27,17 @@ Ext.define('app.model.Course', {
         },{
         	name:'correct_percent',
         	type:'string'
-        }]
+        }],
+        proxy: {
+        	type: "ajax",
+            actionMethods : 'POST',
+            url : config.url.getCourseList,
+            reader: {
+                type: "json",
+                messageProperty:'info',
+                successProperty:'state',
+                rootProperty: "result"
+            }
+        }
     }
 });

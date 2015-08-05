@@ -2,12 +2,14 @@ Ext.define('app.controller.Questions', {
     extend: 'Ext.app.Controller',
     config: {
         refs: {
+        	mainView:'mainView',
         	main:'exerciseview',
         	questionsList:'questionslist'
         },
         control: {
         	exerciseview:{
-        		initialize:'showQuestions'
+        		initialize:'showQuestions',
+        		deactivate:'onExerciseViewDeactivate'
         	},
         	questionslist: {
                 itemtap: 'onQuestionTap'
@@ -47,9 +49,14 @@ Ext.define('app.controller.Questions', {
     	var record = view.getRecord(),
     		questionsView = Ext.create('app.view.exercise.QuestionsList');
     	questionsView.setStartCount(record.get('process_num'));
-    	questionsView.setTotalCount(record.get('total_num'));
+    	questionsView.setTotalCount(record.get('total_num')),
+    	nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton');
     	
-    	view.down('titlebar').setTitle(record.get('course_name'));
+    	//view.down('titlebar').setTitle(record.get('course_name'));
+    	
+    	nbarRbtn.setText('00:00');
+    	//nbarRbtn.setUi('plain');
+    	nbarRbtn.show();
     	
         var store = Ext.getStore('Questions');
         store.getProxy().setExtraParams({
@@ -76,9 +83,11 @@ Ext.define('app.controller.Questions', {
         			s = Ext.Date.diff(beginTime, endTime, 's');
         			//h = h<10?'0'+h:h;
         			mi = mi<10?'0'+mi:mi;
+        			s = s>60?s%60:s;
         			s = s<10?'0'+s:s;
         			//Ext.String.format('{0}:{1}:{2}',h,mi,s)
-        			view.down('button#timer').setText(Ext.String.format('{0}:{1}',mi,s));
+        			//view.down('button#timer').setText(Ext.String.format('{0}:{1}',mi,s));
+        			nbarRbtn.setText(Ext.String.format('{0}:{1}',mi,s));
         		},1000));
         	}
         });
@@ -93,32 +102,34 @@ Ext.define('app.controller.Questions', {
         view.down('button#pager').setText((parseInt(record.get('process_num'))+1)+'/'+record.get('total_num'));
         view.add(questionsView);
     },
-    onQuestionTap: Ext.emptyFn,
-    onBackHome:function(btn){
+    onExerciseViewDeactivate:function(oldActiveItem, ct, newActiveItem){
+    	var nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton')
+    	nbarRbtn.setText('');
+    	nbarRbtn.hide();
     	var questionsView = this.getQuestionsList(),
-    		beginTime = questionsView.getBeginTime(),
-    		speed = Ext.Date.diff(beginTime, new Date(), 's'),
-    		answers = questionsView.getValueMaps(),
-    		record = this.getMain().getRecord(),
-    		params = {
+			beginTime = questionsView.getBeginTime(),
+			speed = Ext.Date.diff(beginTime, new Date(), 's'),
+			answers = questionsView.getValueMaps(),
+			record = this.getMain().getRecord(),
+			params = {
 	    		username:config.user.username,
 	    		token:config.user.token,
 	    		course_id:record.get('course_id'),
 	    		speed:speed,
 	    		answers:Ext.encode(answers)
-    		};
-    	questionsView.setTimer(null);
-    	util.request(config.url.commitExcercise,params,function(data){
-    		//需要重构首页 分解dataview 单体配置record 便于本地更新 
-    		//record是传递参数
-    		record.set('correct_percent',data.result.correct_percent);
-    		record.set('passing_percent',data.result.progress);
-    		record.set('process_num',data.result.hasdonum);
-    		record.set('average_speed',data.result.speed);
-    		record.set('total_num',data.result.totalnum);
-    		util.ePush('index',null,'right','no');
-    	},this);
-    	
+			};
+		questionsView.setTimer(null);
+		util.request(config.url.commitExcercise,params,function(data){
+			//record是传递参数
+			record.set('correct_percent',data.result.correct_percent);
+			record.set('passing_percent',data.result.progress);
+			record.set('process_num',data.result.hasdonum);
+			record.set('average_speed',data.result.speed);
+			record.set('total_num',data.result.totalnum);
+			//var indexPage = util.ePush('index',null,'right','no');
+			var dv = newActiveItem.down('course'),st = Ext.getStore('Course');
+			util.drawScore(Ext.get(dv.getItemAt(st.indexOf(record))).down('.progress-ring'));
+		},this);
     },
     onQuestionPrev:function(btn){this.getQuestionsList().previous();},
     onQuestionNext:function(btn){this.getQuestionsList().next();},

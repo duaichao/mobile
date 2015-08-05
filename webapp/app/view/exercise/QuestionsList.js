@@ -22,7 +22,7 @@ Ext.define('app.view.exercise.QuestionsList', {
 			}]
 		}]*/
         valueMaps:[],
-        offsetLimit: 10,
+        offsetLimit: 5,
         store: null,
         animation: {
             duration: 650

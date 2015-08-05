@@ -1,28 +1,12 @@
 Ext.define('app.view.exercise.Main', {
     alternateClassName: 'exerciseview',
     xtype: 'exerciseview',
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.Container',
     config: {
     	scrollable:null,
-    	//defaultParams:{},
     	record:null,
     	layout:'fit',
         items: [{
-        	title:'练习题',
-        	ui:'fred',
-			docked: 'top',
-			xtype: 'titlebar',
-			items:[{
-				itemId: 'backhome',
-				ui:'back',
-				text:'返回'
-			},{
-				itemId:'timer',
-				ui:'plain',
-				align:'right',
-				text:'00:00'
-			}]
-        },{
         	xtype:'tabbar',
     		docked:'bottom',
     		cls:'noactive',

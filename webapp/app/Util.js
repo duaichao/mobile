@@ -135,6 +135,7 @@ Ext.define('app.Util', {
                 type: 'slide',
                 direction: turn||'left'
             });
+            return view;
         },
         //监控Viewport界面切换,切换时销毁旧项
         eActiveitemchange: function () {
@@ -368,7 +369,7 @@ Ext.define('app.Util', {
 				};
     		var nf = dh.append(Ext.getBody(),notification,true);
     		
-    		nf.setXY(nf.getAlignToXY(document,'c-c'));
+    		nf.setXY(nf.getAlignToXY(document,'c-b',[0, -120]));
     		
     		Ext.Viewport.setMasked({
     			xtype: 'mask',

@@ -1,4 +1,4 @@
-Ext.define("app.view.user.Login", {
+Ext.define("app.view.Login", {
     alternateClassName: 'userLogin',
     extend: 'Ext.form.Panel',
     xtype: 'userLogin',
@@ -12,7 +12,7 @@ Ext.define("app.view.user.Login", {
 			ui:'fblack',
 			xtype: 'titlebar',
 			items:[{
-				action: 'regist',
+				itemId: 'regist',
 				text:'注册',
 				ui:'fred',
 				align:'right'
@@ -39,7 +39,7 @@ Ext.define("app.view.user.Login", {
         },
         {
         	xtype:'button',
-        	action: 'login',
+        	itemId: 'login',
         	cls:'ob-btn ob-btn-danger',
         	height:40,
             text: '登录'

@@ -3,11 +3,7 @@ Ext.define('app.view.Favorite', {
     xtype: 'favoriteContainer',
     alternateClassName: 'favoriteContainer',
     config: {
-    	items:[{
-        	title:'我的收藏',
-        	ui:'fred',
-			docked: 'top',
-			xtype: 'titlebar'
-        }]
+    	title:'我的收藏',
+    	iconCls: 'favorite'
     }
 });

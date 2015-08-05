@@ -2,6 +2,7 @@ Ext.define('app.controller.About', {
     extend: 'Ext.app.Controller',
     config: {
     	refs: {
+    		mainView:'mainView',
     		aboutContainer: 'moreContainer'
 		},
 		control: {
@@ -17,7 +18,7 @@ Ext.define('app.controller.About', {
 
 	onAboutItemTap: function(list, idx) {
 		if(idx<3){
-			this.getAboutContainer().push(config.aboutPages[idx]);
+			this.getMainView().push(config.aboutPages[idx]);
 		}else{
 			this.logOut();
 		}

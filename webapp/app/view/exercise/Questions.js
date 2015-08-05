@@ -10,7 +10,12 @@ Ext.define('app.view.exercise.Questions', {
         dataPinYin:['A','B','C','D','E','F','G'],
         dataPanDuan:['正确','错误'],
         name:null,
-        options:null
+        options:null,
+        listeners : [{
+        	event : 'deactivate',
+        	order : 'before',
+        	fn    : 'onBeforeDeActiveItem'
+        }]
     },
     /*updateRecords: function(newRecords) {
         var record = newRecords.items[0];

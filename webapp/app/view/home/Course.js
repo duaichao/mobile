@@ -1,8 +1,9 @@
-Ext.define('app.view.user.Course', {
+Ext.define('app.view.home.Course', {
 	extend: 'Ext.dataview.DataView',
     alternateClassName: 'course',
     xtype: 'course',
     config: {
+    	scrollable:false,
     	bgColors : ['rgba(41,128,185,1)','rgba(26,188,156,1)','rgba(211,84,0,1)'],
     	cls: 'dv-basic',
         itemTpl: [

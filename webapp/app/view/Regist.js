@@ -1,4 +1,4 @@
-Ext.define('app.view.user.Regist', {
+Ext.define('app.view.Regist', {
 	alternateClassName: 'userRegist',
 	xtype:'userRegist',
     extend: 'Ext.form.Panel',
@@ -14,11 +14,11 @@ Ext.define('app.view.user.Regist', {
 			items:[{
 				text:'返回',
 				ui:'back',
-				action:'tologin'
+				itemId:'tologin'
 			},{
 				text:'保存',
 				ui:'fblue',
-				action:'save',
+				itemId:'save',
 				align:'right'
 			}]
 		},{

@@ -1,6 +1,6 @@
-Ext.define('app.view.user.Info', {
-	alternateClassName: 'userInfo',
-	xtype:'userInfo',
+Ext.define('app.view.home.Info', {
+	alternateClassName: 'userInfoContainer',
+	xtype:'userInfoContainer',
     extend: 'Ext.form.Panel',
     config: {
     	listeners:{
@@ -21,22 +21,8 @@ Ext.define('app.view.user.Info', {
 	        	this.setValues(d);
 		    }
     	},
+    	title:'个人信息',
         items: [{
-        	title:'个人信息',
-			docked: 'top',
-			ui:'fred',
-			xtype: 'titlebar',
-			items:[{
-				action: 'backHome',
-				ui:'back',
-				text:'返回'
-			},{
-				action: 'saveInfo',
-				ui:'fblack',
-				text:'保存',
-				align:'right'
-			}]
-        },{
 			xtype: 'fieldset',
             layout: 'vbox', 
             defaults: {
@@ -106,6 +92,13 @@ Ext.define('app.view.user.Info', {
 	            maxRows: 2,
 	            label: '考试地址'
 	        }]
+		},{
+			height:40,
+			xtype:'button',
+			itemId:'saveInfo',
+			cls:'ob-btn ob-btn-success',
+			margin:'1.2em 0.6em',
+			text:'保存'
 		}]
     }
 });

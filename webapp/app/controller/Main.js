@@ -1,6 +1,11 @@
 Ext.define('app.controller.Main', {
     extend: 'Ext.app.Controller',
     config: {
+    	refs:{
+    		userLogin: 'userLogin',
+        	userRegist: 'userRegist',
+    		mainView:'mainView'
+    	},
         routes: {
             'go/:view': 'handleRoute',
             'go/:view/:isPop': 'handleRoute',
@@ -22,8 +27,80 @@ Ext.define('app.controller.Main', {
 	        			nf.on('tap',function(){util.ePush('userLogin');});
         			}
         		}
+        	},
+        	'userLogin button#login': {
+                tap: 'doLogin'
+            },
+            'userLogin button#regist':{
+            	tap: function(){
+            		util.ePush('userRegist');
+            	}
+            },
+            'userRegist button#save': {
+                tap: 'saveRegist'
+            },
+            'userRegist button#tologin':{
+            	tap: function(){
+            		util.ePush('userLogin',null,'right');
+            	}
+            },
+        	'indexView':{
+        		activeitemchange:'onActiveItemChange'
         	}
         }
+    },
+    doLogin:function(){
+    	var login = this.getUserLogin(),
+	    	values = login.getValues();
+	    if(values.username==''||values.password==''){
+	    	util.war('用户名或密码不正确');
+	    }else{
+	    	this.logUserIn(values);
+	    }
+    },
+    logUserIn: function (params) {
+    	util.request(config.url.login,params,function(data){
+        	params.token = data.result.token;
+        	//加载个人信息
+        	util.request(config.url.getPersonalInfo,params,function(data){
+            	var d = Ext.applyIf(data.result,params);
+            	var logUser = Ext.create('app.model.User', {
+                    id: 1
+                });
+                logUser.set(d);
+                logUser.save();
+            	
+            	//初始化配置参数
+            	config.user = d;
+            	//加载个人信息成功后 跳转页面
+            	util.ePush('mainView',null,'left','no');
+        	},this);
+        	
+        	
+    	},this);
+    },
+    saveRegist:function () {
+        var regist = this.getUserRegist(),
+			values = regist.getValues();
+	    if(values.username==''){
+	    	util.war('请输入用户名');
+	    	return;
+	    }
+	    if(values.password==''){
+	    	util.war('请输入密码');
+	    	return;
+	    }
+	    if(!/\w@\w*\.\w/.test(values.email)){
+	    	util.war('邮箱格式不正确');
+	    	return;
+	    }
+	    this.logRegist(regist.getValues());
+	},
+    logRegist: function(params){
+    	util.request(config.url.regist,params,function(data){
+    		util.suc('注册成功，请登录');
+        	util.ePush('userLogin');
+    	},this);
     },
     launch: function () {
         var me = this;
@@ -38,8 +115,6 @@ Ext.define('app.controller.Main', {
                 Ext.ModelMgr.getModel('app.model.User').load(1, {
                     scope: this,
                     success: function (cfg) {
-                    	//创建课程数据源
-                    	app.app.getApplication().createCourseStore(cfg.data).load();
                     	//加载个人信息
                     	//去除遮罩
                     	util.request(config.url.getPersonalInfo,Ext.applyIf({noloader:false},cfg.data),function(data){
@@ -53,8 +128,7 @@ Ext.define('app.controller.Main', {
                                 	//初始化配置参数
                                 	config.user = d;
                                 	//加载个人信息成功后 跳转页面
-                                	util.ePush('index',null,'left','no');
-                                	
+                                	util.ePush('mainView',null,'left','no');
                                 }
                             });
                     	},this);
@@ -75,6 +149,9 @@ Ext.define('app.controller.Main', {
                 util.ePush('guide');
             }
         });
+    },
+    onActiveItemChange:function(indexView, item, oldItem){
+    	this.getMainView().getNavigationBar().setTitle(item.getTitle());
     },
     onDeviceReady :function(){
     	var me = this;
@@ -101,64 +178,23 @@ Ext.define('app.controller.Main', {
         }
     },
     onBackButton :function(){
-    	var item = Ext.Viewport.getActiveItem(),
-    		id = item.getItemId();
-    	if (id == 'index') {
-    		var home = item.getActiveItem();
-    		if(home.id.indexOf('home')!=-1){
-    			this.doExitApp();
-    		}else{
-    			this.isExit = false;
-    			util.ePush('index',null,'right','no');
-    		}
-    	}else{
+    	var item = Ext.Viewport.getActiveItem();
+    	if (item.isXType('userLogin')||item.isXType('userRegist')) {
     		this.doExitApp();
+    	}else{
+    		
+    		this.isExit = false;
     	}
     },
     doExitApp :function(){
-    	/*Ext.Msg.confirm("提示", "您确定要退出应用吗?", function(e) {
-			if (e == "yes") {
-				navigator.app.exitApp();
-			}
-		}, this);*/
-		//this.onMenuButton();
+    	var me = this;
     	if (this.isExit) {
     		navigator.app.exitApp();
     	} else {
     		this.isExit = true;
-    		util.war('再按一次退出程序','exph-info')
+    		util.war('再按一次退出程序','exph-info');
+    		setTimeout(function(){me.isExit = false;},2000)
     	}
-    },
-    onMenuButton :function(){
-    	var items = [{
-	        text: '退出程序',
-	        height:40,
-	        ui: 'decline',
-	        cls:'ui red',
-	        scope: this,
-	        handler: function() {
-	        	this.actions.hide();
-	        	navigator.app.exitApp();
-	        }
-	    },
-	    {
-	        xtype: 'button',
-	        text: '取消',
-	        cls:'ui gray',
-	        height:40,
-	        scope: this,
-	        handler: function() {
-	            this.actions.hide();
-	        }
-	    }];
-        if (!this.actions) {
-            this.actions = Ext.create('Ext.ActionSheet', {
-            	hideOnMaskTap :true,
-                items: items
-            });
-        }
-        Ext.Viewport.add(this.actions);
-        this.actions.show();
     },
     handleRoute : function (xtype, isPop) {
         var params = config.tmpParams|| {};

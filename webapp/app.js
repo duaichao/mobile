@@ -14,26 +14,6 @@ Ext.application({
         '1536x2008': 'resources/startup/1536x2008.png', // : Retina iPad (third generation) in portrait orientation
         '1496x2048': 'resources/startup/1496x2048.png' // : Retina iPad (third generation) in landscape orientation
     },
-    createCourseStore:function(data){
-    	//读取课程列表
-    	return Ext.create("Ext.data.Store", {
-    		id:'Course',
-    		params:Ext.applyIf({noloader:true},data),
-            model: "app.model.Course",
-            proxy: {
-                type: "ajax",
-                actionMethods : 'POST',
-                url : config.url.getCourseList,
-                reader: {
-                    type: "json",
-                    messageProperty:'info',
-                    successProperty:'state',
-                    rootProperty: "result"
-                }
-            },
-            autoLoad: false
-        });
-    },
     isIconPrecomposed: false,
     icon: {
         57: 'resources/icons/icon.png',
@@ -49,33 +29,39 @@ Ext.application({
 	controllers: [
 		'Main',
 		//'demo.Demo',
-		'User',
+		//'User',
+		'Home',
 		'Questions',
 		'About'
 	],
 	views: [
         //'demo.Demo',
-        'Guide','Main','Index',
-        'App','Favorite',
+        'Guide',
+        'Login',
+        'Regist',
+        
+        'Main',
+        'App',
+        'Favorite',
+        'Home',
+        'About',
         
         'exercise.Main',
         'exercise.Answer',
         'exercise.QuestionsList',
         'exercise.Questions',
         
-        'user.Login',
-        'user.Regist',
-        'user.Home',
-        'user.Course',
-        'user.Info',
+        
+        'home.Course',
+        'home.Info',
         
         
-        'about.More',
         'about.List',
         'about.HtmlPage'
 	],
 	stores:[
-        'Questions'
+        'Questions',
+        'Course'
 	],
     models: [
          'Local',
