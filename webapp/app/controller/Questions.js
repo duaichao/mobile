@@ -49,154 +49,196 @@ Ext.define('app.controller.Questions', {
         },
         questionsUrls:['getExercise','','','getFavorite','getWrong']//source值对应
     },
-    showQuestions: function(view) {
-    	var record = view.getRecord(),
-    		questionsView = Ext.create('app.view.exercise.QuestionsList'),
+    showQuestions: function(questionsView) {
+    	var viewRecord = questionsView.getRecord(),
+    		questionsList,
 	    	nbarRbtn,
-	    	source = record.get('source'),
-	    	beginCount,
+	    	courseId,
+	    	source,
+	    	startCount,
+	    	totalCount,
 	    	store = Ext.getStore('Questions');
-    	beginCount = 0;
-    	
+    	courseId = viewRecord.get('course_id');
+    	source = viewRecord.get('source');
+    	startCount = parseInt(viewRecord.get('process_num'));
+    	totalCount = parseInt(viewRecord.get('total_num'));
+    	questionsList = Ext.create('app.view.exercise.QuestionsList');
     	if(source==0){
-    		questionsView.setStartCount(record.get('process_num'));
-        	questionsView.setTotalCount(record.get('total_num'));
-    		beginCount = record.get('process_num');
 	    	nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton');
     		nbarRbtn.setText('00:00');
 	    	//nbarRbtn.setUi('plain');
 	    	nbarRbtn.show();
     	}
+    	if(source==3||source==4){
+    		startCount = 0;
+    	}
     	
-        
+    	questionsList.setStartCount(startCount);
+    	questionsList.setTotalCount(totalCount);
+    	
         store.getProxy().setUrl(config.url[this.getQuestionsUrls()[source]]);
-        
         store.getProxy().setExtraParams({
-			course_id:record.get('course_id'),
+			course_id:courseId,
 			token:config.user.token,
 			username:config.user.username,
-			course_offset:beginCount,
+			course_offset:startCount,
 			course_num:store.getPageSize()
 		});
         store.load({
         	callback:function(records){
         		//初始化 首次加载第一道题收藏 状态
-        		var favoriteBtn = view.down('button#favorite'),
-        			itemRecord = questionsView.getActiveItem().getRecord(),
+        		var favoriteBtn = questionsView.down('button#favorite'),
+        			itemRecord = questionsList.getActiveItem().getRecord(),
         			isFavorite;
         		if(itemRecord){
         			isFavorite = itemRecord.get('is_favorite');
-	        		favoriteBtn.setIconCls(isFavorite==1?'fav1':'fav');
-	        		favoriteBtn.setText(isFavorite==1?'已收藏':'未收藏');
+	        		favoriteBtn.setIconCls(isFavorite==1?questionsView.getDyBtnIcon()[source]+'1':questionsView.getDyBtnIcon()[source]);
+	        		favoriteBtn.setText(isFavorite==1?questionsView.getDyBtnText()[source]:questionsView.getDyBtnDefText()[source]);
         		}
-        		
         		if(source==0){
 	        		//开启计时器
 	        		var beginTime = new Date();
-	        		questionsView.setBeginTime(beginTime);
-	        		questionsView.setTimer(setInterval(function(){
+	        		questionsList.setBeginTime(beginTime);
+	        		questionsList.setTimer(setInterval(function(){
 	        			var endTime = new Date(),h,mi,s;
-	        			//h = Ext.Date.diff(beginTime, endTime, 'h');
 	        			mi = Ext.Date.diff(beginTime, endTime, 'mi');
 	        			s = Ext.Date.diff(beginTime, endTime, 's');
-	        			//h = h<10?'0'+h:h;
 	        			mi = mi<10?'0'+mi:mi;
 	        			s = s>60?s%60:s;
 	        			s = s<10?'0'+s:s;
-	        			//Ext.String.format('{0}:{1}:{2}',h,mi,s)
-	        			//view.down('button#timer').setText(Ext.String.format('{0}:{1}',mi,s));
 	        			nbarRbtn.setText(Ext.String.format('{0}:{1}',mi,s));
 	        		},1000));
         		}else{
-	        		if(records.length==0){
-	        			util.war('没有查询结果','exph-info');
-	        			view.down('button#pager').setText('0/0');
-	        		}else{
-	        			questionsView.setStartCount(0);
-	        	    	questionsView.setTotalCount(records.length);
-	        			view.down('button#pager').setText('1/'+records.length);
-	        		}
+        			if(store.getCount()==0){
+            			util.war('没有查询结果','exph-info');
+            			questionsView.down('tabbar').hide();
+            		}else{
+            			questionsList.setStartCount(0);
+            			questionsList.setTotalCount(store.getCount());
+            			questionsView.down('button#pager').setText('1/'+store.getCount());
+            		}
         		}
         	}
         });
-
-        var productsStore = questionsView.getStore();
-        if (productsStore) {
-            productsStore.removeAll();
+        /*Ext.Ajax.on('requestcomplete',function (conn, response, options, eOpts) {
+        	console.log(response.responseText);
+        });*/
+        var oldStore = questionsList.getStore();
+        if (oldStore) {
+        	oldStore.removeAll();
         }
-        questionsView.setStore(store);
-        view.down('button#pager').setText((parseInt(record.get('process_num'))+1)+'/'+record.get('total_num'));
-        view.add(questionsView);
+        questionsList.setStore(store);
+        questionsView.down('button#pager').setText((startCount+1)+'/'+totalCount);
+        questionsView.add(questionsList);
     },
     onExerciseViewDeactivate:function(oldActiveItem, ct, newActiveItem){
-    	var questionsView = oldActiveItem.down('questionslist'),
+    	var questionsList = oldActiveItem.down('questionslist'),
     		answers,
     		record = oldActiveItem.getRecord(),
+    		source = record.get('source');
     		nbarRbtn = this.getMainView().getNavigationBar().down('#rightTplButton')
     	nbarRbtn.setText('');
     	nbarRbtn.hide();
-    	answers = questionsView.getValueMaps();
+    	answers = questionsList.getValueMaps();
     	
     	//souce 3 4 不提交答案
-    	if(answers.length==0||record.get('source')==3||record.get('source')==4){
-    		questionsView.setTimer(null);
-    		return;
+    	if(answers.length==0||source==3||source==4){
+    		questionsList.setTimer(null);
+    	}else{
+	    	var beginTime = questionsList.getBeginTime(),
+				speed = Ext.Date.diff(beginTime, new Date(), 's'),
+				params = {
+		    		username:config.user.username,
+		    		token:config.user.token,
+		    		course_id:record.get('course_id'),
+		    		speed:speed,
+		    		answers:Ext.encode(answers)
+				};
+	    	questionsList.setTimer(null);
+			util.request(config.url.commitExcercise,Ext.applyIf({loaderText:'正在提交答案...'},params),function(data){
+				//record是传递参数
+				record.set('correct_percent',data.result.correct_percent);
+				record.set('passing_percent',data.result.progress);
+				record.set('process_num',data.result.hasdonum);
+				record.set('average_speed',data.result.speed);
+				record.set('total_num',data.result.totalnum);
+				var dv = newActiveItem.down('course'),st = Ext.getStore('Course');
+				util.drawScore(Ext.get(dv.getItemAt(st.indexOf(record))).down('.progress-ring'));
+			},this);
     	}
-    	console.log(111);
-    	var beginTime = questionsView.getBeginTime(),
-			speed = Ext.Date.diff(beginTime, new Date(), 's'),
-			params = {
-	    		username:config.user.username,
-	    		token:config.user.token,
-	    		course_id:record.get('course_id'),
-	    		speed:speed,
-	    		answers:Ext.encode(answers)
-			};
-		questionsView.setTimer(null);
-		util.request(config.url.commitExcercise,Ext.applyIf({loaderText:'正在提交答案...'},params),function(data){
-			//record是传递参数
-			record.set('correct_percent',data.result.correct_percent);
-			record.set('passing_percent',data.result.progress);
-			record.set('process_num',data.result.hasdonum);
-			record.set('average_speed',data.result.speed);
-			record.set('total_num',data.result.totalnum);
-			//var indexPage = util.ePush('index',null,'right','no');
-			var dv = newActiveItem.down('course'),st = Ext.getStore('Course');
-			util.drawScore(Ext.get(dv.getItemAt(st.indexOf(record))).down('.progress-ring'));
-		},this);
     },
-    onQuestionPrev:function(btn){this.getQuestionsList().previous();},
-    onQuestionNext:function(btn){this.getQuestionsList().next();},
+    onQuestionPrev:function(btn){btn.up('exerciseview').getActiveItem().previous();},
+    onQuestionNext:function(btn){btn.up('exerciseview').getActiveItem().next();},
     onQuestionAnswer:function(btn){
-    	var activeItem = this.getQuestionsList().getActiveItem(),
+    	var activeItem = btn.up('exerciseview').getActiveItem().getActiveItem(),
     		answerBox = activeItem.down('questionanswer'),
     		itemRecord = activeItem.getRecord();
     	answerBox.isHidden()?answerBox.show():answerBox.hide();
     	if(!itemRecord.get('finish')){
     		activeItem.fireEvent('finishQuestion',activeItem);
+    	}else{
+    		btn.setIconCls('visible');
+    		btn.setText('显示答案');
     	}
     },
     onQuestionFavorite:function(btn){
-    	var activeItem = this.getQuestionsList().getActiveItem();
-		record = activeItem.getRecord();
+    	var questionsView = btn.up('exerciseview'),
+    		questionsList = questionsView.getActiveItem(),
+    		activeItem = questionsList.getActiveItem(),
+    		viewRecord = questionsView.getRecord(),
+    		source = viewRecord.get('source'),
+    		record = activeItem.getRecord();
 		var params = {
 				username:config.user.username,
 				token:config.user.token,
-				course_id:record.get('course_id'),
+				course_id:viewRecord.get('course_id'),
 				id:record.get('id'),
 				do_favorite:parseInt(record.get('is_favorite'))==1?0:1
 		};
-		util.request(config.url.doFavorite,params,function(data){
+		var url = config.url.doFavorite;
+		if(btn.getText()=='删除'){
+			url = config.url.removeWrong;
+		}
+		util.request(url,params,function(data){
     		util.suc(params.do_favorite==1?'成功收藏题目':'取消题目收藏');
     		record.set('is_favorite',params.do_favorite);
-    		btn.setIconCls(params.do_favorite==1?'fav1':'fav');
-    		btn.setText(params.do_favorite==1?'已收藏':'未收藏');
+    		btn.setIconCls(params.do_favorite==1?questionsView.getDyBtnIcon()[source]+'1':questionsView.getDyBtnIcon()[source]);
+    		btn.setText(params.do_favorite==1?questionsView.getDyBtnText()[source]:questionsView.getDyBtnDefText()[source]);
+    		
+    		if(source==3||source==4){
+    			var store = questionsList.getStore();
+    			store.load({
+    	        	callback:function(records){
+    	        		//初始化 首次加载第一道题收藏 状态
+    	        		var favoriteBtn = questionsView.down('button#favorite'),
+    	        			itemRecord = questionsList.getActiveItem().getRecord(),
+    	        			isFavorite;
+    	        		if(itemRecord){
+    	        			isFavorite = itemRecord.get('is_favorite');
+    		        		favoriteBtn.setIconCls(questionsView.getDyBtnIcon()[source]+'1');
+    		        		favoriteBtn.setText(questionsView.getDyBtnDefText()[source]);
+    	        		}
+    	        		if(store.getCount()==0){
+	            			util.war('没有查询结果','exph-info');
+	            			questionsView.down('tabbar').hide();
+	            			questionsList.removeAll(true);
+	            		}else{
+	            			questionsList.setStartCount(0);
+	            			questionsList.setTotalCount(store.getCount());
+	            			questionsView.down('button#pager').setText('1/'+store.getCount());
+	            			questionsList.customReset();
+	            		}
+    	        		
+    	        	}
+    	        });
+    			
+    		}
     	},this);
     },
     onFinishQuestion:function(item){
     	var record = item.getRecord(),
     		carousel = item.up('questionslist'),
-    		answerBtn = this.getMain().down('button#anwser'),
+    		answerBtn = carousel.up('exerciseview').down('button#anwser'),
     		finishBtn = item.down('button#finish'),options,checkedOptions,rightString,valueString,valueMap;
     	if(finishBtn){
     		finishBtn.hide();
@@ -243,15 +285,17 @@ Ext.define('app.controller.Questions', {
     	valueMap.user_answer_array.push({
     		user_answer:valueString
     	});
+    	carousel.setValueMaps(valueMap);
+    	var answerBox = item.down('questionanswer');
     	if(rightString!=valueString){
     		//util.err('回答错误');
-    		item.addCls('qe-answer-wrong');
+    		answerBox.addCls('qe-answer-wrong');
     	}else{
     		//util.suc('回答正确');
-    		item.addCls('qe-answer-right');
+    		answerBox.addCls('qe-answer-right');
     	}
-    	carousel.setValueMaps(valueMap);
-    	item.down('questionanswer').show();
+    	answerBox.show();
+    	
     	record.set('finish',1);
     	item.disable();
     	answerBtn.setIconCls('hidden');

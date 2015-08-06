@@ -47,7 +47,7 @@ Ext.define('app.view.Regist', {
 		},{
         	xtype:'button',
         	cls:'ob-btn ob-btn-success',
-        	action: 'save',
+        	itemId: 'save',
         	height:40,
             margin:'0 5px 0 5px',
             text: '注册'

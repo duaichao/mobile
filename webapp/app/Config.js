@@ -41,7 +41,12 @@ Ext.define('app.Config', {
     		getApps:'http://211.101.20.203/api/Apps',
     		doFavorite:'http://211.101.20.203/api/DoFavorite',
     		getFavorite:'http://211.101.20.203/api/Favorite',
-    		getWrong:'http://211.101.20.203/api/Wrong'
+    		getWrong:'http://211.101.20.203/api/Wrong',
+    		removeWrong:'http://211.101.20.203/api/RemoveWrong',
+    		about:'http://211.101.20.203/api/About',
+    		getCustomCategory:'http://211.101.20.203/api/getpracticebyyouinfo',
+    		getCustomExercise:'http://211.101.20.203/api/getquestionbyyou',
+    		commitCustomExercise:'http://211.101.20.203/api/commitpracticebyyou'
     	}
     }
 });

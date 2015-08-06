@@ -29,5 +29,9 @@ Ext.define('app.view.home.Course', {
     prepareData: function(data, index, record) {
     	data.bgcolor = this.getBgColors()[index];
     	return data;
+    },
+    onStoreUpdate: function(store, record, newIndex, oldIndex) {
+        this.callParent(arguments);
+        util.drawScore(Ext.get(this.getItemAt(newIndex)).down('.progress-ring'));
     }
 });

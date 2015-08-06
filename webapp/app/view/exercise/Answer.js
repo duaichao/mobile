@@ -46,7 +46,16 @@ Ext.define('app.view.exercise.Answer', {
             	}
             }
             header.setHtml(this.getHeaderTemplate().apply(levels));
-            content.setHtml(record.get("explain"));
+            if(record.get('type')=='06'){
+            	var hasSubs =record.get('sub_array'),html='';
+            	Ext.Array.each(hasSubs, function(sub, index) {
+    				html+=Ext.String.format('<div>0{0}.{1}</div>',(index+1),sub.explain);
+    			});
+            	
+            	content.setHtml(html);
+            }else{
+            	content.setHtml(record.get("explain"));
+            }
             content.getScrollable().getScroller().scrollTo(null, 0, false);
 
             this.add(header);

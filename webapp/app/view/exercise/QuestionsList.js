@@ -13,14 +13,6 @@ Ext.define('app.view.exercise.QuestionsList', {
         timer:null,
         beginTime:null,
         endTime:null,
-        //答案格式
-		/*[{
-			id:'',
-			type:'',
-			user_answer_array:[{
-				user_answer:'A'//多选 ABD 判断题 中文字 正确/错误
-			}]
-		}]*/
         valueMaps:[],
         offsetLimit: 5,
         store: null,
@@ -39,9 +31,6 @@ Ext.define('app.view.exercise.QuestionsList', {
         	fn    : 'onItemIndexChange'
         }]
     },
-    initialize: function() {
-        Ext.Viewport.on('orientationchange', this.onOrientationChange, this);
-    },
     applyTimer:function(newValue, oldValue){
     	if(oldValue){
     		clearInterval(oldValue);
@@ -55,24 +44,6 @@ Ext.define('app.view.exercise.QuestionsList', {
     		return oldMaps;
     	}
     	return newMaps;
-    },
-    applyCount: function(count) {
-        if (count == "auto") {
-            count = 8;
-            if (Ext.Viewport.getOrientation() == "landscape") {
-                count = 7;
-            }
-        }
-        return count;
-    },
-    onOrientationChange: function(vewport, orientation) {
-        var oldCount = this.getCount(),
-            newCount = this.applyCount(this.config.count);
-
-        if (oldCount != newCount) {
-            this.setCount(newCount);
-            this.refreshItems();
-        }
     },
     updateStore: function(newStore) {
         var me = this;
@@ -91,20 +62,29 @@ Ext.define('app.view.exercise.QuestionsList', {
 	    	itemRecord = newItem.getRecord(),
 	    	index = carousel.getActiveIndex();
     	if(view&&itemRecord){
+    		if(itemRecord.get('type')=='06'){
+    			newItem.setScrollable(true);
+    		}else{
+    			newItem.setScrollable(false);
+    		}
+    		
+    		
 	    	var	pagerBtn = view.down('button#pager'),
 	    		favoriteBtn = view.down('button#favorite'),
 	    		answerBtn = view.down('button#anwser'),
 	    		isFavorite = itemRecord.get('is_favorite'),
-	    		finishBtn = newItem.down('button#finish');
+	    		finishBtn = newItem.down('button#finish'),
+	    		source = view.getRecord().get('source'),
+	    		dyText = view.getDyBtnText(),
+	    		dyIcon = view.getDyBtnIcon(),
+	    		dydefText = view.getDyBtnDefText() ;
 	    	pagerBtn.setText((parseInt(this.getStartCount())+index+1)+'/'+this.getTotalCount());
-	    	favoriteBtn.setIconCls(isFavorite==1?'fav1':'fav');
-			favoriteBtn.setText(isFavorite==1?'已收藏':'未收藏');
+	    	
+	    	favoriteBtn.setIconCls(isFavorite==1?dyIcon[source]+'1':dyIcon[source]);
+			favoriteBtn.setText(isFavorite==1?dyText[source]:dydefText[source]);
 			if(itemRecord.get('finish')){
 				newItem.fireEvent('finishQuestion',newItem);
 			}else{
-				newItem.enable();
-				newItem.removeCls(['qe-answer-wrong','qe-answer-right']);
-				newItem.down('questionanswer').hide();
 				answerBtn.setIconCls('visible');
 		    	answerBtn.setText('显示答案');
 		    	if(finishBtn){
@@ -118,16 +98,17 @@ Ext.define('app.view.exercise.QuestionsList', {
             count = this.getCount(),
             offsetLimit = this.getOffsetLimit(),
             store = this.getStore(),
-            storeCount = store.getCount(),
+            storeCount = store.data.length,
             oldParams = store.getProxy().getExtraParams();
-        //当前浏览题目当前数小于offsetLimit 10时，加载下一页
-        if (storeCount>offsetLimit&&(storeCount - (count * index) < offsetLimit && !store.isLoading())) {
-        	oldParams.course_offset = parseInt(this.getStartCount())+parseInt(store.getPageSize());
-        	store.getProxy().setExtraParams(oldParams);
-			this.setStartCount(oldParams.course_offset);
-            store.nextPage();
+        //当前浏览题目当前数小于offsetLimit 5时，加载下一页
+        if(storeCount==store.getPageSize()){
+	        if (storeCount - (count * index) < offsetLimit && !store.isLoading()) {
+	        	oldParams.course_offset = parseInt(this.getStartCount())+parseInt(store.getPageSize());
+	        	store.getProxy().setExtraParams(oldParams);
+				this.setStartCount(oldParams.course_offset);
+	            store.nextPage();
+	        }
         }
-        
     },
     onItemIndexChange: function(me, item, index) {
         var store = this.getStore(),
@@ -137,6 +118,9 @@ Ext.define('app.view.exercise.QuestionsList', {
             i;
         if (!store) {
             return;
+        }
+        if(store.getCount()<store.getPageSize()){
+        	this.setMaxItemIndex(store.getCount()-1);
         }
         startIndex = index * count;
         if (count > 1) {
@@ -152,5 +136,15 @@ Ext.define('app.view.exercise.QuestionsList', {
             }
         }, this);
         item.setRecord(records.items[0]);
+    },
+    customReset:function(source){
+    	this.rebuildInnerIndexes();
+        this.setActiveItem(0);
+        var favoriteBtn;
+        favoriteBtn = this.up('exerciseview').down('button#favorite');
+        if(source==3){
+	    	favoriteBtn.setIconCls(questionsView.getDyBtnIcon()[source]+'1');
+			favoriteBtn.setText(questionsView.getDyBtnDefText()[source]);
+        }
     }
 });
