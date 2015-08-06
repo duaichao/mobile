@@ -37,8 +37,9 @@
 	color:#bbb;
 }
 
-
-
+.x-carousel-item {
+  border-left: 1px solid #e1e1e1;
+}
 .dv-basic  .x-dataview-item{position: relative;height:100px;margin-bottom:0.6em;background:#fff;}
 .dv-basic  .x-dataview-item .progress-ring {
   display: inline-block;

@@ -4,6 +4,7 @@ Ext.define('app.view.exercise.QuestionsList', {
     
     config: {
     	directionLock: true,
+    	//direction:'vertical',
         innerItemConfig: {
             xclass: 'app.view.exercise.Questions'
         },
@@ -105,7 +106,7 @@ Ext.define('app.view.exercise.QuestionsList', {
 	        if (storeCount - (count * index) < offsetLimit && !store.isLoading()) {
 	        	oldParams.course_offset = parseInt(this.getStartCount())+parseInt(store.getPageSize());
 	        	store.getProxy().setExtraParams(oldParams);
-				this.setStartCount(oldParams.course_offset);
+				//this.setStartCount(oldParams.course_offset);
 	            store.nextPage();
 	        }
         }

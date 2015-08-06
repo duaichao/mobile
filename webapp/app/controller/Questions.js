@@ -157,11 +157,12 @@ Ext.define('app.controller.Questions', {
 	    	questionsList.setTimer(null);
 			util.request(config.url.commitExcercise,Ext.applyIf({loaderText:'正在提交答案...'},params),function(data){
 				//record是传递参数
-				record.set('correct_percent',data.result.correct_percent);
-				record.set('passing_percent',data.result.progress);
-				record.set('process_num',data.result.hasdonum);
-				record.set('average_speed',data.result.speed);
-				record.set('total_num',data.result.totalnum);
+				record.set({
+					'correct_percent':data.result.correct_percent,
+					'passing_percent':data.result.progress,
+					'process_num':data.result.hasdonum,
+					'average_speed':data.result.speed
+				});
 				var dv = newActiveItem.down('course'),st = Ext.getStore('Course');
 				util.drawScore(Ext.get(dv.getItemAt(st.indexOf(record))).down('.progress-ring'));
 			},this);
@@ -200,7 +201,7 @@ Ext.define('app.controller.Questions', {
 			url = config.url.removeWrong;
 		}
 		util.request(url,params,function(data){
-    		util.suc(params.do_favorite==1?'成功收藏题目':'取消题目收藏');
+    		util.suc(params.do_favorite==1?'成功'+btn.getText()+'题目':'取消题目收藏');
     		record.set('is_favorite',params.do_favorite);
     		btn.setIconCls(params.do_favorite==1?questionsView.getDyBtnIcon()[source]+'1':questionsView.getDyBtnIcon()[source]);
     		btn.setText(params.do_favorite==1?questionsView.getDyBtnText()[source]:questionsView.getDyBtnDefText()[source]);

@@ -43,10 +43,12 @@ Ext.define('app.controller.Home', {
     },
     onDataViewItemTap:function(dv, index, target, record, e, eOpts){
 		if(e.target.className.indexOf('ob-btn-primary')!=-1){
-			record.dirty = true;
 			record.set('source',0);
-			
 			this.getMainView().push(Ext.create('app.view.exercise.Main',{title:'<span class="font14">'+record.get('course_name')+'</span>',record:record}));
+		}
+		if(e.target.className.indexOf('ob-btn-success')!=-1){
+			record.set('source',1);
+			this.getMainView().push(Ext.create('app.view.exercise.Custom',{record:record}));
 		}
 	},
     //上传图片

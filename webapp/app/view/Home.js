@@ -9,12 +9,15 @@ Ext.define('app.view.Home', {
         userInfo:null,
     },
 	applyUserInfo:function(cfg){
-    	var r = config.user,html,me = this;
+    	var r = config.user,html,me = this,photo = 'resources/images/noface.png';
     	if(r){
     		html = [
 		        '<div class="ue-info-name">欢迎你，<span>{0}</span></div>',
 		        '<div class="ue-info-other">距离考试还有<span class="font20 fnumber blue"> {1} </span>天</div>'
     		].join('');
+    		if(r.photo){
+    			photo = config.url.host+r.photo;
+    		}
 	    	return Ext.factory(Ext.applyIf(cfg,{
 	    		layout:'hbox',
 	    		items:[{
@@ -22,7 +25,7 @@ Ext.define('app.view.Home', {
 	    		    width: 70,
 	    			cls:'ue-info-face',
 	    			xtype:'image',
-	    			src:config.url.host+r.photo
+	    			src:photo
 	    		},{
 	    			flex:1,
 	    			cls:'ue-info',

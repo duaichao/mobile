@@ -9,7 +9,7 @@ Ext.define('app.view.home.Course', {
         itemTpl: [
               '<div style="background:{bgcolor};width:100%;height:100%;">',
               '<div class="progress-ring" data-percent="{correct_percent}">',
-      			'<canvas height="80" width="80"></canvas>',
+      			'<canvas height="80" width="80" style="width:80px;height:80px;"></canvas>',
      				'<div class="score"></div>',
       		  '</div>',	
               '<div class="content">',

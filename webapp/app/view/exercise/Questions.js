@@ -63,6 +63,7 @@ Ext.define('app.view.exercise.Questions', {
     			ptype = r.get('type');
     		if(ptype=='06'&&Ext.isArray(hasSubs)){
         		//type=06
+    			me.setScrollable(true);
     			Ext.Array.each(hasSubs, function(sub, index) {
     				var cnt = me.creaetOptions(sub.answer_array, sub.type);
     				cnt.splice(0, 0, {
@@ -76,6 +77,7 @@ Ext.define('app.view.exercise.Questions', {
     			});
         	}else{
         		innerItems = this.creaetOptions(options, ptype);
+        		me.setScrollable(false);
         	}
     		if(ptype=='02'||ptype=='06'){
         		//多选题需要手动提交答案

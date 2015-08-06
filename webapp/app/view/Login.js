@@ -18,9 +18,14 @@ Ext.define("app.view.Login", {
 				align:'right'
 			}]
 		},{
-			xtype:'container',
-			styleHtmlContent: true,
-			html:'<div class="login-logo"><img src="resources/images/login_logo.png" style="width:80px;"/><h3>全国会计从业资格全真模拟考试系统</h3></div>'
+			xtype:'image',
+			height:80,
+			src:'resources/images/login_logo.png'
+		},{
+			xtype: 'container',
+			padding:'0.6em',
+			style:'text-align:center',
+			html:'会计从业资格全真模拟考试系统'
 		},{
             xtype: 'fieldset',
             items: [{

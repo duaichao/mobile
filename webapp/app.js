@@ -50,6 +50,7 @@ Ext.application({
         'exercise.Answer',
         'exercise.QuestionsList',
         'exercise.Questions',
+        'exercise.Custom',
         
         
         'home.Course',
@@ -61,14 +62,16 @@ Ext.application({
 	],
 	stores:[
         'Questions',
-        'Course'
+        'Course',
+        'Custom'
 	],
     models: [
          'Local',
          'User',
          'Course',
          'Questions',
-         'App'
+         'App',
+         'Custom'
     ],
     launch: function() {
     	Ext.fly('appLoadingIndicator').destroy();
