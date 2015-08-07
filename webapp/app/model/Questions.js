@@ -34,6 +34,9 @@ Ext.define('app.model.Questions', {
         	name:'is_favorite',
         	type:'int'
         },{
+        	name:'exam_id',
+        	type:'int'
+        },{
             name: 'finish',
             type: 'int'
         }],

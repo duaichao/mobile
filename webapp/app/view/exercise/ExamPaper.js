@@ -22,7 +22,7 @@ Ext.define('app.view.exercise.ExamPaper', {
     		},{
     			itemId:'submit',
     	    	title: '交卷',
-    	        iconCls: 'visible'
+    	        iconCls: 'ok'
     	    },{
     	    	itemId:'pager',
     	    	title: '0/0',

@@ -47,36 +47,6 @@ Ext.define('app.Util', {
 			}
 			return str;
     	},
-    	//时间字符串转换
-    	timeAgoInWords:function(date){
-    		try {
-    			date = date.replace(/\.\d\d\d+/,""); 
-				date = date.replace(/-/,"/").replace(/-/,"/");
-				date = date.replace(/T/," ").replace(/Z/," UTC");
-				date = date.replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2");
-		        var now = Math.ceil(Date.parse(new Date()) / 1000),
-		            dateTime = Math.ceil(Date.parse(new Date(date)) / 1000),
-		            diff = now - dateTime,
-		            str;
-		
-		        if (diff < 60) {
-		            return String(diff) + '秒前';
-		        } else if (diff < 3600) {
-		            str = String(Math.ceil(diff / (60)));
-		            return str + (str == "1" ? '分钟' : '分钟') + '前';
-		        } else if (diff < 86400) {
-		            str = String(Math.ceil(diff / (3600)));
-		            return str + (str == "1" ? '小时' : '小时') + '前';
-		        } else if (diff < 60 * 60 * 24) {
-		            str = String(Math.ceil(diff / (60 * 60 * 24)));
-		            return str + (str == "1" ? '天' : '天') + '前';
-		        } else {
-		            return Ext.Date.format(new Date(date), 'Y/m/d');
-		        }
-		    } catch (e) {
-		        return '';
-		    }
-    	},
     	request :function(url,params,callback,scope){
     		Ext.Ajax.request({
                 url: url,
@@ -467,6 +437,12 @@ Ext.define('app.Util', {
 
             });
         },
+        overrideMessageBox:function(){
+        	Ext.MessageBox.YESNO =  [
+	            {text: '取消',  itemId: 'no', ui: 'action'},
+	            {text: '确定', itemId: 'yes', ui: 'action'}
+	        ];
+        },
         overrideList:function(){
         	Ext.define('xxx.overrides.dataview.DataView', {
                 override: 'Ext.dataview.DataView',
@@ -483,6 +459,7 @@ Ext.define('app.Util', {
             this.eActiveitemchange();
             this.overrideAjax();
             this.overridePick();
+            this.overrideMessageBox();
             this.overrideList();
         }
     }

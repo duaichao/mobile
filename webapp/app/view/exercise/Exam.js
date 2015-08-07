@@ -24,7 +24,7 @@ Ext.define('app.view.exercise.Exam', {
     					tpl:[
     					      '<div class="em-item"><span class="name">考试科目：</span>{name}</div>',
     					      '<div class="em-item"><span class="name">考试时间：</span>{total_time}分钟</div>',
-    					      '<div class="em-item"><span class="name">试题总数：</span>{total_num}</div>',
+    					      //'<div class="em-item"><span class="name">试题总数：</span>{total_num}</div>',
     					      '<div class="em-item"><span class="name">合格标准：</span>满分{full_mark}分，{pass_mark}分及格</div>'
     					],
     					data:data.result

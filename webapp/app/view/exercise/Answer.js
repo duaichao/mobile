@@ -45,11 +45,11 @@ Ext.define('app.view.exercise.Answer', {
             		levels.push('&#xe622;');
             	}
             }
-            header.setHtml(this.getHeaderTemplate().apply(levels));
+            header.setHtml(this.getHeaderTemplate().apply({levels:levels,RightAnswer:record.get('RightAnswer')||'见解析'}));
             if(record.get('type')=='06'){
             	var hasSubs =record.get('sub_array'),html='';
             	Ext.Array.each(hasSubs, function(sub, index) {
-    				html+=Ext.String.format('<div>0{0}.{1}</div>',(index+1),sub.explain);
+    				html+=Ext.String.format('<div>0{0}.){1}</div>',(index+1),sub.explain);
     			});
             	
             	content.setHtml(html);
@@ -74,10 +74,10 @@ Ext.define('app.view.exercise.Answer', {
     getHeaderTemplate: function() {
         if (!this._headerTemplate) {
             this._headerTemplate = new Ext.XTemplate(
-                '<div class="title">试题解析</div>',
+                '<div class="title">试题解析<span class="rightanswer green">答案：{RightAnswer}</span></div>',
                 '<div class="rating clearfix">',
                 '难度: ',
-                '<tpl for=".">',
+                '<tpl for="levels">',
                 '<i class="iconfont">{.}</i>',
                 '</tpl>',
                 '</div>'

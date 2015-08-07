@@ -72,6 +72,10 @@ Ext.define('app.view.Home', {
 	updateDatas:function(newDatas,oldDatas){
 		this.setUserInfo({docked:'top',cls:'ue-info-container'});
 		var courseView = this.down('course');
+		courseView.getStore().getProxy().setExtraParams({
+			token:newDatas.token,
+			username:newDatas.username
+		});
 		courseView.getStore().load({
 	    	callback:function(){
 	    		courseView.element.select('.x-dataview-item').each(function(item,c,i){

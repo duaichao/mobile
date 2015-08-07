@@ -20,13 +20,28 @@ Ext.define('app.controller.Questions', {
             },
             'questions button#finish':{
             	tap:function(btn){
-            		var item = btn.up('questions'),
-            			checkedOptions = item.query('checkboxfield[checked=true]');
-        			if(checkedOptions.length>1){
-        				item.fireEvent('finishQuestion',item);
-        			}else{
-        				util.war('至少选择两个答案');
-        			}
+            		var item = btn.up('questions'); 
+            		if(item.getRecord().get('type')=='06'){
+            			var noWay = false;
+            			Ext.Array.each(item.query('container[cls=qe-sub-container]'),function(subItem,index){
+            				if(subItem.query('checkboxfield[checked=true]').length==0){
+            					noWay = true;
+            					return false;
+            				}
+            			});
+            			if(noWay){
+            				util.war('还有选择题没做完');
+            			}else{
+            				item.fireEvent('finishQuestion',item);
+            			}
+            		}else{
+	            		var checkedOptions = item.query('checkboxfield[checked=true]');
+	        			if(checkedOptions.length>1){
+	        				item.fireEvent('finishQuestion',item);
+	        			}else{
+	        				util.war('至少选择两个答案');
+	        			}
+            		}
             	}
             },
             'exerciseview button#backhome':{
@@ -52,6 +67,11 @@ Ext.define('app.controller.Questions', {
             },
             'examView button#create':{
         		tap:'onCreateExam'
+        	},
+        	'examPaperView button#submit':{
+        		tap:function(){
+        			this.onMainViewBackTap.call(this,this.getMainView().getNavigationBar());
+        		}
         	}
         },
         questionsUrls:['getExercise','getCustomExercise','getExamExercise','getFavorite','getWrong'],//source值对应
@@ -102,7 +122,7 @@ Ext.define('app.controller.Questions', {
     	questionsList.setTotalCount(totalCount);
     	
         store.getProxy().setUrl(config.url[this.getQuestionsUrls()[source]]);
-        
+       
         store.getProxy().setExtraParams({
         	exam_id:viewRecord.get('exam_id'),
         	dagang:viewRecord.get('dagang'),
@@ -126,8 +146,10 @@ Ext.define('app.controller.Questions', {
 	        		favoriteBtn.setIconCls(isFavorite==1?questionsView.getDyBtnIcon()[source]+'1':questionsView.getDyBtnIcon()[source]);
 	        		favoriteBtn.setText(isFavorite==1?questionsView.getDyBtnText()[source]:questionsView.getDyBtnDefText()[source]);
         		}
+        		//首次加载 题目计时器
+        		//itemRecord.set('beginTime',new Date());
         		if(source==0||source==1||source==2){
-	        		//开启计时器
+	        		//开启总计时器
 	        		var beginTime = new Date();
 	        		questionsList.setBeginTime(beginTime);
 	        		questionsList.setTimer(setInterval(function(){
@@ -145,7 +167,9 @@ Ext.define('app.controller.Questions', {
             			util.war('没有查询结果','exph-info');
             			questionsView.down('tabbar').hide();
             		}else{
-            			totalCount = source==2?questionsView.getExamCount():store.getCount();//==store.getPageSize()?store.getPageSize():store.getCount();
+            			
+            			totalCount = store.getCount();//==store.getPageSize()?store.getPageSize():store.getCount();
+            			questionsView.setExamCount(totalCount);
             			questionsList.setStartCount(0);
             			questionsList.setTotalCount(totalCount);
             			questionsView.down('button#pager').setText('1/'+totalCount);
@@ -180,13 +204,15 @@ Ext.define('app.controller.Questions', {
     	}else{
 	    	var beginTime = questionsList.getBeginTime(),
 				speed = Ext.Date.diff(beginTime, new Date(), 's'),
-				params = {
-		    		course_id:record.get('course_id'),
-		    		speed:speed,
-		    		answers:Ext.encode(answers),
-		    		exam_id:record.get('exam_id'),
-		    		total_time:speed
-				};
+				currInnerItem = questionsList.getActiveItem();
+	    	console.log(currInnerItem.getRecord().data);
+			var	params = {
+	    		course_id:record.get('course_id'),
+	    		speed:speed,
+	    		answers:Ext.encode(answers),
+	    		exam_id:currInnerItem.getRecord().get('exam_id'),//record.get('exam_id'),这个是试卷id  需要考试id
+	    		total_time:speed
+			};
 	    	questionsList.setTimer(null);
 	    	
 	    	var urlKey = this.getCommitQuestionsUrls()[source];
@@ -300,111 +326,141 @@ Ext.define('app.controller.Questions', {
     		source = questionsView.getRecord().get('source'),
     		answerBtn = questionsView.down('button#anwser'),
     		type = record.get('type'),
-    		finishBtn = item.down('button#finish'),options,checkedOptions,rightString,valueString,valueMap,oldAnswerValue;
+    		finishBtn = item.down('button#finish');
     	if(finishBtn){
     		finishBtn.hide();
     	}
-    	
-    	if(type=='06'){
-    		item.getScrollable().getScroller().scrollToEnd();
-    		
-		}else{
-	    	options = item.query(type=='02'?'checkboxfield':'radiofield');
-	    	checkedOptions = item.query(type=='02'?'checkboxfield[checked=true]':'radiofield[checked=true]');
-	    	rightString='';
-	    	Ext.Array.each(options, function(option, index) {
-	    		if(option.config.isRight==1){
-	    			rightString+=option.getValue();
-	    			//考试题不提示正确
-	    			if(source!=2){
-	    				option.addCls('qe-answer-right');
-	    			}
-	    		}else{
-	    			//考试题不提示错误
-	    			if(option.isChecked()&&source!=2){
-	    				option.addCls('qe-answer-wrong');
-	    			}
-	    		}
-	    	});
-		}
-    	//缓存选中值
+    	//构造提交内容
     	/**{
 			id:'',题目id
 			type:'',题目类型
+			time_cost:0,//答题耗时
 			user_answer_array:[{
 				user_answer:'A'//多选 ABD 判断题 中文字 正确/错误
 			}]
 		}**/
-    	valueMap={
-			id:record.get('id'),
-			type:record.get('type'),
-			oldAnswerValue:[],
-			user_answer_array:[]
-    	};
-    	valueString = '';
-    	oldAnswerValue = [];
-    	if(type=='06'){
-    		
-    	}else{
-	    	Ext.Array.each(checkedOptions, function(option, index) {
-	    		oldAnswerValue.push(option.getValue());
-	    		valueString+=option.getValue();
-	    		
-	    	});
-    	}
-    	//再次进来上次选中的值已丢失
-    	if(valueString==''){
+    	var answerBox = item.down('questionanswer'),
+    		valueMap={
+				id:record.get('id'),
+				type:record.get('type'),
+				oldAnswerValue:[],
+				sumitResult:false,
+				time_cost:0,
+				user_answer_array:[]
+	    	},
+	    	vim = carousel.getValueIdMaps(),
+	    	options,
+	    	checkedOptions,
+	    	returnObj;
+    	if(!vim[record.get('id')]){
     		if(type=='06'){
-    			
+    			item.getScrollable().getScroller().scrollToEnd();
+    			Ext.Array.each(item.query('container[cls=qe-sub-container]'),function(subItem,index){
+        			var subDatas = subItem.config.datas,
+        				subValueMap = {
+        					id:subDatas.id,
+        					type:subDatas.type,
+        					sumitResult:false,
+        					oldAnswerValue:[],
+        					user_answer_array:[]
+        				},returnObj;
+        			options = subItem.query('checkboxfield');
+        			checkedOptions= subItem.query('checkboxfield[checked=true]');
+        			returnObj = this.finishQuestionSetValue(options,checkedOptions,source);
+        			subValueMap.user_answer_array.push({
+        	    		user_answer:returnObj.valueString
+        	    	});
+        			subValueMap.sumitResult = returnObj.sumitResult;
+        			subValueMap.oldAnswerValue=returnObj.oldAnswerValue;
+        			valueMap.user_answer_array.push(subValueMap);
+    			},this);
     		}else{
-	    		Ext.Array.each(carousel.getValueMaps(), function(value, index) {
-	    			if(value.id==record.get('id')){
-	    				valueString = value.user_answer_array[0].user_answer;
-	    				oldAnswerValue = value.oldAnswerValue;
-	    				return false;
-	    			}
-	        	});
+	    		//当前为查看历史回答
+	    		options = item.query(type=='02'?'checkboxfield':'radiofield');
+		    	checkedOptions = item.query(type=='02'?'checkboxfield[checked=true]':'radiofield[checked=true]');
+	    		returnObj = this.finishQuestionSetValue(options,checkedOptions,source);
+		    	valueMap.user_answer_array.push({
+		    		user_answer:returnObj.valueString
+		    	});
+		    	valueMap.sumitResult = returnObj.sumitResult;
+		    	valueMap.oldAnswerValue=returnObj.oldAnswerValue;
+    		}
+    		carousel.setValueMaps(valueMap);
+    		record.set('finish',1);
+    		//考题需要自动下一题
+    		if(source==2){
+    			carousel.next();
+    		}
+    	}else{
+    		//默认选中
+    		valueMap = vim[record.get('id')];
+    		//考题需要默认到以前选的答案
+    		if(type=='06'){
+    			Ext.Array.each(item.query('container[cls=qe-sub-container]'),function(subItem,index){
+    				var subDatas = subItem.config.datas,subValueMap;
+    				options = subItem.query('checkboxfield');
+    				subValueMap = valueMap.user_answer_array[index];
+    				this.selectedFinishQuestionOptions(options, subValueMap.oldAnswerValue,source);
+    			});
+    		}else{
+    			options = item.query(type=='02'?'checkboxfield':'radiofield');
+    			this.selectedFinishQuestionOptions(options, valueMap.oldAnswerValue,source);
     		}
     	}
-    	valueMap.user_answer_array.push({
-    		user_answer:valueString
-    	});
-    	valueMap.oldAnswerValue=oldAnswerValue;
-    	carousel.setValueMaps(valueMap);
-    	record.set('finish',1);
     	item.disable();
-    	//考题需要默认到以前选的答案
-    	if(source==2){
-    		if(type=='06'){
-    			
-    		}else{
-	    		Ext.Array.each(options, function(option, index) {
-	        		for(var p=0;p<oldAnswerValue.length;p++){
-	        			if(option.getValue()==oldAnswerValue[p]){
-	        				option.check();
-	        			}
-	        		}
-	        	});
-    		}
-			//carousel.next();
-    		return;
+    	if(source==2)return;
+    	if(answerBtn){
+	    	answerBtn.setIconCls('hidden');
+	    	answerBtn.setText('隐藏答案');
     	}
-    	
-    	var answerBox = item.down('questionanswer');
-    	if(rightString!=valueString){
-    		//util.err('回答错误');
-    		answerBox.addCls('qe-answer-wrong');
-    	}else{
+    	if(valueMap.sumitResult){
     		//util.suc('回答正确');
     		answerBox.addCls('qe-answer-right');
-    	}
+		}else{
+			//util.err('回答错误');
+    		answerBox.addCls('qe-answer-wrong');
+		}
     	answerBox.show();
-    	answerBtn.setIconCls('hidden');
-    	answerBtn.setText('隐藏答案');
-    	
-    	
-    	
-    	
+    },
+    selectedFinishQuestionOptions:function(options,oldAnswerValue,source){
+    	Ext.Array.each(options, function(option, index) {
+    		for(var p=0;p<oldAnswerValue.length;p++){
+    			if(option.getValue()==oldAnswerValue[p]){
+    				option.check();
+    				if(source!=2&&option.config.isRight!=1){
+    					option.addCls('qe-answer-wrong');
+    				}
+    			}
+    		}
+    	});
+    },
+    finishQuestionSetValue:function(options,checkedOptions,source){
+    	var rightString = '',
+	    	valueString = '';
+	    	oldAnswerValue = [],
+	    	sumitResult = false;
+    	Ext.Array.each(options, function(option, index) {
+    		if(option.config.isRight==1){
+    			rightString+=option.getValue();
+    			//考试题不提示正确
+    			//if(source!=2){
+    			//	option.addCls('qe-answer-right');
+    			//}
+    		}else{
+    			//考试题不提示错误
+    			if(option.isChecked()&&source!=2){
+    				option.addCls('qe-answer-wrong');
+    			}
+    		}
+    	});
+    	Ext.Array.each(checkedOptions, function(option, index) {
+    		oldAnswerValue.push(option.getValue());
+    		valueString+=option.getValue();
+    	});
+    	if(rightString==valueString){
+    		sumitResult = true;
+    	}
+    	return {valueString:valueString,oldAnswerValue:oldAnswerValue,sumitResult:sumitResult};
     },
     onFavoriteItemTap:function(favoriteView, index, target, record){
     	var sb = favoriteView.down('segmentedbutton').getPressedButtons()[0];

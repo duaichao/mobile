@@ -72,6 +72,8 @@ Ext.define('app.view.exercise.Questions', {
 						xtype:'container'
 					}); 
     				innerItems.push(Ext.factory({
+    					cls:'qe-sub-container',
+    					datas:sub,
     					items:cnt
     				}, 'Ext.Container'));
     			});

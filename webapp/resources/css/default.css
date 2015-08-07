@@ -176,8 +176,7 @@
 .qe-answerbox .title{float:left;}
 .qe-answerbox .rating{float:right;font-size:.825em;}
 .qe-answerbox .rating i{font-size:1.25em;color:#f4b400;}
-
-
+.qe-answerbox .title .rightanswer{font-size:0.6em;padding-left:10px;}
 
 .em-item .name{color:#666;}
 .em-explain{font-size:0.625em;ext-align:center;}
