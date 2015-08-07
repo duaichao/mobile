@@ -15,6 +15,7 @@ Ext.define('app.view.exercise.QuestionsList', {
         beginTime:null,
         endTime:null,
         valueMaps:[],
+        valueIdMaps:[],
         offsetLimit: 5,
         store: null,
         animation: {
@@ -68,26 +69,36 @@ Ext.define('app.view.exercise.QuestionsList', {
     		}else{
     			newItem.setScrollable(false);
     		}
-    		
+    		var source = view.getRecord().get('source');
     		
 	    	var	pagerBtn = view.down('button#pager'),
 	    		favoriteBtn = view.down('button#favorite'),
 	    		answerBtn = view.down('button#anwser'),
 	    		isFavorite = itemRecord.get('is_favorite'),
 	    		finishBtn = newItem.down('button#finish'),
-	    		source = view.getRecord().get('source'),
-	    		dyText = view.getDyBtnText(),
-	    		dyIcon = view.getDyBtnIcon(),
-	    		dydefText = view.getDyBtnDefText() ;
+	    		
+	    		submitBtn = view.down('button#submit');
+	    		
+	    	
 	    	pagerBtn.setText((parseInt(this.getStartCount())+index+1)+'/'+this.getTotalCount());
 	    	
-	    	favoriteBtn.setIconCls(isFavorite==1?dyIcon[source]+'1':dyIcon[source]);
-			favoriteBtn.setText(isFavorite==1?dyText[source]:dydefText[source]);
+	    	
+    		
+    		
+	    	var dyText = view.getDyBtnText(),
+    		dyIcon = view.getDyBtnIcon(),
+    		dydefText = view.getDyBtnDefText() ;
+	    	if(favoriteBtn){
+		    	favoriteBtn.setIconCls(isFavorite==1?dyIcon[source]+'1':dyIcon[source]);
+				favoriteBtn.setText(isFavorite==1?dyText[source]:dydefText[source]);
+	    	}
 			if(itemRecord.get('finish')){
 				newItem.fireEvent('finishQuestion',newItem);
 			}else{
-				answerBtn.setIconCls('visible');
-		    	answerBtn.setText('显示答案');
+				if(answerBtn){
+					answerBtn.setIconCls('visible');
+			    	answerBtn.setText('显示答案');
+				}
 		    	if(finishBtn){
 		    		finishBtn.show();
 		    	}

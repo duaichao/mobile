@@ -46,7 +46,11 @@ Ext.define('app.Config', {
     		about:'http://211.101.20.203/api/About',
     		getCustomCategory:'http://211.101.20.203/api/getpracticebyyouinfo',
     		getCustomExercise:'http://211.101.20.203/api/getquestionbyyou',
-    		commitCustomExercise:'http://211.101.20.203/api/commitpracticebyyou'
+    		commitCustomExercise:'http://211.101.20.203/api/commitpracticebyyou',
+    		getExamInfo:'http://211.101.20.203/api/ExamIntroduction',
+    		createExam:'http://211.101.20.203/api/CreateExam',
+    		getExamExercise:'http://211.101.20.203/api/Exam',
+    		commitExamExercise:'http://211.101.20.203/api/CommitExam'
     	}
     }
 });

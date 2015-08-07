@@ -389,17 +389,21 @@ Ext.define('app.Util', {
         overrideAjax: function () {
             //开始加载
             Ext.Ajax.on('beforerequest',function (connection, options) {
-            	Ext.applyIf(config.defaultParams,{
-            		username:config.user.username,
-            		token:config.user.token
-            	});
-            	Ext.applyIf(options.params||{},config.defaultParams);
+            	if(config.user){
+	            	Ext.applyIf(config.defaultParams,{
+	            		username:config.user.username,
+	            		token:config.user.token
+	            	});
+            	}
+            	options.params = options.params||{}
+            	Ext.applyIf(options.params,config.defaultParams);
             	if(!options.params.noloader){
             		util.loader(options.params.loaderText||'加载中...');
             	}
             });
             //加载成功
             Ext.Ajax.on('requestcomplete',function (conn, response, options, eOpts) {
+            	options.params = options.params||{}
             	if(!options.params.noloader){
             		util.hideMessage();
             	}

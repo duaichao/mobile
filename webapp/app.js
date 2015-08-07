@@ -51,6 +51,8 @@ Ext.application({
         'exercise.QuestionsList',
         'exercise.Questions',
         'exercise.Custom',
+        'exercise.Exam',
+        'exercise.ExamPaper',
         
         
         'home.Course',

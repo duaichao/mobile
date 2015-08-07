@@ -92,7 +92,7 @@
 	line-height: 23px;
 }
 .fv-data-item{border-bottom:1px solid #fff;}
-.fv-data-item .name{padding:0.6em;color:#fff;}
+.fv-data-item .name{padding:1.2em;color:#fff;}
 .fv-tbar.x-toolbar{overflow:visible;}
 
 .x-form-fieldset{  margin: .5em;}
@@ -177,6 +177,10 @@
 .qe-answerbox .rating{float:right;font-size:.825em;}
 .qe-answerbox .rating i{font-size:1.25em;color:#f4b400;}
 
+
+
+.em-item .name{color:#666;}
+.em-explain{font-size:0.625em;ext-align:center;}
 
 .x-rating{min-height:25px;}
 .x-rating .x-component-outer{position: relative; padding:0.6em;min-height: 40px;}

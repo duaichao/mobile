@@ -6,7 +6,12 @@ Ext.define('app.view.exercise.Custom', {
     	record:null,
     	scrollable: false,
     	listeners:{
-    		activate:'onActivate'
+    		deactivate:'onCustomDeactivate'
+    	}
+    },
+    onCustomDeactivate:function(customView){
+    	if(customView.down('picker')){
+    		customView.down('picker').hide();
     	}
     },
     initialize: function() {
@@ -19,65 +24,87 @@ Ext.define('app.view.exercise.Custom', {
     		store.getProxy().setExtraParams({
     			course_id:record.get('course_id')
     		});
-    		store.load();
-	        this.add({
-	        	xtype:'fieldset',
-	        	defaults:{
-	        		xtype:'selectfield',
-	        		labelWidth:'25%'
-	        	},
-	        	items:[{
-	        		label:'大纲',
-	        		itemId:'dagang',
-	        		name:'dagang',
-	        		displayField:'syllabusName',
-	        		valueField:'syllabusID',
-	        		store:store,
-	        		listeners:{
-                        change: function(select,newValue,oldValue){
-                            var subSelect = select.up('fieldset').down('selectfield#zhishidian'),
-                            	r = select.getStore().getById(newValue);      
-                            if(r){
-                            	subSelect.getStore().setData(r.get('points'));
+    		
+    		store.load({callback:function(){
+    			store.insert(0,Ext.create('app.model.Custom',{
+        			id:'不限',
+        			syllabusID:'',
+        			syllabusName:'不限',
+        			points:[{pointName:'不限',pointID:''}]
+        		}));
+    			
+    			me.add({
+    	        	xtype:'fieldset',
+    	        	defaults:{
+    	        		xtype:'selectfield',
+    	        		labelWidth:'25%'
+    	        	},
+    	        	items:[{
+    	        		label:'大纲',
+    	        		itemId:'dagang',
+    	        		name:'dagang',
+    	        		displayField:'syllabusName',
+    	        		valueField:'syllabusID',
+    	        		store:store,
+    	        		listeners:{
+    	        			painted:function(){
+    	        				var zs = me.down('selectfield#zhishidian').getStore();
+    	        				if(zs.getData().length==0){
+    	        					zs.setData([{pointName:'不限',pointID:''}]);
+    	        				}
+    	        			},
+                            change: function(select,newValue,oldValue){
+                                var subSelect = select.up('fieldset').down('selectfield#zhishidian'),
+                                	r = select.getStore().getById(newValue);     
+                                if(r){
+                                	subSelect.getStore().setData(r.get('points'));
+                                }
+                              
                             }
-                          
                         }
-                    }
-	        	},{
-	        		label:'知识点',
-	        		itemId:'zhishidian',
-	        		name:'zhishidian',
-	        		displayField:'pointName',
-	        		valueField:'pointID',
-	        		store:subStore
-	        	},{
-	        		label:'题型',
-	        		options: [
-        		          {text: '不限',  value: '不限'},
-        		          {text: '单项选择题', value: '单项选择题'},
-        		          {text: '多项选择题',  value: '多项选择题'},
-        		          {text: '判断题',  value: '判断题'},
-        		          {text: '综合题',  value: '综合题'}
-					]
-	        	},{
-	        		label:'难易程度',
-	        		options: [
-        		          {text: '不限',  value: '不限'},
-        		          {text: '简单', value: '简单'},
-        		          {text: '一般',  value: '一般'},
-        		          {text: '较难',  value: '较难'},
-        		          {text: '困难',  value: '困难'}
-					]
-	        	}]
-	        });
-	        this.add({
-	        	height:40,
-	        	xtype:'button',
-    			itemId:'submit',
-    			cls:'ob-btn ob-btn-success',
-    			margin:'1.2em 0.6em',
-    			text:'开始练习'
-	        });
+    	        	},{
+    	        		label:'知识点',
+    	        		itemId:'zhishidian',
+    	        		name:'zhishidian',
+    	        		displayField:'pointName',
+    	        		valueField:'pointID',
+    	        		store:subStore
+    	        	},{
+    	        		label:'题型',
+    	        		name:'tixing',
+    	        		options: [
+            		          {text: '不限',  value: ''},
+            		          {text: '单项选择题', value: '01'},
+            		          {text: '多项选择题',  value: '02'},
+            		          {text: '判断题',  value: '03'},
+            		          {text: '综合题',  value: '06'}
+    					]
+    	        	},{
+    	        		label:'难易程度',
+    	        		name:'nanyidu',
+    	        		options: [
+            		          {text: '不限',  value: ''},
+            		          {text: '简单', value: '1'},
+            		          {text: '一般',  value: '2'},
+            		          {text: '较难',  value: '3'},
+            		          {text: '困难',  value: '4'}
+    					]
+    	        	}]
+    	        });
+    	        me.add({
+    	        	height:40,
+    	        	xtype:'button',
+        			itemId:'submit',
+        			cls:'ob-btn ob-btn-success',
+        			margin:'1.2em 0.6em',
+        			text:'开始练习'
+    	        });
+    			
+    			
+    			
+    			
+    		}});
+	        
     	}
     }
 });

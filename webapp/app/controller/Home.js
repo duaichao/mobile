@@ -50,6 +50,10 @@ Ext.define('app.controller.Home', {
 			record.set('source',1);
 			this.getMainView().push(Ext.create('app.view.exercise.Custom',{record:record}));
 		}
+		if(e.target.className.indexOf('ob-btn-danger')!=-1){
+			record.set('source',2);
+			this.getMainView().push(Ext.create('app.view.exercise.Exam',{record:record}));
+		}
 	},
     //上传图片
     openFileSelector: function () {

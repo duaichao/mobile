@@ -69,7 +69,8 @@ Ext.define('app.controller.Main', {
             	//初始化配置参数
             	config.user = d;
             	//加载个人信息成功后 跳转页面
-            	util.ePush('mainView',null,'left','no');
+            	var view = util.ePush('mainView',null,'left','no');
+            	view.down('homeContainer').setDatas(d);
         	},this);
         	
         	

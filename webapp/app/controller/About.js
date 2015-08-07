@@ -32,8 +32,8 @@ Ext.define('app.controller.About', {
             success: function (user) {
                 user.erase();
                 config.user = null;
-                document.location.reload();
-                //util.ePush('userLogin');
+                //document.location.reload();
+                util.ePush('userLogin');
             }
         });
     }

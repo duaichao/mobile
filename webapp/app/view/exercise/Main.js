@@ -6,9 +6,9 @@ Ext.define('app.view.exercise.Main', {
     	scrollable:null,
     	record:null,
     	layout:'fit',
-    	dyBtnText:['已收藏','','','取消收藏','删除'],
-    	dyBtnDefText:['未收藏','','','取消收藏','删除'],
-    	dyBtnIcon:['fav','','','fav','del'],
+    	dyBtnText:['已收藏','已收藏','','取消收藏','删除'],
+    	dyBtnDefText:['未收藏','未收藏','','取消收藏','删除'],
+    	dyBtnIcon:['fav','fav','','fav','del'],
         items: [{
         	xtype:'tabbar',
     		docked:'bottom',

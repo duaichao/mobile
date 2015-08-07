@@ -6,7 +6,8 @@ Ext.define('app.view.Home', {
     	title: '个人中心',
         iconCls: 'home',
         layout:'fit',
-        userInfo:null,
+        datas:null,
+        userInfo:null
     },
 	applyUserInfo:function(cfg){
     	var r = config.user,html,me = this,photo = 'resources/images/noface.png';
@@ -67,5 +68,16 @@ Ext.define('app.view.Home', {
 	    });
 	    this.add(courseView);
 	    this.callParent();
+	},
+	updateDatas:function(newDatas,oldDatas){
+		this.setUserInfo({docked:'top',cls:'ue-info-container'});
+		var courseView = this.down('course');
+		courseView.getStore().load({
+	    	callback:function(){
+	    		courseView.element.select('.x-dataview-item').each(function(item,c,i){
+	    			util.drawScore(item.down('.progress-ring'));
+	    		});
+	    	}
+	    });
 	}
 });

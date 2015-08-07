@@ -10,12 +10,13 @@ Ext.define('app.view.Favorite', {
     	items: [{
 			docked: 'top',
 			xtype: 'toolbar',
-			ui: 'fblack',
+			ui: 'fred',
 			cls:'fv-tbar',
 			items: [{
 				width: '100%',
 				defaults: {
-					flex: 1
+					flex: 1,
+					height:35
 				},
 				xtype: 'segmentedbutton',
 				allowDepress: false,
