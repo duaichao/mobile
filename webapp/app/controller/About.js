@@ -1,4 +1,4 @@
-Ext.define('app.controller.About', {
+Ext.define('Pass.controller.About', {
     extend: 'Ext.app.Controller',
     config: {
     	refs: {
@@ -28,7 +28,7 @@ Ext.define('app.controller.About', {
     logOut:function(){
     	var me = this;
     	this.getIndexView().setActiveItem(0);
-        Ext.ModelMgr.getModel('app.model.User').load(1, {
+        Ext.ModelMgr.getModel('Pass.model.User').load(1, {
             success: function (user) {
                 user.erase();
                 config.user = null;

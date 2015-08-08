@@ -1,4 +1,4 @@
-Ext.define('app.view.exercise.Questions', {
+Ext.define('Pass.view.exercise.Questions', {
 	extend: 'Ext.Container',
     xtype: 'questions',
     config: {
@@ -30,6 +30,16 @@ Ext.define('app.view.exercise.Questions', {
     	oldActiveItem.removeCls(['qe-answer-wrong','qe-answer-right']);
     	oldActiveItem.down('questionanswer').hide();
 		
+    },
+    applyRecord:function(record){
+    	if(!record){
+    		if(util.checkConnection()){
+    			this.addCls('load-empty');
+    		}else{
+    			this.addCls('load-no-network');
+    		}
+    	}
+    	return record;
     },
     updateRecord: function(newRecord) {
     	if(newRecord){
@@ -96,7 +106,7 @@ Ext.define('app.view.exercise.Questions', {
 				width:'100%',
 				height:160,
 				record:r
-    		},'app.view.exercise.Answer'));
+    		},'Pass.view.exercise.Answer'));
 	    	return Ext.factory(Ext.applyIf(config,{
 	    		items:innerItems
 	    	}), 'Ext.Container');

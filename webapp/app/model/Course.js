@@ -1,4 +1,4 @@
-Ext.define('app.model.Course', {
+Ext.define('Pass.model.Course', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{

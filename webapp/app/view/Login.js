@@ -1,10 +1,11 @@
-Ext.define("app.view.Login", {
+Ext.define("Pass.view.Login", {
     alternateClassName: 'userLogin',
     extend: 'Ext.form.Panel',
     xtype: 'userLogin',
     config: {
         scrollable: null,
         padding: '10',  
+        isFirst:null,
         cls:'userLogin',
         items: [{
 			title:'登录',

@@ -1,4 +1,4 @@
-Ext.define('app.view.Regist', {
+Ext.define('Pass.view.Regist', {
 	alternateClassName: 'userRegist',
 	xtype:'userRegist',
     extend: 'Ext.form.Panel',

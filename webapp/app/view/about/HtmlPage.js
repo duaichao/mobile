@@ -1,4 +1,4 @@
-Ext.define('app.view.about.HtmlPage', {
+Ext.define('Pass.view.about.HtmlPage', {
 
 	extend: 'Ext.Container',
 	xtype: 'htmlPage',

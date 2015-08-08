@@ -1,10 +1,11 @@
-Ext.define('app.Util', {
+Ext.define('Pass.Util', {
     alternateClassName: 'util',
     statics: {
     	drawScore : function(target) {
     		var percent = target.getAttribute('data-percent'),
     			old = target.getAttribute('data-old');
     		if(old==percent)return;
+    		//console.log('draw');
     		target.set({'data-old':percent});
             var a = parseInt(Math.round(percent), 10); // 百分比
             var b = 360 * parseInt(a) / 100 || 1,
@@ -137,7 +138,7 @@ Ext.define('app.Util', {
         	if(util.audioVar){
         		util.audioVar.release();
         	}
-        	util.audioMessage('正在录音 {0}','00:00');
+        	util.loader('正在录音 {0}','00:00',true);
         	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
         		fileSystem.root.getDirectory(util.mediaDir, {create:true,exclusive:false},function(dirEntry){
         			util.log('创建了一个文件夹');
@@ -170,7 +171,7 @@ Ext.define('app.Util', {
                 var recTime=0;
         	    util.audioTimer = setInterval(function() {
         	    	recTime++;
-        	        util.audioMessage('正在录音 {0}','00:'+(recTime<10?'0'+recTime:recTime));
+        	        util.loader('正在录音 {0}','00:'+(recTime<10?'0'+recTime:recTime),true);
         	    }, 1000);
             }
         },
@@ -264,96 +265,75 @@ Ext.define('app.Util', {
                 ]
         	}).show();
         },
-        audioMessage:function(format,progress){
-        	format = Ext.String.format(format, progress);
+        war:function(msg,time){util.showMessage('war',msg,time);},
+        suc:function(msg,time){util.showMessage('suc',msg,time);},
+        err:function(msg,time){util.showMessage('err',msg,time);},
+        info:function(msg,time){util.showMessage('info',msg,time);},
+        loader:function(msg,progress,isAudio){
+        	//msg
+        	//进度 '上传中{0}' {0} = progress
+        	//录音 '正在录音 {0}'
+        	if(progress){
+        		msg = Ext.String.format(msg, progress);
+        	}
         	if(Ext.get('notification')){
         		if(progress){
         			Ext.get('notification').down('span').setHtml(format);
         		}
         		return;
         	}
-    		var dh = Ext.DomHelper,
-    			notification = {
-				    tag:'div',
-				    id:'notification',
-				    cls: 'ex-popoup-hint exph-audio',
-				    children: [    
-				        {tag: 's'},
-	    				{tag: 'span', html: format||'正在录音 {0}'} 
-				    ]
-				};
-    		var nf = dh.append(Ext.getBody(),notification,true);
-    			nf.setXY(nf.getAlignToXY(document,'c-c'));
+        	util.showMessage(isAudio?'audio':'loader',msg);
         },
-        loader:function(format,progress){
-        	format = Ext.String.format(format, progress);
-        	if(Ext.get('notification')){
-        		if(progress){
-        			Ext.get('notification').down('span').setHtml(format);
-        		}
-        		return;
-        	}
-    		var dh = Ext.DomHelper,
-    			notification = {
-				    tag:'div',
-				    id:'notification',
-				    cls: 'ex-popoup-hint exph-loader',
-				    children: [    
-				        {tag: 'div'},
-	    				{tag: 'span', html: format||''} 
-				    ]
-				};
-    		var nf = dh.append(Ext.getBody(),notification,true);
-    			nf.setXY(nf.getAlignToXY(document,'c-c'));
-			Ext.Viewport.setMasked({
-    			xtype: 'mask',
-                transparent: true
-    		});
-        },
-        war:function(format,info){
-        	format = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 0));
-        	info = info ||'';
-    		util.showMessage('exph-war '+info,format);
-        },
-        suc:function(format){
-        	format = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 0));
-    		util.showMessage('exph-suc',format);
-        },
-        err:function(format){
-        	format = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 0));
-    		util.showMessage('exph-err',format);
-        },
-        showMessage: function (type,format) {
-        	if(Ext.get('notification')){
-        		return;
-        	}
-    		var dh = Ext.DomHelper,
-    			notification = {
-				    tag:'div',
-				    id:'notification',
-				    cls: 'ex-popoup-hint '+type,
-				    children: [    
-				        {tag: 's'},
-	    				{tag: 'span', html: format||''} 
-				    ]
-				};
-    		var nf = dh.append(Ext.getBody(),notification,true);
-    		
-    		nf.setXY(nf.getAlignToXY(document,'c-b',[0, -120]));
-    		
-    		Ext.Viewport.setMasked({
-    			xtype: 'mask',
-                transparent: true
-    		});
-    		setTimeout(function(){
-    			util.hideMessage();
-    		},1000);
+        showMessage: function (type,msg,time) {
+        	if(Ext.get('notification')){return;}
+        	msg = msg || '';
+        	time = time || 1000;
+        	var notification = Ext.create('Ext.Container', {
+        		 id:'notification',
+        		 cls:'notification '+type,
+                 centered : true,
+                 modal: {style: 'opacity: 0'},
+                 hideOnMaskTap : false,
+                 styleHtmlContent:true,
+                 html:Ext.String.format('<div class="icon"></div><span class="text">{0}</span>',msg),
+                 listeners:{
+                 	hide:function(g){
+                 		Ext.Viewport.remove(g);
+                 	}
+                 }
+             });
+             Ext.Viewport.add(notification);
+             if(type!='loader'){
+            	 notification.element.up('.x-center').addCls('nf-bottom');
+	             setTimeout(function(){
+		            util.hideMessage();
+	             },time);
+             }
+             notification.show();
         },
         hideMessage:function(){
-        	Ext.Viewport.setMasked(false);
         	if(Ext.get('notification')){
-   				Ext.get('notification').destroy();
+        		Ext.get('notification').up('.x-center').removeCls('nf-bottom');
+        		Ext.getCmp('notification').hide();
    			}
+        },
+        createGuide:function(innerItem){
+        	if (!Ext.get('guideContainer')) {
+                var guide = Ext.create('Ext.Container', {
+                	id:'guideContainer',
+                    centered : true,
+                    modal    : true,
+                    hideOnMaskTap : true,
+                    items    : innerItem,
+                    listeners:{
+                    	hide:function(g){
+                    		Ext.Viewport.remove(g);
+                    	}
+                    }
+                });
+                Ext.Viewport.add(guide);
+                guide.show();
+            }
         },
         //重写ajax
         overrideAjax: function () {
@@ -388,7 +368,7 @@ Ext.define('app.Util', {
         overridePick: function () {
             Ext.Date.monthNames = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
             Ext.Date.dayNames = ['周日','周一','周二','周三','周四','周五','周六'];
-            Ext.define("Jianghu.app.DatePicker", {
+            Ext.define("Pass.app.DatePicker", {
                 override: "Ext.picker.Date",
                 config: {
                     yearFrom: 2000,
@@ -453,6 +433,26 @@ Ext.define('app.Util', {
                     return data;
                 }
             });
+        },
+        checkConnection :function(autoClose){
+        	var networkState = navigator.network.connection.type;        
+            var states = {}; 
+            states[Connection.UNKNOWN]  = 'Unknown connection'; 
+            states[Connection.ETHERNET] = 'Ethernet connection'; 
+            states[Connection.WIFI]     = 'WiFi connection'; 
+            states[Connection.CELL_2G]  = 'Cell 2G connection'; 
+            states[Connection.CELL_3G]  = 'Cell 3G connection'; 
+            states[Connection.CELL_4G]  = 'Cell 4G connection'; 
+            states[Connection.NONE]     = 'No network connection'; 
+            if(states[networkState]=='No network connection'||typeof states[networkState] == "undefined"){
+            	util.war('请打开网络链接',3000);
+            	if(autoClose){
+	            	setTimeout(function(){
+	            		navigator.app.exitApp();
+	            	},3000); 
+            	}
+            	return false;
+            }else{return true;}
         },
         //app初始化执行
         init: function () {

@@ -1,4 +1,4 @@
-Ext.define('app.model.Questions', {
+Ext.define('Pass.model.Questions', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{

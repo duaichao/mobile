@@ -1,7 +1,7 @@
-Ext.define('app.model.Local', {
+Ext.define('Pass.model.Local', {
     extend: 'Ext.data.Model',
     config: {
-        fields: [],
+        fields: ['guide'],
         proxy: {
             type: 'localstorage',
             id: 'local'

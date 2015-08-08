@@ -1,4 +1,4 @@
-Ext.define('app.view.exercise.Custom', {
+Ext.define('Pass.view.exercise.Custom', {
 	extend: 'Ext.form.Panel',
     xtype: 'customQuery',
     config: {
@@ -26,7 +26,7 @@ Ext.define('app.view.exercise.Custom', {
     		});
     		
     		store.load({callback:function(){
-    			store.insert(0,Ext.create('app.model.Custom',{
+    			store.insert(0,Ext.create('Pass.model.Custom',{
         			id:'不限',
         			syllabusID:'',
         			syllabusName:'不限',

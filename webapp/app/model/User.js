@@ -1,4 +1,4 @@
-Ext.define('app.model.User', {
+Ext.define('Pass.model.User', {
     extend: 'Ext.data.Model',
     config: {
         fields: [{

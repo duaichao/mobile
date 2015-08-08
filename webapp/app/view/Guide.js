@@ -1,4 +1,4 @@
-Ext.define('app.view.Guide', {
+Ext.define('Pass.view.Guide', {
     extend: 'Ext.carousel.Carousel',
     alternateClassName: 'guide',
     xtype: 'guide',

@@ -21,9 +21,6 @@ html,body {
 .font40{font-size:2.45em!important;}
 .font42{font-size:2.55em!important;}
 
-
-
-
 .fnumber{font-family: "Arial", sans-serif;}
 .clearfix:after {
   content: ".";
@@ -75,63 +72,57 @@ html,body {
 	line-height: 37px;
 }
 
+.load-empty,.load-no-network{
+	  background-repeat: no-repeat;
+	  background-position: center;
+}
+.load-no-network{background-image:url(../images/no_network_n.png);}
+.load-empty{background-image:url(../images/load_empty_img.png);}
+
+.guide-action.x-img.x-img-background{
+	background-position:left center;
+}
+
 
 /*V2*/
-.ex-popoup-hint {
-    position: fixed;
-    z-index: 11111111;
+.x-center.nf-bottom{top:auto;}
+.x-center.nf-bottom .war,
+.x-center.nf-bottom .suc,
+.x-center.nf-bottom .err,
+.x-center.nf-bottom .info{
+	margin-bottom:80px;
+}
+.notification{
+	border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    overflow: hidden;
     
-    height: 50px;
-    text-align: center;
-    border-radius: 5px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.3)
 }
-
-
-.ex-popoup-hint s {
+.notification .icon{
+	background-image: url(../images/ext_hint_icon.png?v=6);
+    background-repeat: no-repeat;
     position: absolute;
-    text-decoration: none;
-    top: 10px;
-    left: 5px;
-    height: 50px;
-    overflow: hidden;
-    background-image: url(../images/ext_hint_icon.png?v=6);
-    background-repeat: no-repeat
+    width: 40px;
+	height: 40px;
+	left:10px;
+	top:10px;
 }
-
-.ex-popoup-hint span {
-	padding:15px 15px 0px 40px;
-    display: inline-block;
-    line-height: 18px;
-    vertical-align: middle;
-    overflow: hidden;
-    word-wrap: break-word;
-    word-break: break-all;
-    font-size: 15px;
-    font-family: "Yuanti SC","Microsoft Yahei","Heiti";
-    color: white
+.notification .text{
+	color:#fff;
+	padding-left: 40px;
 }
-
-.ex-popoup-hint span b {
-    font-weight: normal;
-    color: white
-}
-/*加载*/
-
-.exph-loader {
+.notification .x-innerhtml{padding:0.85em;position:relative;}
+.notification.loader{
+	bottom: auto;
     background-image: none;
     background-color: rgba(102,102,102,0.85);
 }
-.exph-loader div {
-	top:5px;left:5px;
-	width: 40px;
-	height: 40px;
-	background-image:none;
-	border-radius: 50%;
-	font-size: 10px;
-	position: absolute;
-	text-indent: -9999em;
-	-webkit-transform-style: preserve-3d;
+.notification.loader .icon{
+	background-image: none;
+	top:3px;
+	left:5px;
+    border-radius: 50%;
+    -webkit-transform-style: preserve-3d;
 	-webkit-backface-visibility:hidden;
 	border-top: 0.6em solid rgba(255, 255, 255, 0.2);
 	border-right: 0.6em solid rgba(255, 255, 255, 0.2);
@@ -143,79 +134,73 @@ html,body {
 	-webkit-animation: loader 1.1s infinite linear;
 	animation: loader 1.1s infinite linear;
 }
-.exph-loader div:after{
+.notification.loader div。icon:after{
 	border-radius: 50%;
 	width: 40px;
 	height: 40px;
 }
-.exph-loader span{padding-left: 50px;}
-/*警告*/
-.exph-war {
-    background-image: url(about:blank);
+.notification.war{
+	background-image: url(about:blank);
     background-color: rgba(248,149,0,0.95);
 }
-.exph-war.exph-info {
-    background-image: none;
-    background-color: rgba(102,102,102,0.85);
-}
-.exph-war s {
+.notification.war .icon{
 	width: 6px;
-	margin-left: 15px;
+	left: 15px;
 	background-position: -38px 0;
     -webkit-transform-style: preserve-3d;
 	-webkit-backface-visibility:hidden;
     -webkit-animation: war 1.2s ease 0.3s;
     -webkit-animation-fill-mode: both
 }
-.exph-war.exph-info s{background-image: none;-webkit-animation: none;}
-.exph-war.exph-info span{padding-left: 15px;}
-/*成功*/
-.exph-suc {
-    background-image: url(about:blank);
+.notification.war .text{padding-left:25px;}
+
+.notification.suc{
+	background-image: url(about:blank);
     background-color: rgba(47,183,70,0.95);
 }
-.exph-suc s {
-    width: 38px;
-    margin-left: 5px;
+.notification.suc .icon{
+	width: 38px;
     background-position: 0 0;
     -webkit-transform-style: preserve-3d;
 	-webkit-backface-visibility:hidden;
     -webkit-animation: suc 0.5s ease;
     -webkit-animation-fill-mode: both
 }
-.exph-suc span{padding-left: 55px;}
 
-.exph-err {
-    background-image: url(about:blank);
+
+.notification.err{
+	background-image: url(about:blank);
     background-color: rgba(181,12,3,0.95);
 }
-.exph-err s {
-    width: 30px;
-    margin-left: 3px;
+.notification.err .icon{
+	width: 30px;
     background-position: -44px 0;
     -webkit-transform-style: preserve-3d;
 	-webkit-backface-visibility:hidden;
     -webkit-animation: err 1.2s ease 0.3s;
     -webkit-animation-fill-mode: both
 }
-.exph-err span{padding-left: 45px;}
 
-.exph-audio{
+.notification.audio{
 	background-image: none;
     background-color: rgba(102,102,102,0.95);
 }
-.exph-audio s{
-	background-image:none;
-	top:5px;
-	left:3px;
-}
-.exph-audio s:after{
+.notification.audio .icon{top:-3px;
+	left:3px;background-image:none;}
+.notification.audio .icon:after{
 	font-size:36px;
 	font-family: "iconfont";
 	content: "\e618";
 	color:#fff;
 }
+.notification.audio .text{padding-left:30px;}
 
+.notification.info{
+	background-image: none;
+    background-color: rgba(102,102,102,0.95);
+}
+.notification.info .icon{width:0px;background-image:none;}
+.notification.info .text{padding-left:0px;}
 
 
 

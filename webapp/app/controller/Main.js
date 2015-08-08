@@ -1,4 +1,4 @@
-Ext.define('app.controller.Main', {
+Ext.define('Pass.controller.Main', {
     extend: 'Ext.app.Controller',
     config: {
     	refs:{
@@ -10,17 +10,11 @@ Ext.define('app.controller.Main', {
         	'guide':{
         		activeitemchange:function(ca, value, oldValue, eOpts){
         			if(value.getItemId()=='last'){
-	        			var dh = Ext.DomHelper,
-		        			inbtn = {
-		    				    tag:'div',
-		    				    style:'position:absolute;',
-		    				    children: [    
-		    	    				{cls: 'inbutton scaleout',tag: 'div'} 
-		    				    ]
-		    				};
-	        			var nf = dh.append(value.element,inbtn,true);
-	        			nf.setXY(nf.getAlignToXY(value.element,'c-c',[0,10]));
-	        			nf.on('tap',function(){util.ePush('userLogin');});
+	        				value.element.on('swipe',function(e, target, options, eOpts){
+	        					if(e.direction=='left'){
+	        						util.ePush('userLogin',{isFirst:true});
+	        					}
+	        				});
         			}
         		}
         	},
@@ -45,36 +39,33 @@ Ext.define('app.controller.Main', {
         	}
         }
     },
-    doLogin:function(){
-    	var login = this.getUserLogin(),
-	    	values = login.getValues();
-	    if(values.username==''||values.password==''){
+    doLogin:function(btn){
+    	var login = btn.up('userLogin'),
+    		params = login.getValues();
+	    if(params.username==''||params.password==''){
 	    	util.war('用户名或密码不正确');
 	    }else{
-	    	this.logUserIn(values);
+	    	util.request(config.url.login,params,function(data){
+	        	params.token = data.result.token;
+	        	//加载个人信息
+	        	util.request(config.url.getPersonalInfo,params,function(data){
+	            	var d = Ext.applyIf(data.result,params);
+	            	var logUser = Ext.create('Pass.model.User', {
+	                    id: 1
+	                });
+	                logUser.set(d);
+	                logUser.save();
+	            	
+	            	//初始化配置参数
+	            	config.user = d;
+	            	//加载个人信息成功后 跳转页面
+	            	var view = util.ePush('mainView',null,'left','no');
+	            	if(!login.getIsFirst()){
+	            		view.down('homeContainer').setDatas(d);
+	            	}
+	        	},this);
+	    	},this);
 	    }
-    },
-    logUserIn: function (params) {
-    	util.request(config.url.login,params,function(data){
-        	params.token = data.result.token;
-        	//加载个人信息
-        	util.request(config.url.getPersonalInfo,params,function(data){
-            	var d = Ext.applyIf(data.result,params);
-            	var logUser = Ext.create('app.model.User', {
-                    id: 1
-                });
-                logUser.set(d);
-                logUser.save();
-            	
-            	//初始化配置参数
-            	config.user = d;
-            	//加载个人信息成功后 跳转页面
-            	var view = util.ePush('mainView',null,'left','no');
-            	view.down('homeContainer').setDatas(d);
-        	},this);
-        	
-        	
-    	},this);
     },
     saveRegist:function () {
         var regist = this.getUserRegist(),
@@ -104,19 +95,19 @@ Ext.define('app.controller.Main', {
         //phonepga
         document.addEventListener('deviceready', function(){me.onDeviceReady.call(me);}, false);
         //检测是否第一次启动程序
-        Ext.ModelMgr.getModel('app.model.Local').load(1, {
+        Ext.ModelMgr.getModel('Pass.model.Local').load(1, {
             scope: this,
             success: function (cache) {
             	//util.ePush('demo');
             	//检测是否自动登录
-                Ext.ModelMgr.getModel('app.model.User').load(1, {
+                Ext.ModelMgr.getModel('Pass.model.User').load(1, {
                     scope: this,
                     success: function (cfg) {
                     	//加载个人信息
                     	//去除遮罩
                     	util.request(config.url.getPersonalInfo,Ext.applyIf({noloader:false},cfg.data),function(data){
                         	var d = Ext.applyIf(data.result,cfg.data);
-                        	Ext.ModelMgr.getModel('app.model.User').load(1, {
+                        	Ext.ModelMgr.getModel('Pass.model.User').load(1, {
                                 scope: this,
                                 success: function (cfg) {
                                 	cfg.setData(d);
@@ -139,7 +130,7 @@ Ext.define('app.controller.Main', {
             failure: function (error) {
             	//util.ePush('demo');
             	//存储配置信息
-                var local = Ext.create('app.model.Local', {
+                var local = Ext.create('Pass.model.Local', {
                     id: 1
                 });
                 local.save();
@@ -152,27 +143,10 @@ Ext.define('app.controller.Main', {
     },
     onDeviceReady :function(){
     	var me = this;
-    	this.checkConnection();
+    	util.checkConnection(true);
     	document.addEventListener("backbutton", function(){me.onBackButton.apply(me);}, false); //返回键
         document.addEventListener("menubutton", function(){me.onMenuButton.apply(me);}, false); //菜单键
         //document.addEventListener("searchbutton", eventSearchButton, false); //搜索键
-    },
-    checkConnection :function(){
-    	var networkState = navigator.network.connection.type;        
-        var states = {}; 
-        states[Connection.UNKNOWN]  = 'Unknown connection'; 
-        states[Connection.ETHERNET] = 'Ethernet connection'; 
-        states[Connection.WIFI]     = 'WiFi connection'; 
-        states[Connection.CELL_2G]  = 'Cell 2G connection'; 
-        states[Connection.CELL_3G]  = 'Cell 3G connection'; 
-        states[Connection.CELL_4G]  = 'Cell 4G connection'; 
-        states[Connection.NONE]     = 'No network connection'; 
-        if(states[networkState]=='No network connection'||typeof states[networkState] == "undefined"){
-        	util.war('请打开网络链接');
-        	setTimeout(function(){
-        		navigator.device.exitApp();
-        	},3000); 
-        }
     },
     onBackButton :function(){
     	var item = Ext.Viewport.getActiveItem(),innerTabView;
@@ -199,7 +173,7 @@ Ext.define('app.controller.Main', {
     		navigator.app.exitApp();
     	} else {
     		this.isExit = true;
-    		util.war('再按一次退出程序','exph-info');
+    		util.info('再按一次退出程序');
     		setTimeout(function(){me.isExit = false;},2000)
     	}
     }

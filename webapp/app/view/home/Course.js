@@ -1,4 +1,4 @@
-Ext.define('app.view.home.Course', {
+Ext.define('Pass.view.home.Course', {
 	extend: 'Ext.dataview.DataView',
     alternateClassName: 'course',
     xtype: 'course',

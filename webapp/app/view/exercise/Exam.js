@@ -1,4 +1,4 @@
-Ext.define('app.view.exercise.Exam', {
+Ext.define('Pass.view.exercise.Exam', {
 	extend: 'Ext.Container',
     xtype: 'examView',
     config: {

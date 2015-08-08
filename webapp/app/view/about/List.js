@@ -1,4 +1,4 @@
-Ext.define('app.view.about.List', {
+Ext.define('Pass.view.about.List', {
 
 	extend: 'Ext.List',
 	xtype: 'aboutList',

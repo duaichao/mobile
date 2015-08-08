@@ -1,4 +1,4 @@
-Ext.define('app.view.exercise.QuestionsList', {
+Ext.define('Pass.view.exercise.QuestionsList', {
 	extend: 'Ext.carousel.Infinite',
     xtype: 'questionslist',
     
@@ -6,7 +6,7 @@ Ext.define('app.view.exercise.QuestionsList', {
     	directionLock: true,
     	//direction:'vertical',
         innerItemConfig: {
-            xclass: 'app.view.exercise.Questions'
+            xclass: 'Pass.view.exercise.Questions'
         },
         count: 1,
         startCount:0,
@@ -41,6 +41,7 @@ Ext.define('app.view.exercise.QuestionsList', {
     	return newValue;
     },
     applyValueMaps:function(newMaps, oldMaps){
+    	if(!newMaps){this.setValueIdMaps(null);return [];}
     	if(oldMaps){
     		var vim = this.getValueIdMaps()||{};
     		if(!vim[newMaps.id]){
@@ -111,14 +112,11 @@ Ext.define('app.view.exercise.QuestionsList', {
     	}
     },
     onActiveItemChange: function(carousel, newItem, oldItem) {
-    	//console.log(newItem);
-    	//console.log(oldItem);
-    	//var time = new Date(),
-    	//	nr=newItem.getRecord(),or=oldItem.getRecord();
-    	//if()
-    	//newItem.set('beginTime',time);
-    	//oldItem.set('endTime',time);
-    	
+    	var time = new Date(),
+    		nr=newItem.getRecord();
+    	if(!nr.get('beginTime')){
+    		nr.set('beginTime',time);
+    	}
         var index = carousel.getActiveIndex(),
             count = this.getCount(),
             offsetLimit = this.getOffsetLimit(),
@@ -144,7 +142,7 @@ Ext.define('app.view.exercise.QuestionsList', {
         if (!store) {
             return;
         }
-        if(store.getCount()<store.getPageSize()){console.log('我穿越到这里了 导致index有问题了');
+        if(store.getCount()<store.getPageSize()){
         	this.setMaxItemIndex(store.getCount()-1);
         }
         startIndex = index * count;

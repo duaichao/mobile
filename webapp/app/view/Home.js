@@ -1,4 +1,4 @@
-Ext.define('app.view.Home', {
+Ext.define('Pass.view.Home', {
 	extend: 'Ext.Container',
     alternateClassName: 'homeContainer',
     xtype:'homeContainer',
@@ -34,7 +34,7 @@ Ext.define('app.view.Home', {
 	    			listeners  : {
 	    		        element : 'element',
 	    		        tap     : function(e) {
-	    		            me.up('mainView').push(Ext.create('app.view.home.Info'));
+	    		            me.up('mainView').push(Ext.create('Pass.view.home.Info'));
 	    		        }
 	    		    },
 	    			styleHtmlContent:true,
@@ -54,7 +54,7 @@ Ext.define('app.view.Home', {
     initialize: function() {
     	this.setUserInfo({docked:'top',cls:'ue-info-container'});
 		var store = Ext.getStore('Course'),
-			courseView = Ext.create('app.view.home.Course');
+			courseView = Ext.create('Pass.view.home.Course');
 		store.getProxy().setExtraParams({
 			token:config.user.token,
 			username:config.user.username

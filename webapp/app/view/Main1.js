@@ -1,4 +1,4 @@
-Ext.define("app.view.Main", {
+Ext.define("Pass.view.Main", {
     extend: 'Ext.ux.slidenavigation.View',
     alternateClassName: 'main',
     config: {
@@ -113,7 +113,7 @@ Ext.define("app.view.Main", {
             },*/
             items: [{
             	maskOnOpen:true,
-            	xclass : 'app.view.Index'
+            	xclass : 'Pass.view.Index'
             }]
         },{
             title: 'Item 2',
@@ -126,7 +126,7 @@ Ext.define("app.view.Main", {
             },
             items: [{
             	maskOnOpen:true,
-                xclass:'app.view.demo.Demo'
+                xclass:'Pass.view.demo.Demo'
             }]
         }]
     }

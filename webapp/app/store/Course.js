@@ -1,8 +1,8 @@
-Ext.define('app.store.Course', {
+Ext.define('Pass.store.Course', {
     extend: 'Ext.data.Store',
 
     config :{
         clearOnPageLoad: false,
-        model: 'app.model.Course'
+        model: 'Pass.model.Course'
     }
 });

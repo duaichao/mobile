@@ -1,4 +1,4 @@
-Ext.define('app.view.exercise.Answer', {
+Ext.define('Pass.view.exercise.Answer', {
     alternateClassName: 'questionanswer',
     xtype: 'questionanswer',
     extend: 'Ext.Container',
@@ -12,12 +12,12 @@ Ext.define('app.view.exercise.Answer', {
         showAnimation: {
             type: "slideIn",
             direction: "up",
-            duration: 500
+            duration: 100
         },
         hideAnimation: {
             type: "slideOut",
             direction: "down",
-            duration: 500
+            duration: 100
         }
     },
     initialize: function() {

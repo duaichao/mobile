@@ -1,4 +1,4 @@
-Ext.define('app.controller.Home', {
+Ext.define('Pass.controller.Home', {
     extend: 'Ext.app.Controller',
     config: {
         refs: {
@@ -15,14 +15,14 @@ Ext.define('app.controller.Home', {
         	},
             'homeContainer dataview':{
             	itemtap:'onDataViewItemTap'
-            },
+            }
         }
     },
     saveInfo :function(){
     	var params = this.getUserInfoContainer().getValues();
     	util.request(config.url.setPersonalInfo,params,function(data){
     		util.suc('保存成功');
-    		Ext.ModelMgr.getModel('app.model.User').load(1, {
+    		Ext.ModelMgr.getModel('Pass.model.User').load(1, {
                 scope: this,
                 success: function (cfg) {
                 	var d = params;
@@ -37,6 +37,10 @@ Ext.define('app.controller.Home', {
                 	config.user = d;
                 	cfg.setData(d);
                 	cfg.save();
+                	
+                	//自动跳转到首页
+                	var indexView = this.getMainView().pop();
+                	indexView.getActiveItem().setUserInfo({docked:'top',cls:'ue-info-container'});
                 }
             });
     	},this);
@@ -44,19 +48,19 @@ Ext.define('app.controller.Home', {
     onDataViewItemTap:function(dv, index, target, record, e, eOpts){
 		if(e.target.className.indexOf('ob-btn-primary')!=-1){
 			record.set('source',0);
-			this.getMainView().push(Ext.create('app.view.exercise.Main',{title:'<span class="font14">'+record.get('course_name')+'</span>',record:record}));
+			this.getMainView().push(Ext.create('Pass.view.exercise.Main',{title:'<span class="font14">'+record.get('course_name')+'</span>',record:record}));
 		}
 		if(e.target.className.indexOf('ob-btn-success')!=-1){
 			record.set('source',1);
-			this.getMainView().push(Ext.create('app.view.exercise.Custom',{record:record}));
+			this.getMainView().push(Ext.create('Pass.view.exercise.Custom',{record:record}));
 		}
 		if(e.target.className.indexOf('ob-btn-danger')!=-1){
 			record.set('source',2);
-			this.getMainView().push(Ext.create('app.view.exercise.Exam',{record:record}));
+			this.getMainView().push(Ext.create('Pass.view.exercise.Exam',{record:record}));
 		}
 	},
     //上传图片
-    openFileSelector: function () {
+    openFileSelector: function (image) {
     	var　me = this;
         /*
         *图片选择方式
@@ -98,9 +102,9 @@ Ext.define('app.controller.Home', {
         	util.request(config.url.setPhoto,params,function(data){
         		util.suc(data.info);
             	config.user.photo = data.result.icon;
-            	this.getUserCard().down('image').setSrc(config.url.host+config.user.photo);
+            	image.setSrc(config.url.host+config.user.photo);
             	//放入缓存
-            	Ext.ModelMgr.getModel('app.model.User').load(1, {
+            	Ext.ModelMgr.getModel('Pass.model.User').load(1, {
                     scope: this,
                     success: function (cfg) {
                     	cfg.set('photo',data.result.icon);

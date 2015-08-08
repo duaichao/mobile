@@ -1,4 +1,4 @@
-Ext.define('app.view.demo.Demo', {
+Ext.define('Pass.view.demo.Demo', {
     extend: 'Ext.Panel',
 	alternateClassName: 'demo',
 	xtype:'demo',

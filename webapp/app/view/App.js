@@ -1,4 +1,4 @@
-Ext.define('app.view.App', {
+Ext.define('Pass.view.App', {
     extend: 'Ext.Container',
     alternateClassName: 'appContainer',
     xtype: 'appContainer',

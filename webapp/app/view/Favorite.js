@@ -1,4 +1,4 @@
-Ext.define('app.view.Favorite', {
+Ext.define('Pass.view.Favorite', {
 	extend: 'Ext.dataview.DataView',
     xtype: 'favoriteContainer',
     alternateClassName: 'favoriteContainer',

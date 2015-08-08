@@ -1,7 +1,7 @@
-Ext.define('app.view.exercise.ExamPaper', {
+Ext.define('Pass.view.exercise.ExamPaper', {
     alternateClassName: 'examPaperView',
     xtype: 'examPaperView',
-    extend: 'app.view.exercise.Main',
+    extend: 'Pass.view.exercise.Main',
     config: {
     	scrollable:null,
     	record:null,

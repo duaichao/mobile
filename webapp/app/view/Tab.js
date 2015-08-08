@@ -1,4 +1,4 @@
-Ext.define("app.view.Tab", {
+Ext.define("Pass.view.Tab", {
     extend: 'Ext.tab.Panel',
     alternateClassName: 'indexView',
     xtype:'indexView',
@@ -13,10 +13,10 @@ Ext.define("app.view.Tab", {
 		activeItem:0,
     	scrollable:false,
 		items:[
-	       {xclass:'app.view.Home'},
-	       {xclass:'app.view.Favorite'},
-	       {xclass:'app.view.App'},
-	       {xclass:'app.view.About'}
+	       {xclass:'Pass.view.Home'},
+	       {xclass:'Pass.view.Favorite'},
+	       {xclass:'Pass.view.App'},
+	       {xclass:'Pass.view.About'}
 		]
     }
 });

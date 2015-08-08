@@ -1,4 +1,4 @@
-Ext.define('app.view.exercise.Main', {
+Ext.define('Pass.view.exercise.Main', {
     alternateClassName: 'exerciseview',
     xtype: 'exerciseview',
     extend: 'Ext.Container',

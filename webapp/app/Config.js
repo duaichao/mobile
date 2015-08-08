@@ -1,4 +1,4 @@
-Ext.define('app.Config', {
+Ext.define('Pass.Config', {
     alternateClassName: 'config',
     statics: {
     	tmpParams : {},

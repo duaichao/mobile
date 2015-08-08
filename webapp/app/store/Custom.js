@@ -1,8 +1,8 @@
-Ext.define('app.store.Custom', {
+Ext.define('Pass.store.Custom', {
     extend: 'Ext.data.Store',
 
     config :{
         clearOnPageLoad: true,
-        model: 'app.model.Custom'
+        model: 'Pass.model.Custom'
     }
 });

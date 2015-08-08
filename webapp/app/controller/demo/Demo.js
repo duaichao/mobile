@@ -1,4 +1,4 @@
-Ext.define('app.controller.demo.Demo', {
+Ext.define('Pass.controller.demo.Demo', {
     extend: 'Ext.app.Controller',
     config: {
         refs: {

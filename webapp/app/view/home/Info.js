@@ -1,4 +1,4 @@
-Ext.define('app.view.home.Info', {
+Ext.define('Pass.view.home.Info', {
 	alternateClassName: 'userInfoContainer',
 	xtype:'userInfoContainer',
     extend: 'Ext.form.Panel',

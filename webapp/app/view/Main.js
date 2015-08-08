@@ -1,4 +1,4 @@
-Ext.define("app.view.Main", {
+Ext.define("Pass.view.Main", {
     extend: 'Ext.navigation.View',
     alternateClassName: 'mainView',
     xtype:'mainView',
@@ -20,6 +20,6 @@ Ext.define("app.view.Main", {
 				align:'right'
 			}]
 	    },
-	    items:[{xclass:'app.view.Tab'}]
+	    items:[{xclass:'Pass.view.Tab'}]
     }
 });
