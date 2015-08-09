@@ -325,11 +325,17 @@ Ext.define('Pass.Util', {
                     modal    : true,
                     hideOnMaskTap : true,
                     items    : innerItem,
-                    listeners:{
+                    listeners:[{
+                    	element: 'element',
+                        event: 'swipe',
+                        fn: function(e, target, options, eOpts) {
+                        	Ext.Viewport.remove(Ext.getCmp('guideContainer'));
+                        }
+                    },{
                     	hide:function(g){
                     		Ext.Viewport.remove(g);
                     	}
-                    }
+                    }]
                 });
                 Ext.Viewport.add(guide);
                 guide.show();

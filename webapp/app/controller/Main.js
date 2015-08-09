@@ -10,11 +10,30 @@ Ext.define('Pass.controller.Main', {
         	'guide':{
         		activeitemchange:function(ca, value, oldValue, eOpts){
         			if(value.getItemId()=='last'){
-	        				value.element.on('swipe',function(e, target, options, eOpts){
-	        					if(e.direction=='left'){
-	        						util.ePush('userLogin',{isFirst:true});
-	        					}
-	        				});
+	        				var into = Ext.create('Ext.Container', {
+	                        	id:'into',
+	                            centered : true,
+	                            modal    : false,
+	                            hideOnMaskTap : false,
+	                            margin:'25 0 0 5',
+	                            html:[
+									'<div class="la-ball-scale-multiple la-2x">',
+									'<div></div>',
+									'<div></div>',
+									'<div></div>',
+									'</div>'
+	                            ].join(''),
+	                            listeners:[{
+	                            	element:'element',
+	                            	event:'tap',
+	                            	fn:function(){
+	                            		Ext.Viewport.remove(Ext.getCmp('into'));
+	                            		util.ePush('userLogin',{isFirst:true});
+	                            	}
+	                            }]
+	                        });
+	                        Ext.Viewport.add(into);
+	                        into.show();
         			}
         		}
         	},
@@ -98,6 +117,9 @@ Ext.define('Pass.controller.Main', {
         Ext.ModelMgr.getModel('Pass.model.Local').load(1, {
             scope: this,
             success: function (cache) {
+            	
+            	util.ePush('guide');
+            	return;
             	//util.ePush('demo');
             	//检测是否自动登录
                 Ext.ModelMgr.getModel('Pass.model.User').load(1, {
