@@ -33,7 +33,7 @@ Ext.define('Pass.view.exercise.Questions', {
     },
     applyRecord:function(record){
     	if(!record){
-    		if(util.checkConnection()){
+    		 if(util.checkConnection()){
     			this.addCls('load-empty');
     		}else{
     			this.addCls('load-no-network');

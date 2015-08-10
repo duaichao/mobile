@@ -153,6 +153,13 @@ Ext.define('Pass.controller.Questions', {
                     		util.createGuide([{
                                 xtype : 'image',
                                 cls:'guide-action',
+                                listeners:[{
+                                	element: 'element',
+                                    event: 'swipe',
+                                    fn: function(e, target, options, eOpts) {
+                                    	Ext.Viewport.remove(Ext.getCmp('guideContainer'));
+                                    }
+                                }],
                                 width:200,
                                 height:160,
                                 src : 'resources/images/helper.png'
@@ -249,8 +256,9 @@ Ext.define('Pass.controller.Questions', {
 				//	newActiveItem = this.getMainView().pop();
 				//}
 				//提交试卷
-				//if(source==2){
-				//}
+				if(source==2){
+					
+				}
 			},this);
     	}
     	//清空缓存值
@@ -293,6 +301,7 @@ Ext.define('Pass.controller.Questions', {
     	if(finishBtn){
     		finishBtn.hide();
     	}
+    	item.disable();
     	//构造提交内容
     	/**{
 			id:'',题目id
@@ -375,7 +384,6 @@ Ext.define('Pass.controller.Questions', {
     			this.selectedFinishQuestionOptions(options, valueMap.oldAnswerValue,source);
     		}
     	}
-    	item.disable();
     	if(source==2)return;
     	if(answerBtn){
 	    	answerBtn.setIconCls('hidden');

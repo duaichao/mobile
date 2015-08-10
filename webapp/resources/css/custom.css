@@ -76,8 +76,8 @@ html,body {
 	  background-repeat: no-repeat;
 	  background-position: center;
 }
-.load-no-network{background-image:url(../images/no_network_n.png);}
-.load-empty{background-image:url(../images/load_empty_img.png);}
+.load-no-network{background-image:url(../images/no_network_nb.png);}
+.load-empty{background-image:url(../images/load_empty_img_b.png);}
 
 .guide-action.x-img.x-img-background{
 	background-position:left center;

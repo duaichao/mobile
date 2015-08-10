@@ -117,9 +117,6 @@ Ext.define('Pass.controller.Main', {
         Ext.ModelMgr.getModel('Pass.model.Local').load(1, {
             scope: this,
             success: function (cache) {
-            	
-            	util.ePush('guide');
-            	return;
             	//util.ePush('demo');
             	//检测是否自动登录
                 Ext.ModelMgr.getModel('Pass.model.User').load(1, {
