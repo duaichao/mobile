@@ -344,6 +344,10 @@ Ext.define('Pass.Util', {
             	Ext.applyIf(options.params,config.defaultParams);
             	if(!options.params.noloader){
             		util.loader(options.params.loaderText||'加载中...');
+            		options.params.loaderText = '';
+            		delete options.params.loaderText;
+            		delete options.params.ostype;
+            		delete options.params.version;
             	}
             });
             //加载成功

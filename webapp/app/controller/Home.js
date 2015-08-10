@@ -57,6 +57,9 @@ Ext.define('Pass.controller.Home', {
 		if(e.target.className.indexOf('ob-btn-danger')!=-1){
 			record.set('source',2);
 			this.getMainView().push(Ext.create('Pass.view.exercise.Exam',{record:record}));
+			//this.getMainView().push(Ext.create('Pass.view.exercise.ExamResult',{datas:{
+				
+			//}}));
 		}
 	},
     //上传图片

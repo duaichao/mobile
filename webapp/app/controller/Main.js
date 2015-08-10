@@ -8,34 +8,7 @@ Ext.define('Pass.controller.Main', {
     	},
         control: {
         	'guide':{
-        		activeitemchange:function(ca, value, oldValue, eOpts){
-        			if(value.getItemId()=='last'){
-	        				var into = Ext.create('Ext.Container', {
-	                        	id:'into',
-	                            centered : true,
-	                            modal    : false,
-	                            hideOnMaskTap : false,
-	                            margin:'25 0 0 5',
-	                            html:[
-									'<div class="la-ball-scale-multiple la-2x">',
-									'<div></div>',
-									'<div></div>',
-									'<div></div>',
-									'</div>'
-	                            ].join(''),
-	                            listeners:[{
-	                            	element:'element',
-	                            	event:'tap',
-	                            	fn:function(){
-	                            		Ext.Viewport.remove(Ext.getCmp('into'));
-	                            		util.ePush('userLogin',{isFirst:true});
-	                            	}
-	                            }]
-	                        });
-	                        Ext.Viewport.add(into);
-	                        into.show();
-        			}
-        		}
+        		activeitemchange:'afterLastGuidePage'
         	},
         	'userLogin button#login': {
                 tap: 'doLogin'
@@ -58,6 +31,36 @@ Ext.define('Pass.controller.Main', {
         	}
         }
     },
+    afterLastGuidePage:function(ca, value, oldValue, eOpts){
+		if(value.getItemId()=='last'){
+			if(!Ext.get('into')){
+				var into = Ext.create('Ext.Container', {
+                	id:'into',
+                    centered : true,
+                    modal    : false,
+                    hideOnMaskTap : false,
+                    margin:'25 0 0 5',
+                    html:[
+						'<div class="la-ball-scale-multiple la-2x">',
+						'<div></div>',
+						'<div></div>',
+						'<div></div>',
+						'</div>'
+                    ].join(''),
+                    listeners:[{
+                    	element:'element',
+                    	event:'tap',
+                    	fn:function(){
+                    		Ext.Viewport.remove(Ext.getCmp('into'));
+                    		util.ePush('userLogin',{isFirst:true});
+                    	}
+                    }]
+                });
+                Ext.Viewport.add(into);
+                into.show();
+			}
+		}
+	},
     doLogin:function(btn){
     	var login = btn.up('userLogin'),
     		params = login.getValues();

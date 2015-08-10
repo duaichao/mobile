@@ -90,7 +90,11 @@ Ext.define('Pass.controller.Questions', {
 	        }, this);
 	        return false;
     	}else{
-    		return true;
+    		var newInnerItem = mainView.pop();
+    		if(newInnerItem.isXType('indexView')){
+    			nav.setTitle(newInnerItem.getActiveItem().getTitle());
+    		}
+    		return false;
     	}
     },
     showQuestions: function(questionsView) {
