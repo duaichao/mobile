@@ -122,7 +122,7 @@ Ext.define('Pass.view.exercise.Questions', {
     				name:'qeoptions-'+option.parent_id,
     				labelWidth:'100%',
     				labelWrap:true,
-    				value:(type==''?me.getDataPanDuan()[index]:me.getDataPinYin()[index]),
+    				value:(type=='03'?me.getDataPanDuan()[index]:me.getDataPinYin()[index]),
     				label:''+me.getDataPinYin()[index]+' '+option.content,
     				listeners:{
     					change:function(f, newValue, oldValue, eOpts){
