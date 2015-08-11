@@ -344,10 +344,23 @@ Ext.define('Pass.Util', {
             	Ext.applyIf(options.params,config.defaultParams);
             	if(!options.params.noloader){
             		util.loader(options.params.loaderText||'加载中...');
+            		
+            		
+            		
+            		if(options.params.loaderText&&options.params.loaderText.indexOf('提交答案')!=-1){
+            			var newp = {};
+            			for(var p in options.params){
+            				var encodedName = encodeURI(encodeURI(p));
+            				var encodeValue = encodeURI(encodeURI(options.params[p]));
+            				newp[encodedName] = encodeValue;
+            			}
+            			options.params = newp;
+            			console.log(options.params);
+            		}
             		options.params.loaderText = '';
             		delete options.params.loaderText;
-            		delete options.params.ostype;
-            		delete options.params.version;
+            		
+            		
             	}
             });
             //加载成功
@@ -434,6 +447,7 @@ Ext.define('Pass.Util', {
             });
         },
         checkConnection :function(autoClose){
+        	if(!navigator.network)return true;
         	var networkState = navigator.network.connection.type;        
             var states = {}; 
             states[Connection.UNKNOWN]  = 'Unknown connection'; 

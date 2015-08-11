@@ -226,6 +226,12 @@ Ext.define('Pass.controller.Questions', {
     	nbarRbtn.setText('');
     	nbarRbtn.hide();
     	answers = questionsList.getValueMaps();
+    	if(source==2){
+    		Ext.Array.each(answers,function(a){
+    			delete a.oldAnswerValue;
+    			delete a.sumitResult;
+    		});
+    	}
     	
     	//souce 3 4 不提交答案
     	if(answers.length==0||source==3||source==4){
@@ -241,6 +247,7 @@ Ext.define('Pass.controller.Questions', {
 	    		exam_id:currInnerItem.getRecord().get('exam_id'),//record.get('exam_id'),这个是试卷id  需要考试id
 	    		total_time:speed
 			};
+			
 	    	questionsList.setTimer(null);
 	    	var urlKey = this.getCommitQuestionsUrls()[source];
 			util.request(config.url[urlKey],Ext.applyIf({loaderText:'正在提交答案...'},params),function(data){
