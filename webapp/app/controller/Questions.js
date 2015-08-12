@@ -226,12 +226,12 @@ Ext.define('Pass.controller.Questions', {
     	nbarRbtn.setText('');
     	nbarRbtn.hide();
     	answers = questionsList.getValueMaps();
-    	if(source==2){
-    		Ext.Array.each(answers,function(a){
-    			delete a.oldAnswerValue;
-    			delete a.sumitResult;
-    		});
-    	}
+//    	if(source==2){
+//    		Ext.Array.each(answers,function(a){
+//    			delete a.oldAnswerValue;
+//    			delete a.sumitResult;
+//    		});
+//    	}
     	
     	//souce 3 4 不提交答案
     	if(answers.length==0||source==3||source==4){
@@ -378,6 +378,21 @@ Ext.define('Pass.controller.Questions', {
     		//考题需要自动下一题
     		if(source==2){
     			carousel.next();
+    		}else{
+    			if(answerBtn){
+    		    	answerBtn.setIconCls('hidden');
+    		    	answerBtn.setText('隐藏答案');
+    	    	}
+    	    	if(valueMap.sumitResult){
+    	    		//util.suc('回答正确');
+    	    		answerBox.addCls('qe-answer-right');
+    	    		record.set('answerResult',1);
+    			}else{
+    				//util.err('回答错误');
+    	    		answerBox.addCls('qe-answer-wrong');
+    	    		record.set('answerResult',0);
+    			}
+    	    	answerBox.show();
     		}
     	}else{
     		//默认选中
@@ -395,19 +410,6 @@ Ext.define('Pass.controller.Questions', {
     			this.selectedFinishQuestionOptions(options, valueMap.oldAnswerValue,source);
     		}
     	}
-    	if(source==2)return;
-    	if(answerBtn){
-	    	answerBtn.setIconCls('hidden');
-	    	answerBtn.setText('隐藏答案');
-    	}
-    	if(valueMap.sumitResult){
-    		//util.suc('回答正确');
-    		answerBox.addCls('qe-answer-right');
-		}else{
-			//util.err('回答错误');
-    		answerBox.addCls('qe-answer-wrong');
-		}
-    	answerBox.show();
     },
     selectedFinishQuestionOptions:function(options,oldAnswerValue,source){
     	Ext.Array.each(options, function(option, index) {

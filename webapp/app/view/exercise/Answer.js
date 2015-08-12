@@ -8,17 +8,17 @@ Ext.define('Pass.view.exercise.Answer', {
         cls: "qe-answerbox",
         record: null,
         layout: "vbox",
-        hidden: true,
-        showAnimation: {
-            type: "slideIn",
-            direction: "up",
-            duration: 100
-        },
-        hideAnimation: {
-            type: "slideOut",
-            direction: "down",
-            duration: 100
-        }
+        hidden: true
+//        showAnimation: {
+//            type: "slideIn",
+//            direction: "up",
+//            duration: 100
+//        },
+//        hideAnimation: {
+//            type: "slideOut",
+//            direction: "down",
+//            duration: 100
+//        }
     },
     initialize: function() {
         var me = this;

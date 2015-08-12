@@ -347,16 +347,16 @@ Ext.define('Pass.Util', {
             		
             		
             		
-            		if(options.params.loaderText&&options.params.loaderText.indexOf('提交答案')!=-1){
-            			var newp = {};
-            			for(var p in options.params){
-            				var encodedName = encodeURI(encodeURI(p));
-            				var encodeValue = encodeURI(encodeURI(options.params[p]));
-            				newp[encodedName] = encodeValue;
-            			}
-            			options.params = newp;
-            			console.log(options.params);
-            		}
+//            		if(options.params.loaderText&&options.params.loaderText.indexOf('提交答案')!=-1){
+//            			var newp = {};
+//            			for(var p in options.params){
+//            				var encodedName = encodeURI(encodeURI(p));
+//            				var encodeValue = encodeURI(encodeURI(options.params[p]));
+//            				newp[encodedName] = encodeValue;
+//            			}
+//            			options.params = newp;
+//            			console.log(options.params);
+//            		}
             		options.params.loaderText = '';
             		delete options.params.loaderText;
             		

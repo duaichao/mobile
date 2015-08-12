@@ -25,12 +25,6 @@ Ext.define('Pass.view.exercise.Questions', {
         console.log(record.data);
         this.setName(record.data);
     },*/
-    onQuestionDeactivate:function(oldActiveItem, carousel, newActiveItem, eOpts){
-    	oldActiveItem.enable();
-    	oldActiveItem.removeCls(['qe-answer-wrong','qe-answer-right']);
-    	oldActiveItem.down('questionanswer').hide();
-		
-    },
     applyRecord:function(record){
     	if(!record){
     		 if(util.checkConnection()){
@@ -45,6 +39,7 @@ Ext.define('Pass.view.exercise.Questions', {
     	if(newRecord){
 	        this.setName({cls:'qe-title',styleHtmlContent:true});
 	        this.setOptions({cls:'qe-options-container'});
+	        this.setDisabled(newRecord.get('finish'));
     	}
     },
     applyName:function(config){
@@ -67,6 +62,7 @@ Ext.define('Pass.view.exercise.Questions', {
     applyOptions:function(config){
     	var r = this.getRecord(),me = this;
     	if(r){
+    		var viewRecord = this.up('questionslist').up('exerciseview').getRecord();
     		var options = r.get('answer_array'),
     			hasSubs = r.get('sub_array'),
     			innerItems = [],
@@ -92,9 +88,11 @@ Ext.define('Pass.view.exercise.Questions', {
         		me.setScrollable(false);
         	}
     		if(ptype=='02'||ptype=='06'){
+    			
         		//多选题需要手动提交答案
     			innerItems.push(Ext.factory({
     				height:40,
+    				hidden:r.get('finish'),
         			itemId:'finish',
         			cls:'ob-btn ob-btn-success',
         			margin:'1.2em 0.6em',
@@ -102,9 +100,18 @@ Ext.define('Pass.view.exercise.Questions', {
     			},'Ext.Button'));
         	}
     		//显示答案element
+    		var defCls = 'qe-answerbox';
+    		if(r.get('answerResult')==0){
+    			defCls = 'qe-answerbox qe-answer-wrong';
+    		}
+    		if(r.get('answerResult')==1){
+    			defCls = 'qe-answerbox qe-answer-right';
+    		}
     		innerItems.push(Ext.factory({
 				width:'100%',
 				height:160,
+				cls:defCls,
+				hidden: (!r.get('finish')||viewRecord.get('source')==2),
 				record:r
     		},'Pass.view.exercise.Answer'));
 	    	return Ext.factory(Ext.applyIf(config,{
