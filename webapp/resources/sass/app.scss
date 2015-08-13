@@ -1,0 +1,72 @@
+// The following two lines import the default Sencha Touch theme. If you are building
+// a new theme, remove them and the add your own CSS on top of the base CSS (which
+// is already included in your app.json file).
+$base-color:#606060;
+$toolbar-base-color:#d0312a;
+$toolbar-gradient:false;
+$list-bg-color: #ffffff;
+$list-active-color:#eaeaea;
+$list-active-gradient:'flat';
+$list-pressed-color: #fafafa;
+$panel-border-radius: 0em; 
+$sheet-bg-gradient: #ffffff;
+
+$include-pictos-font:false;
+$include-button-uis:false;
+
+
+@import 'sencha-touch/default';
+@import 'sencha-touch/default/all';
+
+// Custom code goes here..
+
+
+
+// Examples of using the icon mixin:
+
+
+
+@include sencha-toolbar-ui('fblack', #404040, 'flat');
+@include sencha-toolbar-ui('fred',#d73d32, 'flat');
+@include sencha-toolbar-ui('fgray', #fafafa, 'flat');
+
+@include sencha-button-ui('fred',#d0312a, 'flat');
+@include sencha-button-ui('fblue',#0088cc, 'flat');
+@include sencha-button-ui('fgreen',#5bb75b, 'flat');
+@include sencha-button-ui('finfo',#49afcd, 'flat');
+@include sencha-button-ui('fgray',#fafafa, 'flat');
+@include sencha-button-ui('fblack',#363636, 'flat');
+
+// @include icon('user');
+@include icon-font(
+	'iconfont', inline-font-files(
+		'/iconfont/iconfont.woff', woff, 
+		'/iconfont/iconfont.ttf', truetype, 
+		'/iconfont/iconfont.svg', svg 
+	)
+); 
+@include icon("home", "\e62c","iconfont");
+@include icon("apps", "\e62f","iconfont");
+@include icon("favorite", "\e628","iconfont");
+@include icon("more", "\e600","iconfont");
+@include icon("rightarrow", "\e60b","iconfont");
+@include icon("star", "\e622","iconfont");
+@include icon("star1", "\e623","iconfont");
+
+@include icon("visible", "\e614","iconfont");
+@include icon("hidden", "\e615","iconfont");
+@include icon("next", "\e605","iconfont");
+@include icon("prev", "\e604","iconfont");
+@include icon("flist", "\e603","iconfont");
+@include icon("fav", "\e60e","iconfont");
+@include icon("fav1", "\e611","iconfont");
+
+@include icon("happy", "\e602","iconfont");
+@include icon("sad", "\e601","iconfont");
+
+@include icon("right", "\e60a","iconfont");
+@include icon("wrong", "\e608","iconfont");
+@include icon("del", "\e60c","iconfont");
+@include icon("del1", "\e60c","iconfont");
+@include icon("ok", "\e60f","iconfont");
+@include icon("edit", "\e60d","iconfont");
