@@ -36,6 +36,7 @@ Ext.define('Pass.view.exercise.Custom', {
     			me.add({
     	        	xtype:'fieldset',
     	        	defaults:{
+    	        		usePicker:true,
     	        		xtype:'selectfield',
     	        		labelWidth:'25%'
     	        	},

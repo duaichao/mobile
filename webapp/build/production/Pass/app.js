@@ -69719,6 +69719,9 @@ Ext.define('Ext.picker.Picker', {
             this.doExitApp();
         } else {
             if (item.getInnerItems().length > 1) {
+                Ext.Array.each(Ext.Viewport.query('picker'), function(picker, index) {
+                    Ext.Viewport.remove(picker);
+                });
                 item.pop();
             } else {
                 //item = mainView
@@ -69727,6 +69730,9 @@ Ext.define('Ext.picker.Picker', {
                     this.doExitApp();
                 } else {
                     this.isExit = false;
+                    Ext.Array.each(Ext.Viewport.query('picker'), function(picker, index) {
+                        Ext.Viewport.remove(picker);
+                    });
                     innerTabView.setActiveItem(0);
                 }
             }
@@ -71749,6 +71755,7 @@ Ext.define('Ext.picker.Picker', {
                     me.add({
                         xtype: 'fieldset',
                         defaults: {
+                            usePicker: true,
                             xtype: 'selectfield',
                             labelWidth: '25%'
                         },
@@ -72298,5 +72305,5 @@ Ext.application({
 });
 
 // @tag full-page
-// @require D:\workspace10\mobile\webapp\app.js
+// @require E:\workmyeclipse10\mobile\webapp\app.js
 

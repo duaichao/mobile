@@ -176,9 +176,9 @@ Ext.define('Pass.controller.Main', {
     		this.doExitApp();
     	}else{
     		if(item.getInnerItems().length>1){
-    			if(Ext.Viewport.down('picker')){
-    				Ext.Viewport.down('picker').hide();
-    			}
+    			Ext.Array.each(Ext.Viewport.query('picker'),function(picker,index){
+    				Ext.Viewport.remove(picker);
+    			});
     			item.pop();
     		}else{
     			//item = mainView
@@ -187,9 +187,9 @@ Ext.define('Pass.controller.Main', {
     				this.doExitApp();
     			}else{
     				this.isExit = false;
-    				if(Ext.Viewport.down('picker')){
-        				Ext.Viewport.down('picker').hide();
-        			}
+    				Ext.Array.each(Ext.Viewport.query('picker'),function(picker,index){
+        				Ext.Viewport.remove(picker);
+        			});
     				innerTabView.setActiveItem(0);
     			}
     		}
